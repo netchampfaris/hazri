@@ -1,2 +1,12 @@
 ﻿body {
 }
+
+.presentgreen {
+    background-color:green;
+    color:white;
+}
+
+.absentred {
+    background-color:red;
+    color:white;
+}

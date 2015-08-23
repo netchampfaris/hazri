@@ -4,16 +4,21 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-        <title></title>
+        <meta http-equiv="Content-Security-Policy" >
+        <title>Hazri</title>
 
         <link href="lib/ionic/css/ionic.min.css" rel="stylesheet">
         <link href="css/index.css" rel="stylesheet">
+        <link href="lib/material-light/material.min.css" rel="stylesheet" />
 
         <!-- ionic/angularjs js -->
         <script src="lib/ionic/js/ionic.bundle.js"></script>
         <!-- firebase & angularfire libraries -->
         <script src="lib/firebase/firebase.js"></script>
         <script src="lib/angular-fire/angularfire.min.js"></script>
+        <!--material light js-->
+        <script src="lib/material-light/material.min.js"></script>
+        <script src="lib/angular-filter.min.js"></script>
 
         <!-- cordova script -->
         <script src="cordova.js"></script>
@@ -24,7 +29,7 @@
         <script src="scripts/services.js"></script>
     </head>
 
-    <body>
+    <body ng-app="hazri">
         <!--
           The nav bar that will be updated as we navigate between views.
         -->

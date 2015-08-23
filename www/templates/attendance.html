@@ -1,6 +1,23 @@
 
 <ion-view title="Take Attendance">
     <ion-content padding="true" class="has-header">
-        take attendance
+
+        <form name='newform'>
+            Enter No. of Students:
+            <input type="number" id="num" min="1" max="150" required value="5" ng-model="rollno">
+            <button ng-click="setval()">Submit</button>
+
+            
+                <div class="row responsive-sm">
+                    <div class="col col-50" ng-repeat="item in items">
+                        <button ng-class="{'mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--primary' :!exists(item, selected), 'mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--accent' :exists(item, selected)}" ng-click="toggle(item, selected)">
+                            {{ item }}
+                        </button>
+                    </div>
+                </div>
+             
+                <h2>Absent Students :</h2>
+                <code style="display: block; padding: 8px;">{{selected | json}}</code>
+</form>
     </ion-content>
 </ion-view>
