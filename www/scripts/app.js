@@ -1,6 +1,6 @@
 
 
-angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'angular.filter'])
+angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers'])
 
 .run(function ($ionicPlatform) {
     $ionicPlatform.ready(function () {

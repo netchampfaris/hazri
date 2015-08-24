@@ -27,7 +27,7 @@ angular.module('hazri.controllers', ['ionic','firebase'])
                   "password": user.password
               }, function (error, authData) {
                   if (error) {
-                      console.log("Login Failed!", error);
+                      $scope.showAlert("Error","Login Failed!");
                   } else {
                       console.log("Authenticated successfully with payload:", authData);
                       $ionicHistory.nextViewOptions({
@@ -198,11 +198,10 @@ angular.module('hazri.controllers', ['ionic','firebase'])
       //var abs = $scope.list || "none";
       //$scope.no.$add({ absent: abs});
 
-      $scope.rollno = 15;
       
-      $scope.setval = function () {
+      $scope.setval = function (rollno) {
           $scope.items = [];
-          for (var i = 0; i < $scope.rollno ; i++)
+          for (var i = 0; i < rollno ; i++)
               $scope.items.push(i + 1);
 
       };
