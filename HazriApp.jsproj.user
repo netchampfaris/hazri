@@ -4,7 +4,14 @@
     <ReferenceCachePath>C:\Users\FarisAnsari\AppData\Local\Temp\HazriApp_refcache</ReferenceCachePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'">
-    <DebuggerFlavor>AndroidEmulator</DebuggerFlavor>
+    <DebuggerFlavor>RippleNexus</DebuggerFlavor>
     <AndroidEmulatorID>AndroidDevice;Device</AndroidEmulatorID>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Windows Phone 8'">
+    <DebuggerFlavor>PhoneEmulatorWvga512</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Windows Phone (Universal)'">
+    <DebuggerFlavor>WindowsMobileEmulator</DebuggerFlavor>
+    <WindowsMobileEmulatorID>A6BAF594-9315-40C3-AD16-F5B8A425A7AB;Emulator 8.1 WVGA 4 inch 512MB</WindowsMobileEmulatorID>
   </PropertyGroup>
 </Project>

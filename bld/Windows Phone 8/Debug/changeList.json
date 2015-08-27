@@ -164,6 +164,7 @@
     "plugins\\fetch.json",
     ".git\\hooks\\pre-commit.sample",
     ".git\\objects\\d4\\cdc0146f08ad4b2ad025abb6ebd2462a3a5a2f",
+    "config.xml",
     ".git\\objects\\ea\\5fc074a7b627d844408ed4e27dd2d5393cede9",
     ".git\\objects\\8c\\b049e24358d12c060fef57fe2a9d60ec51cd54",
     ".git\\objects\\24\\bf87946d2d7db6ea9997de519aa490f69663f0",
@@ -452,16 +453,12 @@
     ".git\\objects\\bc\\c7f59fd75a505038712f3f3ab2c9db019a1dfe",
     ".git\\objects\\ac\\47784127ec1c8983c4713ac592068e41c6e377",
     ".git\\objects\\6f\\c644e8f730474a13125732b6a6c24c44dd7399",
-    ".git\\objects\\b8\\e92f15dddca51d01941c57fae17df087d030a2",
-    "www\\scripts\\winstore-jscompat.js",
-    "config.xml"
+    ".git\\objects\\b8\\e92f15dddca51d01941c57fae17df087d030a2"
   ],
   "deletedFilesIos": [],
   "addedPluginsIos": [],
   "deletedPluginsIos": [],
-  "changedFiles": [
-    "www\\scripts\\controllers.js"
-  ],
+  "changedFiles": [],
   "deletedFiles": [],
   "addedPlugins": [],
   "deletedPlugins": []

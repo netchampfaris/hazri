@@ -1,12 +1,6 @@
 ﻿body {
 }
 
-.presentgreen {
-    background-color:green;
-    color:white;
-}
-
-.absentred {
-    background-color:red;
-    color:white;
+.custom-action-sheet .button {
+    margin-left:1em;
 }

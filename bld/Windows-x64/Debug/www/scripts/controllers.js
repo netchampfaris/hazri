@@ -1,4 +1,4 @@
-
+﻿
 angular.module('hazri.controllers', ['ionic','firebase'])
 
 
@@ -30,7 +30,6 @@ angular.module('hazri.controllers', ['ionic','firebase'])
                       $scope.showAlert("Error","Login Failed!");
                   } else {
                       console.log("Authenticated successfully with payload:", authData);
-                      user = null;
                       $ionicHistory.nextViewOptions({
                           disableAnimate: true,
                           disableBack: true,
@@ -110,9 +109,8 @@ angular.module('hazri.controllers', ['ionic','firebase'])
     $scope.year = "First Year";
     $scope.subject = "Subject 1";
     $scope.time = "9.30 - 10.30";
-    
+    var options = [];
     $scope.list = function (type, title) {
-        var options = [];
 
         switch (type) {
             case 1:
@@ -158,8 +156,7 @@ angular.module('hazri.controllers', ['ionic','firebase'])
         // Show the action sheet
         var actionSheet = $ionicActionSheet.show({
             buttons: options,
-            titleText: 'Select ' + title,
-            cssClass: 'custom-action-sheet',
+            titleText: 'Select '+title,
             buttonClicked: function (index, button) {
                 switch (type) {
                     case 1: $scope.dept = button.text;
@@ -177,8 +174,15 @@ angular.module('hazri.controllers', ['ionic','firebase'])
 
     };
 
-    $scope.next = function () {
+    $scope.showAlert = function (title, message) {
 
+        var alertPopup = $ionicPopup.alert({
+            title: title,
+            template: message
+        });
+        alertPopup.then(function (res) {
+            console.log('ok clicked alert');
+        });
     };
 
 })

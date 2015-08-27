@@ -1,0 +1,28 @@
+﻿    <ion-view>
+        
+        <ion-content padding="true" scroll="false" class="has-header">
+            <ion-list>
+                <div class="list">
+                    <div class="item item-divider">Department</div>
+                    <div class="item" ng-click="list(1, 'Department')">{{ dept }}</div>
+                </div>
+                <div class="list">
+                    <div class="item item-divider">Year</div>
+                    <div class="item" ng-click="list(2, 'Year')">{{ year }}</div>
+                </div>
+                <div class="list">
+                    <div class="item item-divider">Subject</div>
+                    <div class="item" ng-click="list(3, 'Subject')">{{ subject }}</div>
+                </div>
+                <div class="list">
+                    <div class="item item-divider">TIme Slot</div>
+                    <div class="item" ng-click="list(4, 'Time Slot')">{{ time }}</div>
+                </div>
+            </ion-list>
+            <div class="padding-left padding-right">
+                <button class="button button-block action-button button-positive" ui-sref="attendance">
+                    Take attendance
+                </button>
+            </div>
+        </ion-content>
+    </ion-view>

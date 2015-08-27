@@ -1,4 +1,4 @@
-angular.module('hazri.services', ['firebase'])
+﻿angular.module('hazri.services', ['firebase'])
 
 
         .factory("Auth", ["$firebaseAuth",
