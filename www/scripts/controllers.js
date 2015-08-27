@@ -105,7 +105,11 @@ angular.module('hazri.controllers', ['ionic','firebase'])
 
 .controller("SelectCtrl", function ($scope, $ionicLoading, $ionicActionSheet, $ionicPopup, $q) {
     $ionicLoading.hide();
+
+    //load all data from firebase at login successfull, to be done later
     
+
+    //default values for options
     $scope.dept = "Computer";
     $scope.year = "Final Year";
     $scope.semester = "Semester 7";
@@ -247,25 +251,99 @@ angular.module('hazri.controllers', ['ionic','firebase'])
 
     };
 
-    $scope.next = function () {
 
+    $scope.showAlert = function (title, message) {
+
+        var alertPopup = $ionicPopup.alert({
+            title: title,
+            template: message
+        });
+        alertPopup.then(function (res) {
+            console.log('ok clicked alert');
+        });
     };
 
 })
 
-.controller('AttendanceCtrl', ["$scope", "$firebaseArray",
-  function ($scope, $firebaseArray) {
+.controller('AttendanceCtrl', ["$scope", "$firebaseArray", "$stateParams","$q","$ionicLoading","$ionicPopup",
+  function ($scope, $firebaseArray, $stateParams, $q, $ionicLoading,$ionicPopup) {
 
-      var ref = new Firebase("https://hazri.firebaseio.com/absentroll");
-      var fb = $firebaseArray(ref);
 
-      $scope.no = $firebaseArray(ref);
-      
+      var dept = $stateParams.dept;
+      var year = $stateParams.year;
+      var sem = $stateParams.semester;
+      var type = $stateParams.type;
+      var subject = $stateParams.subject;
+      var date = $stateParams.date;
+      $scope.totalStudents = 0;
+
+
+      var getNo = function(){
+          var deferred = $q.defer();
+          $ionicLoading.show({ template: 'Loading student count..' });
+
+          var ref = new Firebase("https://hazri.firebaseio.com/Department/" + dept + "/" + year + "/" + sem + "/");
+          ref.on("value", function (snapshot) {
+              snapshot.forEach(function (data) {
+                  if (data.key() == "totalstudents")
+                      $scope.totalStudents = data.val();
+              });
+              deferred.resolve();
+          }, function (error) {
+              console.log("error:" + error.code);
+              deferred.reject();
+          });
+
+          return deferred.promise;
+      }
+      var promise = getNo();
+
+      promise.then(function () {
+          $ionicLoading.hide();
+          $scope.setval($scope.totalStudents);
+      }, function (reason) {
+          $ionicLoading.hide();
+          alert('Failed: ' + reason);
+      }, function (update) {
+          $ionicLoading.hide();
+          alert('Got notification: ' + update);
+      });
+
+      $scope.showConfirm = function () {
+          var confirmPopup = $ionicPopup.confirm({
+              title: 'Confirm Submit',
+              template: 'Are you sure you want to submit this list?'
+          });
+          confirmPopup.then(function (res) {
+              if (res) {
+                  console.log('You are sure');
+                  $scope.updateAttendance();
+              } else {
+                  console.log('You are not sure');
+              }
+          });
+      };
+
+      $scope.updateAttendance = function () {
+
+          var str = "https://hazri.firebaseio.com/Department/" + dept + "/" + year + "/" + sem + "/" + type + "/" + subject +"/";
+          var ref = new Firebase(str);
+          $scope.selected = $scope.selected.sort();
+          var absent = "";
+          for (var i = 0; i < $scope.selected.length; i++)
+              absent += $scope.selected[i] + ",";
+          ref.push({ date: date, absentno: absent });
+
+          console.log("successfull");
+
+      };
+
+
       $scope.setval = function (rollno) {
           $scope.items = [];
           for (var i = 0; i < rollno ; i++)
               $scope.items.push(i + 1);
-              };
+      };
 
 
       $scope.selected = [];
@@ -284,11 +362,6 @@ angular.module('hazri.controllers', ['ionic','firebase'])
           return list.indexOf(item) > -1;
       };
       
-       $scope.upload=function (){
-        var final=$scope.selected;
-        final = final.sort(function(a, b){return a-b});
-        ref.child("roll").set(final);
-      };
 
   }
 

@@ -5,86 +5,18 @@
         </button>
     </ion-nav-buttons>
     <ion-content class="has-header">
-        <div class="item item-input-inset">
-            <label class="item-input-wrapper">
-                <input type="number" placeholder="Enter number of students" min="1" max="150" ng-model="rollno" required>
-            </label>
-            <button class="button button-small" ng-click="setval(rollno)">
-                Submit
-            </button>
-        </div>
-
-        <ion-scroll direction="y" style="height:400px;">
-            <div style="display:inline-block; margin:0.4em; margin-left:0.6em;" ng-repeat="item in items">
+        
+        <ion-scroll direction="y" style="height:500px;">
+            <div style="display:inline-block; min-width:18%; margin:2% 1% 2% 1%;" ng-repeat="item in items">
                 <button ng-class="{'mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--primary' :!exists(item, selected), 'mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--accent' :exists(item, selected)}" ng-click="toggle(item, selected)">
                     {{ item }}
                 </button>
             </div>
         </ion-scroll>
-
-        <h4>Absent Students</h4>
-    </ion-content>
-
-    <ion-footer-bar align-title="center" class="bar-assertive">
-        <button class="button button-outline button-light button-clear" ng-repeat="s in selected | orderBy:s">
-            {{ s }}
+        <button class="button button-block button-positive" ng-click="showConfirm()">
+            Submit
         </button>
-    </ion-footer-bar>
+
+    </ion-content>
 </ion-view>
-<ion-side-menus>
 
-    <ion-pane ion-side-menu-content>
-        <ion-nav-bar type="bar-positive"
-                     back-button-type="button-icon"
-                     back-button-icon="ion-ios7-arrow-back"
-                     animation="nav-title-slide-ios7">
-
-        </ion-nav-bar>
-        <ion-nav-view name="main">
-            <ion-content class="has-header">
-
-                <div class="item item-input-inset">
-                    <label class="item-input-wrapper">
-                        <input type="number" placeholder="Enter number of students" min="1" max="150" ng-model="rollno" required>
-                    </label>
-                    <button class="button button-small" ng-click="setval(rollno)">
-                        Submit
-                    </button>
-                </div>
-
-                <ion-scroll direction="y" style="height:400px;">
-                    <div style="display:inline-block; margin:0.4em; margin-left:0.6em;" ng-repeat="item in items">
-                        <button ng-class="{'mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--primary' :!exists(item, selected), 'mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--accent' :exists(item, selected)}" ng-click="toggle(item, selected)">
-                            {{ item }}
-                        </button>
-                    </div>
-                    <div>
-                         <button ng-click="upload()">Confirm</button>
-                    </div>
-                </ion-scroll>
-
-                <h4>Absent Students</h4>
-
-
-            </ion-content>
-            <ion-footer-bar align-title="center" class="bar-assertive">
-                <button class="button button-outline button-light button-clear" ng-repeat="s in selected | orderBy:s">
-                    {{ s }}
-                </button>
-            </ion-footer-bar>
-
-        </ion-nav-view>
-    </ion-pane>
-
-    <ion-side-menu side="left">
-        <header class="bar bar-header bar-assertive">
-            <div class="title">Side Menu</div>
-        </header>
-        <ion-content has-header="true">
-            <ul class="list">
-                <li class="item" ng-repeat="s in selected | orderBy:s">{{ s }}</li>
-            </ul>
-        </ion-content>
-    </ion-side-menu>
-
-</ion-side-menus>

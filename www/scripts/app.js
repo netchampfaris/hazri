@@ -98,6 +98,14 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers','hazri.service
         url: "/attendance",
         templateUrl: "templates/attendance.html",
         controller: 'AttendanceCtrl',
+        params: {
+            "dept": null,
+            "year": null,
+            "semester": null,
+            "type": null,
+            "subject": null,
+            "date": null
+        },
         resolve: {
             // controller will not be loaded until $requireAuth resolves
             // Auth refers to our $firebaseAuth wrapper in the example above

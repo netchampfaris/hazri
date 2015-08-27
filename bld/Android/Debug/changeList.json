@@ -162,7 +162,20 @@
     ".git\\objects\\0c\\882e7c9213e19660c970c1d7cb5422a5116e10",
     ".git\\objects\\fd\\cf960bc23d61936fa9ab07e262f3b844e7a319",
     ".git\\objects\\63\\608d7a785b5dbc7e7f909882e423d11ec541e8",
-    ".git\\objects\\95\\c998dd2aaed79d6fb8d2c5dee544341aaa5efd"
+    ".git\\objects\\95\\c998dd2aaed79d6fb8d2c5dee544341aaa5efd",
+    ".git\\objects\\3d\\73c32125433cabcabe4913aac9c4c78619eba9",
+    ".git\\objects\\fb\\aab15b0f2c52bee5a467f0331125dd49750a6d",
+    ".git\\objects\\29\\3fb45c0021439eebdef902e42a105e26534c5c",
+    ".git\\objects\\b8\\2e1a3ce233df9c380b9524cf7419a2d01bf76b",
+    ".git\\objects\\9a\\e70430e494118fedfbb131e50a8387489c9caa",
+    ".git\\objects\\c0\\e0823a97d5ff0e44de97f8d741a978a3b503cd",
+    ".git\\objects\\4e\\7f31273122265826278efd0e1b5a12a6fdaf64",
+    ".git\\objects\\fb\\2036f581687a2caa0aab589c81036cedea152d",
+    ".git\\objects\\ea\\d291694bdf74dab523ebef8ceffaabf5770195",
+    ".git\\objects\\2d\\ae21606b9b6ece2704ca07207dc84c3c7b09cd",
+    ".git\\objects\\21\\5483497e2a828797a19d3dcbd72c1904059c4e",
+    ".git\\objects\\ab\\1127440ca00e73ae682f8be136cc582654f49c",
+    ".git\\objects\\be\\cedd4234e5426a0564baaf6cb17ddea9e7dac8"
   ],
   "deletedFilesIos": [
     ".git\\objects\\be\\87da362996622a1d2e7d52897c274011be3c72",
@@ -595,9 +608,7 @@
   ],
   "addedPluginsIos": [],
   "deletedPluginsIos": [],
-  "changedFiles": [
-    "www\\scripts\\controllers.js"
-  ],
+  "changedFiles": [],
   "deletedFiles": [],
   "addedPlugins": [],
   "deletedPlugins": []
