@@ -1,5 +1,5 @@
 <ion-view title="Select your class and subject">
-    <ion-content padding="true" scroll="false" class="has-header">
+    <ion-content padding="true" scroll="true" class="has-header">
         <ion-list>
             <div class="list">
                 <div class="item item-divider">Department</div>
@@ -10,16 +10,24 @@
                 <div class="item item-icon-right" ng-click="list(2, 'Year')">{{ year }}<i class="icon ion-chevron-down icon-accessory"></i></div>
             </div>
             <div class="list">
+                <div class="item item-divider">Semester</div>
+                <div class="item item-icon-right" ng-click="list(3, 'Semester')">{{ semester }}<i class="icon ion-chevron-down icon-accessory"></i></div>
+            </div>
+            <div class="list">
+                <div class="item item-divider">Type</div>
+                <div class="item item-icon-right" ng-click="list(4, 'Type')">{{ type }}<i class="icon ion-chevron-down icon-accessory"></i></div>
+            </div>
+            <div class="list">
                 <div class="item item-divider">Subject</div>
-                <div class="item item-icon-right" ng-click="list(3, 'Subject')">{{ subject }}<i class="icon ion-chevron-down icon-accessory"></i></div>
+                <div class="item item-icon-right" ng-click="list(5, 'Subject')">{{ subject }}<i class="icon ion-chevron-down icon-accessory"></i></div>
             </div>
             <div class="list">
                 <div class="item item-divider">Date</div>
-                <div class="item item-icon-right" ng-click="list(4, 'Date')">{{ date }}<i class="icon ion-chevron-down icon-accessory"></i></div>
+                <div class="item item-icon-right" ng-click="list(6, 'Date')">{{ date }}<i class="icon ion-chevron-down icon-accessory"></i></div>
             </div>
             <div class="list">
                 <div class="item item-divider">No. of Lectures</div>
-                <div class="item item-icon-right" ng-click="list(5, 'Lectures')">{{ lectures }}<i class="icon ion-chevron-down icon-accessory"></i></div>
+                <div class="item item-icon-right" ng-click="list(7, 'Lectures')">{{ lectures }}<i class="icon ion-chevron-down icon-accessory"></i></div>
             </div>
         </ion-list>
         <div class="padding-left padding-right">

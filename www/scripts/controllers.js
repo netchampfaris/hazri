@@ -103,77 +103,147 @@ angular.module('hazri.controllers', ['ionic','firebase'])
 
  })
 
-.controller("SelectCtrl", function ($scope, $ionicLoading, $ionicActionSheet, $ionicPopup) {
+.controller("SelectCtrl", function ($scope, $ionicLoading, $ionicActionSheet, $ionicPopup, $q) {
     $ionicLoading.hide();
     
     $scope.dept = "Computer";
-    $scope.year = "First Year";
-    $scope.subject = "Subject 1";
-    $scope.time = "9.30 - 10.30";
+    $scope.year = "Final Year";
+    $scope.semester = "Semester 7";
+    $scope.type = "Theory";
+    $scope.subject = "";
+    $scope.date = "";
+    $scope.lectures = "";
     
     $scope.list = function (type, title) {
-        var options = [];
 
-        switch (type) {
+            var options = [];
+
+        // Show the action sheet
+            var actionSheet = function () {
+                $ionicActionSheet.show({
+                    buttons: options,
+                    titleText: 'Select ' + title,
+                    cssClass: 'custom-action-sheet',
+                    buttonClicked: function (index, button) {
+                        switch (type) {
+                            case 1: $scope.dept = button.text;
+                                break;
+                            case 2: $scope.year = button.text;
+                                break;
+                            case 3: $scope.semester = button.text;
+                                break;
+                            case 4: $scope.type = button.text;
+                                break;
+                            case 5: $scope.subject = button.text;
+                                break;
+                            case 6: $scope.date = button.text;
+                                break;
+                            case 7: $scope.lectures = button.text;
+                                break;
+                        };
+                        return true;
+                    }
+                });
+            };
+
+            switch (type) {
             case 1:
                 options = [
-              { text: ' Computer' },
-              { text: ' Information Technology' },
-              { text: ' Mechanical' },
-              { text: ' Chemical' },
-              { text: ' Instrumentation' },
-              { text: ' Electronics and Telecommunication' }
-              ]; break;
+              { text: 'Computer' },
+              { text: 'Information Technology' },
+              { text: 'Mechanical' },
+              { text: 'Chemical' },
+              { text: 'Instrumentation' },
+              { text: 'Electronics and Telecommunication' }
+                ];
+                actionSheet();
+                break;
 
             case 2:
                 options = [
-                { text: ' First Year' },
-                { text: ' Second Year' },
-                { text: ' Third Year' },
-                { text: ' Final Year' }
-                ]; break;
+                { text: 'First Year' },
+                { text: 'Second Year' },
+                { text: 'Third Year' },
+                { text: 'Final Year' }
+                ];
+                actionSheet();
+                break;
 
             case 3:
                 options = [
-                { text: ' Subject 1' },
-                { text: ' Subject 2' },
-                { text: ' Subject 3' },
-                { text: ' Subject 4' },
-                { text: ' Subject 5' },
-                { text: ' Subject 6' }
-                ]; break;
+                { text: 'Semester 7' },
+                { text: 'Semester 8' }
+                ];
+                actionSheet();
+                break;
 
             case 4:
                 options = [
-                { text: ' 9.30 - 10.30' },
-                { text: ' 10.30 - 11.30' },
-                { text: ' 11.30 - 12.30' },
-                { text: ' 1.00 - 2.00' },
-                { text: ' 2.00 - 3.00' },
-                { text: ' 3.00 - 4.00' },
-                { text: ' 4.00 - 5.00'}
-                ]; break;
-        };
+                { text: 'Theory' },
+                { text: 'Practical' }
+                ];
+                actionSheet();
+                break;
 
-        // Show the action sheet
-        var actionSheet = $ionicActionSheet.show({
-            buttons: options,
-            titleText: 'Select ' + title,
-            cssClass: 'custom-action-sheet',
-            buttonClicked: function (index, button) {
-                switch (type) {
-                    case 1: $scope.dept = button.text;
-                        break;
-                    case 2: $scope.year = button.text;
-                        break;
-                    case 3: $scope.subject = button.text;
-                        break;
-                    case 4: $scope.time = button.text;
-                        break;
+            case 5:
+
+                var getSubjects = function () {
+                    var deferred = $q.defer();
+                    $ionicLoading.show({ template: 'Getting Subject List..' });
+                    var dept = $scope.dept.replace(" ", "%20");
+                    var year = $scope.year.replace(" ", "%20");
+                    var sem = $scope.semester.replace(" ", "%20");
+                    var type = $scope.type.replace(" ", "%20");
+                    var str = "https://hazri.firebaseio.com/Department/" + dept + "/" + year + "/" + sem + "/" + type + "/";
+                    var ref = new Firebase(str);
+
+                    ref.orderByKey().on("value", function (snapshot) {
+                        snapshot.forEach(function (data) {
+                            options.push({ text: data.key() });
+                        });
+                        deferred.resolve();
+                    }, function (errorObject) {
+                        console.log("The read failed: " + errorObject.code);
+                        deferred.reject();
+                    });
+
+                    return deferred.promise;
                 };
-                return true;
-            }
-        });
+
+                var promise = getSubjects();
+
+                promise.then(function () {
+                    $ionicLoading.hide();
+                    actionSheet();
+                }, function (reason) {
+                    $ionicLoading.hide();
+                    alert('Failed: ' + reason);
+                }, function (update) {
+                    $ionicLoading.hide();
+                    alert('Got notification: ' + update);
+                });
+                break;
+
+
+            case 6:
+                options = [
+                    { text: '25-08-2015' },
+                    { text: '26-08-2015' },
+                    { text: '27-08-2015' },
+                    { text: '28-08-2015' }
+                ];
+                actionSheet();
+                break;
+
+            case 7:
+                options = [
+                { text: '1' },
+                { text: '2' }
+                ];
+                actionSheet();
+                break;
+
+            };
 
     };
 
@@ -196,8 +266,6 @@ angular.module('hazri.controllers', ['ionic','firebase'])
           for (var i = 0; i < rollno ; i++)
               $scope.items.push(i + 1);
               };
-
-
 
 
       $scope.selected = [];
