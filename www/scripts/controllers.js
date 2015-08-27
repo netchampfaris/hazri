@@ -194,17 +194,12 @@ angular.module('hazri.controllers', ['ionic','firebase'])
       var fb = $firebaseArray(ref);
 
       $scope.no = $firebaseArray(ref);
-
-      //var abs = $scope.list || "none";
-      //$scope.no.$add({ absent: abs});
-
       
       $scope.setval = function (rollno) {
           $scope.items = [];
           for (var i = 0; i < rollno ; i++)
               $scope.items.push(i + 1);
-
-      };
+              };
 
 
 
@@ -214,23 +209,21 @@ angular.module('hazri.controllers', ['ionic','firebase'])
           var idx = list.indexOf(item);
           if (idx > -1) {
               list.splice(idx, 1);
-              var newvar = fb.$indexFor(item.id);
-              fb.$remove(newvar).then(function (ref) {
-                  ref.key() === item.$id; // true
-              });
           }
+          
           else {
               list.push(item);
-              fb.$add(item).then(function (ref) {
-                  $scope.data = item;
-                  $data.id = ref.key();
-                  //fb.$indexFor(id);
-              });
           }
       };
 
       $scope.exists = function (item, list) {
           return list.indexOf(item) > -1;
+      };
+      
+       $scope.upload=function (){
+        var final=$scope.selected;
+        final = final.sort(function(a, b){return a-b});
+        ref.child("roll").set(final);
       };
 
   }
