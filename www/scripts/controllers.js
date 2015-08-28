@@ -265,8 +265,8 @@ angular.module('hazri.controllers', ['ionic','firebase'])
 
 })
 
-.controller('AttendanceCtrl', ["$scope", "$firebaseArray", "$stateParams","$q","$ionicLoading","$ionicPopup",
-  function ($scope, $firebaseArray, $stateParams, $q, $ionicLoading,$ionicPopup) {
+.controller('AttendanceCtrl', ["$scope", "$firebaseArray", "$stateParams","$q","$ionicLoading","$ionicPopup","$state",
+  function ($scope, $firebaseArray, $stateParams, $q, $ionicLoading,$ionicPopup,$state) {
 
 
       var dept = $stateParams.dept;
@@ -318,6 +318,7 @@ angular.module('hazri.controllers', ['ionic','firebase'])
               if (res) {
                   console.log('You are sure');
                   $scope.updateAttendance();
+                  $state.go("viewAttendance", {dept: dept, year: year, semester: sem, type: type, subject: subject, date: date});
               } else {
                   console.log('You are not sure');
               }
@@ -365,4 +366,13 @@ angular.module('hazri.controllers', ['ionic','firebase'])
 
   }
 
-]);
+])
+
+.controller("ViewAttendanceCtrl", function ($stateParams, $scope) {
+    alert($stateParams);
+
+
+
+})
+
+;

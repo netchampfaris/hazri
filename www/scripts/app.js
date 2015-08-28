@@ -22,6 +22,7 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers','hazri.service
         Auth.$onAuth(function (authData) {
             if (authData) {
                 console.log("Logged in as:", authData.uid);
+                $location.path('/select');
             } else {
                 console.log("Logged out");
                 $location.path('/login');
@@ -118,6 +119,29 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers','hazri.service
         }
     })
 
+    .state('viewAttendance', {
+        url: "/attendance",
+        templateUrl: "templates/view_attendance.html",
+        controller: 'ViewAttendanceCtrl',
+        params: {
+            "dept": null,
+            "year": null,
+            "semester": null,
+            "type": null,
+            "subject": null,
+            "date": null
+        },
+        resolve: {
+            // controller will not be loaded until $requireAuth resolves
+            // Auth refers to our $firebaseAuth wrapper in the example above
+            "currentAuth": ["Auth",
+                function (Auth) {
+                    // $requireAuth returns a promise so the resolve waits for it to complete
+                    // If the promise is rejected, it will throw a $stateChangeError (see above)
+                    return Auth.$requireAuth();
+                }]
+        }
+    })
 
 
 
