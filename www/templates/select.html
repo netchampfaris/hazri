@@ -34,5 +34,6 @@
         <div class="padding-left padding-right">
             <button class="button button-block action-button button-positive" ui-sref="attendance({dept: dept, year: year, semester: semester, type: type, subject: subject, date: date})">Take attendance</button>
         </div>
+        {{ data | json }}
     </ion-content>
 </ion-view>
