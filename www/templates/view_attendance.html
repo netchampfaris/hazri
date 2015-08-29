@@ -2,7 +2,7 @@
     <ion-content padding="true" scroll="true" class="has-header">
         <ion-list>
             <div class="list">
-                <li class="item" ng-repeat="s in absentno | orderBy:s">{{ s }}</li>
+                <div class="item" ng-repeat="s in absentno | orderBy:s">{{ s }}</div>
             </div>
             <div>
                 <button ng-click="upload()">Confirm</button>
