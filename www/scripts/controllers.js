@@ -2,10 +2,9 @@
 angular.module('hazri.controllers', ['ionic','firebase'])
 
 
-.controller("LoginCtrl", function ($scope, $ionicModal, $state, $ionicLoading, $ionicHistory, $ionicPopup) {
+.controller("LoginCtrl", function ($scope, $ionicModal, $state, $ionicLoading, $ionicHistory, $ionicPopup, $q) {
       var ref = new Firebase("https://hazri.firebaseio.com");
-        
-      $scope.user = {};
+
 
       $ionicModal.fromTemplateUrl('templates/signup.html', function (modal) {
           $scope.modal = modal;
@@ -17,67 +16,99 @@ angular.module('hazri.controllers', ['ionic','firebase'])
       $scope.login = function (user) {
 
           if (user && user.email && user.password) {
-              
-              $ionicLoading.show({
-                  template: 'Signing in<br><br><ion-spinner icon="android"></ion-spinner>'
-              });
 
-              ref.authWithPassword({
-                  "email": user.email,
-                  "password": user.password
-              }, function (error, authData) {
-                  if (error) {
-                      $scope.showAlert("Error","Login Failed!");
-                  } else {
-                      console.log("Authenticated successfully with payload:", authData);
-                      user = null;
-                      $ionicHistory.nextViewOptions({
-                          disableAnimate: true,
-                          disableBack: true,
-                          historyRoot: true
-                      });
-                      $state.go('select');
-                  }
-                });
+              var log = function () {
+                  var deferred = $q.defer();
+                  $ionicLoading.show({
+                      template: 'Signing in<br><br><ion-spinner icon="android"></ion-spinner>'
+                  });
+
+                  ref.authWithPassword({
+                      "email": user.email,
+                      "password": user.password
+                  }, function (error, authData) {
+                      if (error) {
+                          deferred.reject();
+                      } else {
+                          console.log("Authenticated successfully with payload:", authData);
+                          $ionicHistory.nextViewOptions({
+                              disableAnimate: true,
+                              disableBack: true,
+                              historyRoot: true
+                          });
+                          deferred.resolve();
+                      }
+                  });
+                  return deferred.promise;
+              };
+
+              var promise = log();
+              promise.then(function () {
+                  $ionicLoading.hide();
+              },
+              function (reason) {
+                  $ionicLoading.hide();
+                  console.log(reason);
+                  $scope.showAlert("Error", "Login Failed!");
+              });
           }
           else {
               $scope.showAlert("Error","Enter email and password");
           }
-
       };
 
-      $scope.signup = function (user) {
+      /*****************************************/
+      /* Commented out signup function for now */
+      /*****************************************/
+      //$scope.signup = function (user) {
 
-          if (user && user.email && user.password) {
+      //    if (user && user.email && user.password) {
 
-              $ionicLoading.show({
-                  template: 'Signing up<br><br><ion-spinner icon="android"></ion-spinner>'
-              });
+      //        var reg = function () {
+                  
+      //            var deferred = $q.defer();
 
-              ref.createUser({
-                  email: user.email,
-                  password: user.password
-              }, function (error, userData) {
-                  if (error) {
-                      switch (error.code) {
-                          case "EMAIL_TAKEN":
-                              $scope.showAlert("Error","The new user account cannot be created because the email is already in use.");
-                              break;
-                          case "INVALID_EMAIL":
-                              $scope.showAlert("Error", "The specified email is not a valid email.");
-                              break;
-                          default:
-                              $scope.showAlert("Error", "Error creating user: ", error);
-                      }
-                  } else {
-                      $scope.hideModal();
-                  }
-              });
-          }
-          else
-              $scope.showAlert("Error","Enter email and password");
+      //            $ionicLoading.show({
+      //                template: 'Signing up<br><br><ion-spinner icon="android"></ion-spinner>'
+      //            });
 
-      };
+      //            ref.createUser({
+      //                email: user.email,
+      //                password: user.password
+      //            }, function (error, userData) {
+      //                if (error) {
+      //                    switch (error.code) {
+      //                        case "EMAIL_TAKEN":
+      //                            $scope.showAlert("Error","The new user account cannot be created because the email is already in use.");
+      //                            break;
+      //                        case "INVALID_EMAIL":
+      //                            $scope.showAlert("Error", "The specified email is not a valid email.");
+      //                            break;
+      //                        default:
+      //                            $scope.showAlert("Error", "Error creating user: ", error);
+      //                    }
+      //                    deferred.reject();
+      //                } else {
+      //                    deferred.resolve();
+      //                }
+      //            });
+      //            return deferred.promise;
+      //        };
+
+      //        promise.then(function () {
+      //            $ionicLoading.hide();
+      //            $scope.showAlert("Successful", "Account created successfully");
+      //            $scope.hideModal();
+      //        }, function (reason) {
+      //            $ionicLoading.hide();
+      //            console.log(reason);
+      //        });
+
+      //    }
+      //    else
+      //        $scope.showAlert("Error","Enter email and password");
+
+      //};
 
       $scope.hideModal = function () {
           $ionicLoading.hide();
@@ -103,11 +134,25 @@ angular.module('hazri.controllers', ['ionic','firebase'])
 
  })
 
-.controller("SelectCtrl", function ($scope, $ionicLoading, $ionicActionSheet, $ionicPopup, $q) {
-    $ionicLoading.hide();
+.controller("SelectCtrl", function ($scope, $ionicLoading, $ionicActionSheet, $ionicPopup, $q, $firebaseObject) {
+    
+    $scope.data = {};
 
     //load all data from firebase at login successfull, to be done later
-    
+    var dataref = new Firebase("https://hazri.firebaseio.com/Department/");
+
+    var dataobj = $firebaseObject(dataref);
+
+    dataobj.$loaded().then(function () {
+        $scope.data = dataobj; //doesn't work
+    });
+    //dataref.on("value", function (snapshot) {
+    //    $scope.data = snapshot.val();
+    //    console.log("successful retrieving data");
+    //    console.log(JSON.stringify(snapshot));
+    //}, function (error) {
+    //    console.log(error.code);
+    //});
 
     //default values for options
     $scope.dept = "Computer";
@@ -222,9 +267,6 @@ angular.module('hazri.controllers', ['ionic','firebase'])
                 }, function (reason) {
                     $ionicLoading.hide();
                     alert('Failed: ' + reason);
-                }, function (update) {
-                    $ionicLoading.hide();
-                    alert('Got notification: ' + update);
                 });
                 break;
 
