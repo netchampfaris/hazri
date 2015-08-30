@@ -7,13 +7,15 @@ angular.module('hazri.services', ['firebase'])
         return $firebaseAuth(ref);
     }])
 
-.factory("getData",
-    function () {
-        var ref = new Firebase("https://hazri.firebaseio.com/Department/");
-        ref.on("value", function (snapshot) {
-            return snapshot;
-        }, function (error) {
-            return {};
-        });
-        
+.factory("getAllData", function ($firebaseObject) {
+        var dataref = new Firebase("https://hazri.firebaseio.com/Department/");
+        var dataobj = $firebaseObject(dataref);
+        var dataObj = {};
+        return {
+            getData: function () {
+                    dataobj.$loaded().then(function () {       
+                    return dataobj;
+                    });
+            }
+        }    
 });

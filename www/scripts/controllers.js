@@ -1,5 +1,5 @@
 
-angular.module('hazri.controllers', ['ionic','firebase'])
+angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services', 'LocalForageModule'])
 
 
 .controller("LoginCtrl", function ($scope, $ionicModal, $state, $ionicLoading, $ionicHistory, $ionicPopup, $q) {
@@ -134,7 +134,7 @@ angular.module('hazri.controllers', ['ionic','firebase'])
 
  })
 
-.controller("SelectCtrl", function ($scope, $ionicLoading, $ionicActionSheet, $ionicPopup, $q, $firebaseObject) {
+.controller("SelectCtrl", function ($scope, $ionicLoading, $ionicActionSheet, $ionicPopup, $q, $firebaseObject, $localForage) {
     
    // $scope.data = {};
 
@@ -236,7 +236,7 @@ angular.module('hazri.controllers', ['ionic','firebase'])
 
             case 5:
 
-            var getSubjects = function () {
+                var getSubjects = function () {
                     var deferred = $q.defer();
                     $ionicLoading.show({ template: 'Getting Subject List..' });
                     var dept = $scope.dept.replace(" ", "%20");
@@ -432,7 +432,7 @@ function ($scope, $firebaseArray, $stateParams, $ionicPopup) {
       var subject = $stateParams.subject;
       var date = $stateParams.date;
       var Uid = $stateParams.Uid;
-        
+
       var str = "https://hazri.firebaseio.com/Department/" + dept + "/" + year + "/" + sem + "/" + type + "/" + subject + "/" + Uid + "/absentno/";
       var ref = new Firebase(str);
 
