@@ -136,22 +136,13 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services', 'Loc
 
 .controller("SelectCtrl", function ($scope, $ionicLoading, $ionicActionSheet, $ionicPopup, $q, $firebaseObject, $localForage) {
     
-   // $scope.data = {};
+    // $scope.data = {};
 
     //load all data from firebase at login successfull, to be done later
-   // var dataref = new Firebase("https://hazri.firebaseio.com/Department/");
-
+    //var dataref = new Firebase("https://hazri.firebaseio.com/Department/");
     //var dataobj = $firebaseObject(dataref);
-
     //dataobj.$loaded().then(function () {
-      //  $scope.data = dataobj; //doesn't work
-    //});
-    //dataref.on("value", function (snapshot) {
-    //    $scope.data = snapshot.val();
-    //    console.log("successful retrieving data");
-    //    console.log(JSON.stringify(snapshot));
-    //}, function (error) {
-    //    console.log(error.code);
+    //  $scope.data = dataobj; // works
     //});
 
     //default values for options
@@ -267,9 +258,6 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services', 'Loc
                 }, function (reason) {
                     $ionicLoading.hide();
                     alert('Failed: ' + reason);
-                }, function (update) {
-                    $ionicLoading.hide();
-                    alert('Got notification: ' + update);
                 });
                 break;
 
@@ -363,17 +351,8 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services', 'Loc
           confirmPopup.then(function (res) {
               if (res) {
                   console.log('You are sure');
-                  var str = "https://hazri.firebaseio.com/Department/" + dept + "/" + year + "/" + sem + "/" + type + "/" + subject + "/";
-                  var ref = new Firebase(str);
-                  $scope.selected = $scope.selected.sort();
-                  var absent = $scope.selected;
-//for (var i = 0; i < $scope.selected.length; i++)
-  //                 absent += $scope.selected[i] + ",";
-
-                  var idbx = ref.push({ date: date, absentno: absent });
-                  var idb = idbx.key();
-                  console.log("successfull and Uid is" + idb);
-                  $state.go("viewAttendance", {dept: dept, year: year, semester: sem, type: type, subject: subject, date: date ,Uid: idb});
+                  $scope.updateAttendance();
+                  
               } else {
                   console.log('You are not sure');
               }
@@ -382,16 +361,14 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services', 'Loc
 
       $scope.updateAttendance = function () {
 
-          var str = "https://hazri.firebaseio.com/Department/" + dept + "/" + year + "/" + sem + "/" + type + "/" + subject +"/";
+          var str = "https://hazri.firebaseio.com/Department/" + dept + "/" + year + "/" + sem + "/" + type + "/" + subject + "/";
           var ref = new Firebase(str);
           $scope.selected = $scope.selected.sort();
           var absent = $scope.selected;
-         // for (var i = 0; i < $scope.selected.length; i++)
-           //   absent += $scope.selected[i] + ",";
-          ref.push({ date: date, absentno: absent });
-
-          console.log("successfull");
-
+          var idbx = ref.push({ date: date, absentno: absent });
+          var idb = idbx.key();
+          console.log("successfull and Uid is" + idb);
+          $state.go("viewAttendance", {dept: dept, year: year, semester: sem, type: type, subject: subject, date: date ,Uid: idb});
       };
 
 
