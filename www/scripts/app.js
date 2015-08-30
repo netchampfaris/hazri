@@ -129,7 +129,8 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers','hazri.service
             "semester": null,
             "type": null,
             "subject": null,
-            "date": null
+            "date": null,
+            "Uid" :null
         },
         resolve: {
             // controller will not be loaded until $requireAuth resolves
