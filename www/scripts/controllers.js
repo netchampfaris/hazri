@@ -1,5 +1,5 @@
 
-angular.module('hazri.controllers', ['ionic','firebase'])
+angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services', 'LocalForageModule'])
 
 
 .controller("LoginCtrl", function ($scope, $ionicModal, $state, $ionicLoading, $ionicHistory, $ionicPopup, $q) {
@@ -134,24 +134,15 @@ angular.module('hazri.controllers', ['ionic','firebase'])
 
  })
 
-.controller("SelectCtrl", function ($scope, $ionicLoading, $ionicActionSheet, $ionicPopup, $q, $firebaseObject) {
+.controller("SelectCtrl", function ($scope, $ionicLoading, $ionicActionSheet, $ionicPopup, $q, $firebaseObject, $localForage) {
     
-    $scope.data = {};
 
     //load all data from firebase at login successfull, to be done later
-    var dataref = new Firebase("https://hazri.firebaseio.com/Department/");
-
-    var dataobj = $firebaseObject(dataref);
-
-    dataobj.$loaded().then(function () {
-        $scope.data = dataobj; //doesn't work
-    });
-    //dataref.on("value", function (snapshot) {
-    //    $scope.data = snapshot.val();
-    //    console.log("successful retrieving data");
-    //    console.log(JSON.stringify(snapshot));
-    //}, function (error) {
-    //    console.log(error.code);
+    //var allData = {};
+    //var dataref = new Firebase("https://hazri.firebaseio.com/Department/");
+    //var dataobj = $firebaseObject(dataref);
+    //dataobj.$loaded().then(function () {
+    //    allData = dataobj;
     //});
 
     //default values for options
