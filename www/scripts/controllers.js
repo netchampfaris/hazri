@@ -136,16 +136,16 @@ angular.module('hazri.controllers', ['ionic','firebase'])
 
 .controller("SelectCtrl", function ($scope, $ionicLoading, $ionicActionSheet, $ionicPopup, $q, $firebaseObject) {
     
-    $scope.data = {};
+   // $scope.data = {};
 
     //load all data from firebase at login successfull, to be done later
-    var dataref = new Firebase("https://hazri.firebaseio.com/Department/");
+   // var dataref = new Firebase("https://hazri.firebaseio.com/Department/");
 
-    var dataobj = $firebaseObject(dataref);
+    //var dataobj = $firebaseObject(dataref);
 
-    dataobj.$loaded().then(function () {
-        $scope.data = dataobj; //doesn't work
-    });
+    //dataobj.$loaded().then(function () {
+      //  $scope.data = dataobj; //doesn't work
+    //});
     //dataref.on("value", function (snapshot) {
     //    $scope.data = snapshot.val();
     //    console.log("successful retrieving data");
@@ -236,7 +236,7 @@ angular.module('hazri.controllers', ['ionic','firebase'])
 
             case 5:
 
-                var getSubjects = function () {
+            var getSubjects = function () {
                     var deferred = $q.defer();
                     $ionicLoading.show({ template: 'Getting Subject List..' });
                     var dept = $scope.dept.replace(" ", "%20");
@@ -267,8 +267,12 @@ angular.module('hazri.controllers', ['ionic','firebase'])
                 }, function (reason) {
                     $ionicLoading.hide();
                     alert('Failed: ' + reason);
+                }, function (update) {
+                    $ionicLoading.hide();
+                    alert('Got notification: ' + update);
                 });
                 break;
+
 
 
             case 6:
@@ -359,8 +363,17 @@ angular.module('hazri.controllers', ['ionic','firebase'])
           confirmPopup.then(function (res) {
               if (res) {
                   console.log('You are sure');
-                  $scope.updateAttendance();
-                  $state.go("viewAttendance", {dept: dept, year: year, semester: sem, type: type, subject: subject, date: date});
+                  var str = "https://hazri.firebaseio.com/Department/" + dept + "/" + year + "/" + sem + "/" + type + "/" + subject + "/";
+                  var ref = new Firebase(str);
+                  $scope.selected = $scope.selected.sort();
+                  var absent = $scope.selected;
+//for (var i = 0; i < $scope.selected.length; i++)
+  //                 absent += $scope.selected[i] + ",";
+
+                  var idbx = ref.push({ date: date, absentno: absent });
+                  var idb = idbx.key();
+                  console.log("successfull and Uid is" + idb);
+                  $state.go("viewAttendance", {dept: dept, year: year, semester: sem, type: type, subject: subject, date: date ,Uid: idb});
               } else {
                   console.log('You are not sure');
               }
@@ -372,9 +385,9 @@ angular.module('hazri.controllers', ['ionic','firebase'])
           var str = "https://hazri.firebaseio.com/Department/" + dept + "/" + year + "/" + sem + "/" + type + "/" + subject +"/";
           var ref = new Firebase(str);
           $scope.selected = $scope.selected.sort();
-          var absent = "";
-          for (var i = 0; i < $scope.selected.length; i++)
-              absent += $scope.selected[i] + ",";
+          var absent = $scope.selected;
+         // for (var i = 0; i < $scope.selected.length; i++)
+           //   absent += $scope.selected[i] + ",";
           ref.push({ date: date, absentno: absent });
 
           console.log("successfull");
@@ -410,11 +423,37 @@ angular.module('hazri.controllers', ['ionic','firebase'])
 
 ])
 
-.controller("ViewAttendanceCtrl", function ($stateParams, $scope) {
-    alert($stateParams);
+.controller("ViewAttendanceCtrl", ["$scope", "$firebaseArray", "$stateParams","$ionicPopup",
+function ($scope, $firebaseArray, $stateParams, $ionicPopup) {
+      var dept = $stateParams.dept;
+      var year = $stateParams.year;
+      var sem = $stateParams.semester;
+      var type = $stateParams.type;
+      var subject = $stateParams.subject;
+      var date = $stateParams.date;
+      var Uid = $stateParams.Uid;
+        
+      var str = "https://hazri.firebaseio.com/Department/" + dept + "/" + year + "/" + sem + "/" + type + "/" + subject + "/" + Uid + "/absentno/";
+      var ref = new Firebase(str);
 
+      //var ref = new Firebase("https://hazri.firebaseio.com/Department/" + dept + "/" + year + "/" + sem + "/" + subject + "/");
+     // $scope.absentno = $firebaseArray(ref);
+     //alert($scope.absentno)
+          ref.on("value", function(snapshot) {
+              $scope.absentno = snapshot.val();
+              console.log(str);
+          }, function (errorObject) {
+              console.log("The read failed: " + errorObject.code);
+          });
+          $scope.upload = function () {
+              var alertPopup = $ionicPopup.alert({
+                  title: 'Data uploaded',
+                  template: 'Have a nice day'
+              });
+              alertPopup.then(function (res) {
+                  console.log('Data was already uploaded : }');
+              });
+          };
 
+  }]);
 
-})
-
-;
