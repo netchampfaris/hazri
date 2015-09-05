@@ -1,38 +1,16 @@
 <ion-view title="Select your class and subject">
     <ion-content padding="true" scroll="true" class="has-header">
         <ion-list>
-		
             <div class="list">
-                <div class="item item-divider">Department</div>
-                <div class="item item-icon-right" ng-click="list(1, 'Department')">{{ dept }}<i class="icon ion-chevron-down icon-accessory"></i></div>
+                <div class="item item-icon-right" ng-click="showDeptOptions()">Department<span class="item-note">{{ selected.dept.value }}</span><i class="icon ion-chevron-right icon-accessory"></i></div>
+                <div class="item item-icon-right" ng-click="showYearOptions()">Year<span class="item-note">{{ selected.year.value }}</span><i class="icon ion-chevron-right icon-accessory"></i></div>
+                <div class="item item-icon-right" ng-click="showSemOptions()">Semester<span class="item-note">{{ selected.semester.value }}</span><i class="icon ion-chevron-right icon-accessory"></i></div>
+                <div class="item item-icon-right" ng-click="showTypeOptions()">Type<span class="item-note">{{ selected.type.value }}</span><i class="icon ion-chevron-right icon-accessory"></i></div>
+                <div class="item item-icon-right" ng-click="showSubOptions()">Subject<span class="item-note">{{ selected.subject.value }}</span><i class="icon ion-chevron-right icon-accessory"></i></div>
+                <div class="item item-input" ng-click="showDateOptions()"><span class="input-label">Date</span><input type="date" /></div>
             </div>
-            <div class="list">
-                <div class="item item-divider">Year</div>
-                <div class="item item-icon-right" ng-click="list(2, 'Year')">{{ year }}<i class="icon ion-chevron-down icon-accessory"></i></div>
-            </div>
-            <div class="list">
-                <div class="item item-divider">Semester</div>
-                <div class="item item-icon-right" ng-click="list(3, 'Semester')">{{ semester }}<i class="icon ion-chevron-down icon-accessory"></i></div>
-            </div>
-            <div class="list">
-                <div class="item item-divider">Type</div>
-                <div class="item item-icon-right" ng-click="list(4, 'Type')">{{ type }}<i class="icon ion-chevron-down icon-accessory"></i></div>
-            </div>
-            <div class="list">
-                <div class="item item-divider">Subject</div>
-                <div class="item item-icon-right" ng-click="list(5, 'Subject')">{{ subject }}<i class="icon ion-chevron-down icon-accessory"></i></div>
-            </div>
-            <div class="list">
-                <div class="item item-divider">Date</div>
-                <div class="item item-icon-right" ng-click="list(6, 'Date')">{{ date }}<i class="icon ion-chevron-down icon-accessory"></i></div>
-            </div>
-            <div class="list">
-                <div class="item item-divider">No. of Lectures</div>
-                <div class="item item-icon-right" ng-click="list(7, 'Lectures')">{{ lectures }}<i class="icon ion-chevron-down icon-accessory"></i></div>
-            </div>
-        </ion-list>
-        <div class="padding-left padding-right">
-            <button class="button button-block action-button button-positive" ui-sref="attendance({dept: dept, year: year, semester: semester, type: type, subject: subject, date: date, Uid: Uid})">Take attendance</button>
-        </div>
+        </ion-list>    
+        <button class="button button-block action-button button-positive" ui-sref="attendance({selected:selected})">Take attendance</button>
+
     </ion-content>
 </ion-view>

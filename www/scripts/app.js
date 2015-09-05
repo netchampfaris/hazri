@@ -78,7 +78,6 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers','hazri.service
         controller: 'LoginCtrl'
     })
 
-
     .state('select', {
         url: "/select",
         templateUrl: "templates/select.html",
@@ -100,12 +99,7 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers','hazri.service
         templateUrl: "templates/attendance.html",
         controller: 'AttendanceCtrl',
         params: {
-            "dept": null,
-            "year": null,
-            "semester": null,
-            "type": null,
-            "subject": null,
-            "date": null
+            "selected": null
         },
         resolve: {
             // controller will not be loaded until $requireAuth resolves
@@ -120,17 +114,11 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers','hazri.service
     })
 
     .state('viewAttendance', {
-        url: "/attendance",
+        url: "/viewattendance",
         templateUrl: "templates/view_attendance.html",
         controller: 'ViewAttendanceCtrl',
         params: {
-            "dept": null,
-            "year": null,
-            "semester": null,
-            "type": null,
-            "subject": null,
-            "date": null,
-            "Uid" :null
+            "selected": null
         },
         resolve: {
             // controller will not be loaded until $requireAuth resolves

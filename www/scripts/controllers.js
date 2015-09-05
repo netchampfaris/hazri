@@ -1,5 +1,5 @@
 
-angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services', 'LocalForageModule'])
+angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
 
 
 .controller("LoginCtrl", function ($scope, $ionicModal, $state, $ionicLoading, $ionicHistory, $ionicPopup, $q) {
@@ -134,158 +134,146 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services', 'Loc
 
  })
 
-.controller("SelectCtrl", function ($scope, $ionicLoading, $ionicActionSheet, $ionicPopup, $q, $firebaseObject, $localForage) {
+.controller("SelectCtrl", function ($ionicPlatform, $scope, $ionicLoading, $ionicModal, $ionicActionSheet, $ionicPopup, $q, $firebaseObject, FirebaseUrl, $filter) {
+
+    $ionicModal.fromTemplateUrl('templates/options_modal.html', function (modal) {
+        $scope.modal = modal;
+    }, {
+        scope: $scope,
+        animation: 'slide-in-right'
+    });
+
+    //initialize values
+    $scope.options = [];
+    $scope.selected = {};
+    $scope.selected.date = '05-09-2015';
     
-    // $scope.data = {};
+    $scope.showDeptOptions = function() {
+            
+        $scope.options = [];
 
-    //load all data from firebase at login successfull, to be done later
-    //var dataref = new Firebase("https://hazri.firebaseio.com/Department/");
-    //var dataobj = $firebaseObject(dataref);
-    //dataobj.$loaded().then(function () {
-    //  $scope.data = dataobj; // works
-    //});
-
-    //default values for options
-    $scope.dept = "Computer";
-    $scope.year = "Final Year";
-    $scope.semester = "Semester 7";
-    $scope.type = "Theory";
-    $scope.subject = "";
-    $scope.date = "";
-    $scope.lectures = "";
-    
-    $scope.list = function (type, title) {
-
-            var options = [];
-
-        // Show the action sheet
-            var actionSheet = function () {
-                $ionicActionSheet.show({
-                    buttons: options,
-                    titleText: 'Select ' + title,
-                    cssClass: 'custom-action-sheet',
-                    buttonClicked: function (index, button) {
-                        switch (type) {
-                            case 1: $scope.dept = button.text;
-                                break;
-                            case 2: $scope.year = button.text;
-                                break;
-                            case 3: $scope.semester = button.text;
-                                break;
-                            case 4: $scope.type = button.text;
-                                break;
-                            case 5: $scope.subject = button.text;
-                                break;
-                            case 6: $scope.date = button.text;
-                                break;
-                            case 7: $scope.lectures = button.text;
-                                break;
-                        };
-                        return true;
-                    }
+        var getDept = function () {
+            var defer = $q.defer();
+            $ionicLoading.show({ template: 'Getting Dept list...' });
+            var ref = new Firebase(FirebaseUrl.root);
+            ref.child("departments").on("value",
+            function (snapshot) {
+                snapshot.forEach(function (data) {
+                    $scope.options.push({ id: data.key(), name:"dept", value: data.val().name });
                 });
-            };
+                defer.resolve();
+            },
+            function (error) {
+                console.log(error);
+                defer.reject();
+            });
+            return defer.promise;
+        };
 
-            switch (type) {
-            case 1:
-                options = [
-              { text: 'Computer' },
-              { text: 'Information Technology' },
-              { text: 'Mechanical' },
-              { text: 'Chemical' },
-              { text: 'Instrumentation' },
-              { text: 'Electronics and Telecommunication' }
-                ];
-                actionSheet();
-                break;
+        var promise = getDept();
+        promise.then(function () {
+            $ionicLoading.hide();
+            console.log("success retrieving depts");
+            $scope.modal.show();
+        }, function (reason) {
+            $ionicLoading.hide();
+            console.log("error: "+reason);
+        });
+    };
 
-            case 2:
-                options = [
-                { text: 'First Year' },
-                { text: 'Second Year' },
-                { text: 'Third Year' },
-                { text: 'Final Year' }
-                ];
-                actionSheet();
-                break;
-
-            case 3:
-                options = [
-                { text: 'Semester 7' },
-                { text: 'Semester 8' }
-                ];
-                actionSheet();
-                break;
-
-            case 4:
-                options = [
-                { text: 'Theory' },
-                { text: 'Practical' }
-                ];
-                actionSheet();
-                break;
-
-            case 5:
-
-                var getSubjects = function () {
-                    var deferred = $q.defer();
-                    $ionicLoading.show({ template: 'Getting Subject List..' });
-                    var dept = $scope.dept.replace(" ", "%20");
-                    var year = $scope.year.replace(" ", "%20");
-                    var sem = $scope.semester.replace(" ", "%20");
-                    var type = $scope.type.replace(" ", "%20");
-                    var str = "https://hazri.firebaseio.com/Department/" + dept + "/" + year + "/" + sem + "/" + type + "/";
-                    var ref = new Firebase(str);
-
-                    ref.orderByKey().on("value", function (snapshot) {
-                        snapshot.forEach(function (data) {
-                            options.push({ text: data.key() });
-                        });
-                        deferred.resolve();
-                    }, function (errorObject) {
-                        console.log("The read failed: " + errorObject.code);
-                        deferred.reject();
-                    });
-
-                    return deferred.promise;
-                };
-
-                var promise = getSubjects();
-
-                promise.then(function () {
-                    $ionicLoading.hide();
-                    actionSheet();
-                }, function (reason) {
-                    $ionicLoading.hide();
-                    alert('Failed: ' + reason);
-                });
-                break;
-
-
-
-            case 6:
-                options = [
-                    { text: '25-08-2015' },
-                    { text: '26-08-2015' },
-                    { text: '27-08-2015' },
-                    { text: '28-08-2015' }
-                ];
-                actionSheet();
-                break;
-
-            case 7:
-                options = [
-                { text: '1' },
-                { text: '2' }
-                ];
-                actionSheet();
-                break;
-
-            };
+    $scope.showYearOptions = function () {
+        if ($scope.selected.dept) {
+            $scope.options = [
+                            { id: "fe", name: "year", value: "First Year" },
+                            { id: "se", name: "year", value: "Second Year" },
+                            { id: "te", name: "year", value: "Third Year" },
+                            { id: "be", name: "year", value: "Final Year" }];
+            $scope.modal.show();
+        }
+        else
+            $scope.showAlert("Uh uh..", "Please select department first");
 
     };
 
+    $scope.showSemOptions = function () {
+        
+        if ($scope.selected.year) {
+            switch ($scope.selected.year.id) {
+                case "fe": $scope.options = [{ id: 1, name: "semester", value: "Semester 1" }, { id: 2, name: "semester", value: "Semester 2" }]; break;
+                case "se": $scope.options = [{ id: 3, name: "semester", value: "Semester 3" }, { id: 4, name: "semester", value: "Semester 4" }]; break;
+                case "te": $scope.options = [{ id: 5, name: "semester", value: "Semester 5" }, { id: 6, name: "semester", value: "Semester 6" }]; break;
+                case "be": $scope.options = [{ id: 7, name: "semester", value: "Semester 7" }, { id: 8, name: "semester", value: "Semester 8" }]; break;
+            };
+            $scope.modal.show();
+        }
+        else
+            $scope.showAlert("Uh uh..", "Please select year field first");
+    };
 
+    $scope.showTypeOptions = function () {
+        if ($scope.selected.semester) {
+            $scope.options = [{ id: "th", name: "type", value: "Theory" }, { id: "pr", name: "type", value: "Practical" }, ];
+            $scope.modal.show();
+        }
+        else
+            $scope.showAlert("Uh uh..", "Please select semester field first");
+    };
+
+    $scope.showSubOptions = function () {
+        console.log(JSON.stringify($scope.selected));
+        $scope.options = [];
+
+        if ($scope.selected.type) {
+            
+            var getSub = function () {
+
+                var defer = $q.defer();
+                $ionicLoading.show({ template: "Getting subject list..." });
+                var ref = new Firebase(FirebaseUrl.root);
+                ref.child("subjects").on("value",
+                function (snapshot) {
+                    snapshot.forEach(function (data) {
+                        console.log(data.key()+" : "+ JSON.stringify(data.val()));
+                        if ($scope.selected.dept.id == data.val().dept_id && $scope.selected.year.id == data.val().year && $scope.selected.semester.id == data.val().sem)
+                            $scope.options.push({ id: data.key(), name: "subject", value: data.val().fullname });
+                    });
+                    defer.resolve();
+                }, function (error) {
+                    console.log(error.code);
+                    defer.reject();
+                });
+                return defer.promise;
+            };
+
+            var promise = getSub();
+
+            promise.then(function () {
+                $ionicLoading.hide();
+                console.log("success retrieving subjects");
+                $scope.modal.show();
+            }, function (reason) {
+                $ionicLoading.hide();
+                console.log(reason);
+            });
+
+        }
+        else
+            $scope.showAlert("Uh uh..", "Please select type field first");
+
+    };
+
+    $scope.showDateOptions = function () {
+        $scope.selected.date = '05-09-2015';
+    };
+
+    $scope.setSelected = function (option) {
+
+        $scope.selected[option.name] = { id:option.id , value:option.value };
+        $scope.modal.hide();
+
+        console.log(JSON.stringify($scope.selected));
+    };
+    
     $scope.showAlert = function (title, message) {
 
         var alertPopup = $ionicPopup.alert({
@@ -299,16 +287,11 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services', 'Loc
 
 })
 
-.controller('AttendanceCtrl', ["$scope", "$firebaseArray", "$stateParams","$q","$ionicLoading","$ionicPopup","$state",
-  function ($scope, $firebaseArray, $stateParams, $q, $ionicLoading,$ionicPopup,$state) {
+.controller('AttendanceCtrl', ["$scope", "$firebaseArray", "$stateParams","$q","$ionicLoading","$ionicPopup","$state","FirebaseUrl",
+  function ($scope, $firebaseArray, $stateParams, $q, $ionicLoading, $ionicPopup, $state, FirebaseUrl) {
 
-
-      var dept = $stateParams.dept;
-      var year = $stateParams.year;
-      var sem = $stateParams.semester;
-      var type = $stateParams.type;
-      var subject = $stateParams.subject;
-      var date = $stateParams.date;
+      console.log($stateParams.selected);
+      var selectedOptions = $stateParams.selected;
       $scope.totalStudents = 0;
 
 
@@ -316,12 +299,14 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services', 'Loc
           var deferred = $q.defer();
           $ionicLoading.show({ template: 'Loading student count..' });
 
-          var ref = new Firebase("https://hazri.firebaseio.com/Department/" + dept + "/" + year + "/" + sem + "/");
-          ref.on("value", function (snapshot) {
+          var ref = new Firebase(FirebaseUrl.root);
+          ref.child("studentCount").on("value", function (snapshot) {
+              
               snapshot.forEach(function (data) {
-                  if (data.key() == "totalstudents")
-                      $scope.totalStudents = data.val();
+                  if (selectedOptions.dept.id == data.val().dept && selectedOptions.year.id == data.val().year) //add batch code later
+                      $scope.totalStudents = data.val().count;
               });
+
               deferred.resolve();
           }, function (error) {
               console.log("error:" + error.code);
@@ -351,8 +336,9 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services', 'Loc
           confirmPopup.then(function (res) {
               if (res) {
                   console.log('You are sure');
+                  $ionicLoading.show({ template: 'Updating attendance...' });
                   $scope.updateAttendance();
-                  
+                  $state.go("viewAttendance", { selected: selectedOptions });
               } else {
                   console.log('You are not sure');
               }
@@ -360,15 +346,23 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services', 'Loc
       };
 
       $scope.updateAttendance = function () {
+          var absent = $scope.selected.sort();
 
-          var str = "https://hazri.firebaseio.com/Department/" + dept + "/" + year + "/" + sem + "/" + type + "/" + subject + "/" + date + "/";
-          var ref = new Firebase(str);
-          $scope.selected = $scope.selected.sort();
-          var absent = $scope.selected;
-          var idbx = ref.set({ absentno: absent });
-          var idb = date;
-          console.log("successfull and Uid is" + idb);
-          $state.go("viewAttendance", {dept: dept, year: year, semester: sem, type: type, subject: subject, date: date ,Uid: idb});
+          var ref = new Firebase(FirebaseUrl.root);
+          ref.child("attendances").push({
+              absentno: absent,
+              batch: "2012-16",     //change later
+              date: selectedOptions.date,
+              dept: selectedOptions.dept.id,
+              semester: selectedOptions.semester.id,
+              subid: selectedOptions.subject.id,
+              type: selectedOptions.type.id,
+              year: selectedOptions.year.id
+          });
+
+          $ionicLoading.hide();
+          console.log("successfully took attendance");
+          
       };
 
 
@@ -395,50 +389,15 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services', 'Loc
           return list.indexOf(item) > -1;
       };
       
+      
 
-  }
+  }])
 
-])
+.controller("ViewAttendanceCtrl", function ($scope, $firebaseArray, $stateParams, $ionicPopup) {
 
-.controller("ViewAttendanceCtrl", ["$scope", "$firebaseArray", "$stateParams","$ionicPopup",
-function ($scope, $firebaseArray, $stateParams, $ionicPopup) {
-      var dept = $stateParams.dept;
-      var year = $stateParams.year;
-      var sem = $stateParams.semester;
-      var type = $stateParams.type;
-      var subject = $stateParams.subject;
-      var date = $stateParams.date;
-      var Uid = $stateParams.Uid;
+    var selectedOptions = $stateParams.selected;
+    console.log(selectedOptions);
 
-      var str = "https://hazri.firebaseio.com/Department/" + dept + "/" + year + "/" + sem + "/" + type + "/" + subject + "/" + Uid + "/absentno/";
-      var ref = new Firebase(str);
 
-      //var ref = new Firebase("https://hazri.firebaseio.com/Department/" + dept + "/" + year + "/" + sem + "/" + subject + "/");
-     // $scope.absentno = $firebaseArray(ref);
-     //alert($scope.absentno)
-          ref.on("value", function(snapshot) {
-              $scope.absentno = snapshot.val();
-              console.log(str);
-          }, function (errorObject) {
-              console.log("The read failed: " + errorObject.code);
-          });
-
-          $scope.remove = function (no) {
-              ref.child(no).remove(function (error) {
-                  if(error)
-                      console.log(error);
-              });
-          };
-
-          $scope.upload = function () {
-              var alertPopup = $ionicPopup.alert({
-                  title: 'Data uploaded',
-                  template: 'Have a nice day'
-              });
-              alertPopup.then(function (res) {
-                  console.log('Data was already uploaded : }');
-              });
-          };
-
-  }]);
+});
 
