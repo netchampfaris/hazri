@@ -1,12 +1,5 @@
 ﻿<ion-view title="Absent Student Numbers">
     <ion-content padding="true" scroll="true" class="has-header">
-        <ion-list>
-            <div class="list">
-                <li class="item" ng-repeat="s in absentno | orderBy:s">{{ s }}</li>
-            </div>
-            <div>
-                <button ng-click="upload()">Confirm</button>
-            </div>
-        </ion-list>
+        {{ selectedOptions | json }}
     </ion-content>
 </ion-view>
