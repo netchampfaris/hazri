@@ -1,12 +1,15 @@
-﻿<ion-view title="Absent Student Numbers">
+﻿<ion-view cache-view="false" title="Absent Student Numbers">
     <ion-content padding="true" scroll="true" class="has-header">
-        <ion-list>
-            <div class="list">
-                <li class="item" ng-repeat="s in absentno | orderBy:s">{{ s }}</li>
-            </div>
-            <div>
-                <button ng-click="upload()">Confirm</button>
-            </div>
-        </ion-list>
+            <ion-list show-delete="shouldShowDelete">
+                <ion-toggle ng-model="shouldShowDelete">
+                    Remove Numbers?
+                </ion-toggle>
+                <ion-item   ng-repeat="s in absentno | orderBy:s" >{{ s }}
+                    <ion-delete-button class="ion-minus-circled" ng-click="remove(absentno.indexOf(s))"></ion-delete-button>
+                </ion-item>
+            </ion-list>
+        <div>
+            <button ng-click="upload()">Confirm</button>
+        </div>
     </ion-content>
 </ion-view>

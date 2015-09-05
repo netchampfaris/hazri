@@ -361,12 +361,12 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services', 'Loc
 
       $scope.updateAttendance = function () {
 
-          var str = "https://hazri.firebaseio.com/Department/" + dept + "/" + year + "/" + sem + "/" + type + "/" + subject + "/";
+          var str = "https://hazri.firebaseio.com/Department/" + dept + "/" + year + "/" + sem + "/" + type + "/" + subject + "/" + date + "/";
           var ref = new Firebase(str);
           $scope.selected = $scope.selected.sort();
           var absent = $scope.selected;
-          var idbx = ref.push({ date: date, absentno: absent });
-          var idb = idbx.key();
+          var idbx = ref.set({ absentno: absent });
+          var idb = date;
           console.log("successfull and Uid is" + idb);
           $state.go("viewAttendance", {dept: dept, year: year, semester: sem, type: type, subject: subject, date: date ,Uid: idb});
       };
@@ -422,6 +422,14 @@ function ($scope, $firebaseArray, $stateParams, $ionicPopup) {
           }, function (errorObject) {
               console.log("The read failed: " + errorObject.code);
           });
+
+          $scope.remove = function (no) {
+              ref.child(no).remove(function (error) {
+                  if(error)
+                      console.log(error);
+              });
+          };
+
           $scope.upload = function () {
               var alertPopup = $ionicPopup.alert({
                   title: 'Data uploaded',
