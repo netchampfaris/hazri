@@ -331,7 +331,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
       console.log($stateParams.selected);
       var selectedOptions = $stateParams.selected;
       $scope.totalStudents = 0;
-
+      $scope.selected = [];
 
       var getNo = function(){
           var deferred = $q.defer();
@@ -376,7 +376,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
                   console.log('You are sure');
                   $ionicLoading.show({ template: 'Updating attendance...' });
                   $scope.updateAttendance();
-                  $state.go("viewAttendance", { selected: selectedOptions });
+                  $state.go("viewAttendance", { selected: selectedOptions, totalStudents:$scope.totalStudents });
               } else {
                   console.log('You are not sure');
               }
@@ -403,15 +403,12 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
           
       };
 
-
       $scope.setval = function (rollno) {
           $scope.items = [];
           for (var i = 0; i < rollno ; i++)
               $scope.items.push(i + 1);
       };
 
-
-      $scope.selected = [];
       $scope.toggle = function (item, list) {
           var idx = list.indexOf(item);
           if (idx > -1) {
@@ -426,16 +423,75 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
       $scope.exists = function (item, list) {
           return list.indexOf(item) > -1;
       };
-      
-      
 
   }])
 
-.controller("ViewAttendanceCtrl", function ($scope, $firebaseArray, $stateParams, $ionicPopup) {
+.controller("ViewAttendanceCtrl", function ($scope, $firebaseArray, $stateParams, $ionicPopup, FirebaseUrl, $q, $ionicLoading, $ionicPlatform, $state) {
 
     var selectedOptions = $stateParams.selected;
+    var totalStudents = $stateParams.totalStudents;
     console.log(selectedOptions);
 
+    $scope.subjectName = selectedOptions.subject.value;
+
+    var cumulativeAttendance = [];
+
+    for (var i = 0; i < totalStudents; i++)
+        cumulativeAttendance.push(0);
+    console.log(cumulativeAttendance);
+
+    var totalLectures = 0;
+
+    var computeAttendance = function () {
+        var defer = $q.defer();
+        $ionicLoading.show({ template: "Getting data..." });
+
+        var ref = new Firebase(FirebaseUrl.root);
+        ref.child("attendances").on("value", function (snapshot) {
+            snapshot.forEach(function (data) {
+
+                if (selectedOptions.dept.id == data.val().dept && selectedOptions.year.id == data.val().year && selectedOptions.semester.id == data.val().semester && selectedOptions.subject.id == data.val().subid && selectedOptions.type.id == data.val().type)
+                {
+                    totalLectures++;
+                    var absentno = data.val().absentno;
+
+                    console.log(absentno);
+                
+                    for (var i = 0; i < absentno.length ; i++)
+                        cumulativeAttendance[absentno[i] - 1]++;
+
+
+                }
+
+            });
+            defer.resolve();
+
+        }, function (error) {
+            console.log("some error occured: " + error.code);
+            defer.reject();
+        });
+
+        return defer.promise;
+    };
+
+
+    var promise = computeAttendance();
+
+    promise.then(function () {
+        $ionicLoading.hide();
+        $scope.totalLectures = totalLectures;
+        $scope.items = cumulativeAttendance;
+    }, function (reason) {
+        $ionicLoading.hide();
+        console.log(reason);
+    });
+
+    $ionicPlatform.registerBackButtonAction(function (event) {
+
+        $state.go('select');
+
+    },100);
+        
 
 });
 

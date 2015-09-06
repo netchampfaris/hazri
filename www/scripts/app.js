@@ -118,7 +118,8 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
         templateUrl: "templates/view_attendance.html",
         controller: 'ViewAttendanceCtrl',
         params: {
-            "selected": null
+            "selected": null,
+            "totalStudents":0
         },
         resolve: {
             // controller will not be loaded until $requireAuth resolves

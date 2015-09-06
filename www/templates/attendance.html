@@ -1,22 +1,22 @@
 ﻿
 <ion-view title="Take attendance">
     <ion-nav-buttons side="primary">
-        <button class="button" ng-click="logout()">
+        <button class="button button-clear" ng-click="logout()">
             Logout
         </button>
     </ion-nav-buttons>
     <ion-content class="has-header">
 
-        <ion-scroll direction="y" style="height:500px;">
-            <div style="display:inline-block; min-width:18%; margin:2% 1% 2% 1%;" ng-repeat="item in items">
-                <button ng-class="{'mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--primary' :!exists(item, selected), 'mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--accent' :exists(item, selected)}" ng-click="toggle(item, selected)">
-                    {{ item }}
-                </button>
-            </div>
-        </ion-scroll>
-        <button class="button button-block button-positive" ng-click="showConfirm()">
-            Submit
-        </button>
-
+        <div class="padding">
+            <button style="min-width:18% !important;margin:2% 1% 2% 1% !important;"
+                    ng-click="toggle(item, selected)" 
+                    ng-class="{'button button-fab button-balanced': !exists(item,selected), 'button button-fab button-assertive': exists(item,selected)}"
+                    ng-repeat="item in items">
+            {{ item }}
+            </button>
+        </div>
     </ion-content>
+    <ion-footer-bar align-title="center" class="bar-positive" ng-click="showConfirm()">
+        <h1 class="title">Submit</h1>
+    </ion-footer-bar>
 </ion-view>

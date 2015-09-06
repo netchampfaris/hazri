@@ -1,5 +1,18 @@
 ﻿<ion-view title="Absent Student Numbers">
     <ion-content padding="true" scroll="true" class="has-header">
-        {{ selectedOptions | json }}
+        <div class="card">
+            <div class="item item-text-wrap">
+                Subject: {{ subjectName }} <br />
+                Total Lectures: {{ totalLectures }}
+            </div>
+        </div>
+        <div class="row header">
+            <div class="col">Roll No</div>
+            <div class="col">Cumulative Attendance</div>
+        </div>
+        <div class="row" ng-repeat="item in items track by $index">
+            <div class="col">{{ $index +1 }}</div>
+            <div class="col">{{ item }}</div>
+        </div>
     </ion-content>
 </ion-view>

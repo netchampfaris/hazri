@@ -21,13 +21,29 @@
   -webkit-transition: all ease-in-out 250ms;
   transition: all ease-in-out 250ms; }
 
-/*  login page */
-.app-icon {
-    background-color: #fff;
-    background: url('../img/icon.png') center;
-    background-size: cover;
-    border-radius: 55%;
-    height: 125px;
-    margin: 0 auto;
-    width: 125px;
+/*attendance button*/
+
+.button.button-fab.button-assertive {
+  box-shadow:none !important;
+}
+
+
+/* table view */
+
+.header .col {
+  background-color:lightgrey;
+}
+
+.col {
+  border: solid 1px grey;
+  border-bottom-style: none;
+  border-right-style: none;
+}
+
+.col:last-child {
+  border-right: solid 1px grey;
+}
+
+.row:last-child .col {
+  border-bottom: solid 1px grey;
 }
