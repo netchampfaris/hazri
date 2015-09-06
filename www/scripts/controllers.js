@@ -134,51 +134,79 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
 
  })
 
-.controller("SelectCtrl", function ($ionicPlatform, $scope, $ionicLoading, $ionicModal, $ionicActionSheet, $ionicPopup, $q, $firebaseObject, FirebaseUrl, $filter) {
+.controller("SelectCtrl", function ($ionicPlatform, $scope, $ionicLoading, $ionicModal,
+    $ionicActionSheet, $ionicPopup, $q, $firebaseObject, FirebaseUrl, $filter,
+    ionicMaterialInk, ionicMaterialMotion, $timeout) {
+
+    var materialEffects = function () {
+
+        $timeout(function () {
+            ionicMaterialInk.displayEffect();
+            ionicMaterialMotion.ripple();
+        }, 0);
+    }
+    
+    materialEffects();
 
     $ionicModal.fromTemplateUrl('templates/options_modal.html', function (modal) {
         $scope.modal = modal;
+        
     }, {
         scope: $scope,
         animation: 'slide-in-right'
     });
 
+    
     //initialize values
     $scope.options = [];
     $scope.selected = {};
     $scope.selected.date = '05-09-2015';
     
     $scope.showDeptOptions = function() {
-            
-        $scope.options = [];
 
-        var getDept = function () {
-            var defer = $q.defer();
-            $ionicLoading.show({ template: 'Getting Dept list...' });
-            var ref = new Firebase(FirebaseUrl.root);
-            ref.child("departments").on("value",
-            function (snapshot) {
-                snapshot.forEach(function (data) {
-                    $scope.options.push({ id: data.key(), name:"dept", value: data.val().name });
-                });
-                defer.resolve();
-            },
-            function (error) {
-                console.log(error);
-                defer.reject();
-            });
-            return defer.promise;
-        };
+        $scope.options = [
+            { id: "ch", name: "dept", value: "Chemical" },
+            { id: "cs", name: "dept", value: "Computer" },
+            { id: "extc", name: "dept", value: "Electronics and Telecommunication" },
+            { id: "is", name: "dept", value: "Instrumentation" },
+            { id: "it", name: "dept", value: "Information Technology" },
+            { id: "me", name: "dept", value: "Mechanical" },
+        ];
 
-        var promise = getDept();
-        promise.then(function () {
-            $ionicLoading.hide();
-            console.log("success retrieving depts");
-            $scope.modal.show();
-        }, function (reason) {
-            $ionicLoading.hide();
-            console.log("error: "+reason);
-        });
+        $scope.modal.show();
+        materialEffects();
+        
+
+        //var getDept = function () {
+        //    var defer = $q.defer();
+        //    $ionicLoading.show({ template: 'Getting Dept list...' });
+        //    var ref = new Firebase(FirebaseUrl.root);
+        //    ref.child("departments").on("value",
+        //    function (snapshot) {
+        //        snapshot.forEach(function (data) {
+        //            $scope.options.push({ id: data.key(), name:"dept", value: data.val().name });
+
+        //        });
+
+        //        defer.resolve();
+        //    },
+        //    function (error) {
+        //        console.log(error);
+        //        defer.reject();
+        //    });
+        //    return defer.promise;
+        //};
+
+        //var promise = getDept();
+        //promise.then(function () {
+        //    $ionicLoading.hide();
+        //    console.log("success retrieving depts");
+        //    $scope.modal.show();
+        //}, function (reason) {
+        //    $ionicLoading.hide();
+        //    console.log("error: "+reason);
+        //});
+
     };
 
     $scope.showYearOptions = function () {
@@ -189,6 +217,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
                             { id: "te", name: "year", value: "Third Year" },
                             { id: "be", name: "year", value: "Final Year" }];
             $scope.modal.show();
+            materialEffects();
         }
         else
             $scope.showAlert("Uh uh..", "Please select department first");
@@ -205,6 +234,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
                 case "be": $scope.options = [{ id: 7, name: "semester", value: "Semester 7" }, { id: 8, name: "semester", value: "Semester 8" }]; break;
             };
             $scope.modal.show();
+            materialEffects();
         }
         else
             $scope.showAlert("Uh uh..", "Please select year field first");
@@ -214,6 +244,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
         if ($scope.selected.semester) {
             $scope.options = [{ id: "th", name: "type", value: "Theory" }, { id: "pr", name: "type", value: "Practical" }, ];
             $scope.modal.show();
+            materialEffects();
         }
         else
             $scope.showAlert("Uh uh..", "Please select semester field first");
@@ -251,6 +282,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
                 $ionicLoading.hide();
                 console.log("success retrieving subjects");
                 $scope.modal.show();
+                materialEffects();
             }, function (reason) {
                 $ionicLoading.hide();
                 console.log(reason);
@@ -269,9 +301,14 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
     $scope.setSelected = function (option) {
 
         $scope.selected[option.name] = { id:option.id , value:option.value };
+        $scope.options = [];    //required to flush values
         $scope.modal.hide();
 
         console.log(JSON.stringify($scope.selected));
+
+        //show button when all options are selected
+        if ($scope.selected.dept && $scope.selected.year && $scope.selected.semester && $scope.selected.type && $scope.selected.subject)
+            $scope.allSelected = true;
     };
     
     $scope.showAlert = function (title, message) {
@@ -284,6 +321,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
             console.log('ok clicked alert');
         });
     };
+
 
 })
 

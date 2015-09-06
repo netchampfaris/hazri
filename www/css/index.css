@@ -20,3 +20,14 @@
 .slide-in-right.ng-leave, .slide-in-right > .ng-leave {
   -webkit-transition: all ease-in-out 250ms;
   transition: all ease-in-out 250ms; }
+
+/*  login page */
+.app-icon {
+    background-color: #fff;
+    background: url('../img/icon.png') center;
+    background-size: cover;
+    border-radius: 55%;
+    height: 125px;
+    margin: 0 auto;
+    width: 125px;
+}

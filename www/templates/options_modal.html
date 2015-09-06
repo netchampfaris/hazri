@@ -1,11 +1,11 @@
-﻿<div class="modal">
+﻿<ion-modal-view>
     <ion-header-bar>
         <h1 class="title">Choose</h1>
-        <a ng-click="modal.hide()" class="button button-icon icon ion-close"></a>
+        <a ng-click="modal.hide()" class="button icon ion-close"></a>
     </ion-header-bar>
     <ion-content>
-        <ul class="list">
-            <li class="item" ng-click="setSelected(option)" ng-repeat="option in options" ng-bind-html="option.value"></li>
-        </ul>
+        <div class="list animate-ripple">
+            <div class="item ink" ng-click="setSelected(option)" ng-repeat="option in options" ng-bind-html="option.value"></div>
+        </div>
     </ion-content>
-</div>
+</ion-modal-view>
