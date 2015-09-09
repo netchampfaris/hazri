@@ -441,7 +441,6 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
     console.log(cumulativeAttendance);
 
     var totalLectures = 0;
-
     var computeAttendance = function () {
         var defer = $q.defer();
         $ionicLoading.show({ template: "Getting data..." });
@@ -453,12 +452,15 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
                 if (selectedOptions.dept.id == data.val().dept && selectedOptions.year.id == data.val().year && selectedOptions.semester.id == data.val().semester && selectedOptions.subject.id == data.val().subid && selectedOptions.type.id == data.val().type)
                 {
                     totalLectures++;
+                    for (var i = 0; i < totalStudents; i++)
+                        cumulativeAttendance[i]++;
+
                     var absentno = data.val().absentno;
 
                     console.log(absentno);
-                
+                    var arraylength = absentno.length;
                     for (var i = 0; i < absentno.length ; i++)
-                        cumulativeAttendance[absentno[i] - 1]++;
+                        cumulativeAttendance[absentno[i] - 1]--;
 
 
                 }

@@ -8,7 +8,7 @@
     For more information on package manifest files, see http://go.microsoft.com/fwlink/?LinkID=241727
   -->
   <Identity Name="io.cordova.myappc8ac77" Publisher="CN=$username$" Version="1.0.0.0" ProcessorArchitecture="x86" />
-  <mp:PhoneIdentity PhoneProductId="7b08de30-4b4a-11e5-9e26-ad7117684902" PhonePublisherId="db093ed5-53b1-45f7-af72-751e8f36ab80" />
+  <mp:PhoneIdentity PhoneProductId="958059b0-54c7-11e5-a038-c9a623466872" PhonePublisherId="db093ed5-53b1-45f7-af72-751e8f36ab80" />
   <Properties>
     <DisplayName>HazriApp</DisplayName>
     <PublisherDisplayName>Apache Cordova Team</PublisherDisplayName>
@@ -47,7 +47,7 @@
     <build:Item Name="VisualStudioEdition" Value="Microsoft Visual Studio Community 2015" />
     <build:Item Name="OperatingSystem" Version="10.0.10240.16384 (th1.150709-1700)" />
     <build:Item Name="Microsoft.Build.AppxPackage.dll" Version="14.0.23121.0" />
-    <build:Item Name="ProjectGUID" Value="cee4c217-e360-4062-8aa4-234227513594" />
+    <build:Item Name="ProjectGUID" Value="31b67a35-9503-4213-857e-f44eb42ae549" />
     <build:Item Name="MakePri.exe" Version="6.3.9600.17336 (winblue.150226-1500)" />
   </build:Metadata>
 </Package>

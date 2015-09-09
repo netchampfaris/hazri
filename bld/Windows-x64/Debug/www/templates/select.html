@@ -1,28 +1,18 @@
-﻿    <ion-view>
-        
-        <ion-content padding="true" scroll="false" class="has-header">
-            <ion-list>
-                <div class="list">
-                    <div class="item item-divider">Department</div>
-                    <div class="item" ng-click="list(1, 'Department')">{{ dept }}</div>
-                </div>
-                <div class="list">
-                    <div class="item item-divider">Year</div>
-                    <div class="item" ng-click="list(2, 'Year')">{{ year }}</div>
-                </div>
-                <div class="list">
-                    <div class="item item-divider">Subject</div>
-                    <div class="item" ng-click="list(3, 'Subject')">{{ subject }}</div>
-                </div>
-                <div class="list">
-                    <div class="item item-divider">TIme Slot</div>
-                    <div class="item" ng-click="list(4, 'Time Slot')">{{ time }}</div>
-                </div>
-            </ion-list>
-            <div class="padding-left padding-right">
-                <button class="button button-block action-button button-positive" ui-sref="attendance">
-                    Take attendance
-                </button>
+﻿<ion-view title="Select your class and subject">
+    <ion-content padding="true" scroll="true" class="has-header">
+        <ion-list>
+            <div class="list animate-ripple">
+                <div class="item item-icon-right ink" ng-click="showDeptOptions()">Department<span class="item-note">{{ selected.dept.value }}</span><i class="icon ion-chevron-right icon-accessory"></i></div>
+                <div class="item item-icon-right ink" ng-click="showYearOptions()">Year<span class="item-note">{{ selected.year.value }}</span><i class="icon ion-chevron-right icon-accessory"></i></div>
+                <div class="item item-icon-right ink" ng-click="showSemOptions()">Semester<span class="item-note">{{ selected.semester.value }}</span><i class="icon ion-chevron-right icon-accessory"></i></div>
+                <div class="item item-icon-right ink" ng-click="showTypeOptions()">Type<span class="item-note">{{ selected.type.value }}</span><i class="icon ion-chevron-right icon-accessory"></i></div>
+                <div class="item item-icon-right ink" ng-click="showSubOptions()">Subject<span class="item-note">{{ selected.subject.value }}</span><i class="icon ion-chevron-right icon-accessory"></i></div>
+                <div class="item item-input" ng-click="showDateOptions()"><span class="input-label">Date</span><input type="date" /></div>
+                <button class="button button-block action-button button-positive ink" ng-show="allSelected" ui-sref="attendance({selected:selected})">Take attendance</button>
             </div>
-        </ion-content>
-    </ion-view>
+
+
+        </ion-list>    
+
+    </ion-content>
+</ion-view>

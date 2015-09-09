@@ -1,6 +1,6 @@
 ﻿
 
-angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers','hazri.services'])
+angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.services', 'ionic-material'])
 
 .run(function ($ionicPlatform, $rootScope, $location, Auth, $ionicLoading) {
     $ionicPlatform.ready(function () {
@@ -18,21 +18,20 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers','hazri.service
         //for solving windows phone issues
         Firebase.INTERNAL.forceWebSockets(); 
 
+
         Auth.$onAuth(function (authData) {
             if (authData) {
                 console.log("Logged in as:", authData.uid);
+                $location.path('/select');
             } else {
                 console.log("Logged out");
-                $ionicLoading.hide();
                 $location.path('/login');
             }
         });
 
+
         $rootScope.logout = function () {
             console.log("Logging out from the app");
-            $ionicLoading.show({
-                template: 'Logging Out...'
-            });
             Auth.$unauth();
         }
 
@@ -79,7 +78,6 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers','hazri.service
         controller: 'LoginCtrl'
     })
 
-
     .state('select', {
         url: "/select",
         templateUrl: "templates/select.html",
@@ -99,9 +97,41 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers','hazri.service
     .state('attendance', {
         url: "/attendance",
         templateUrl: "templates/attendance.html",
-        controller: 'AttendanceCtrl'
+        controller: 'AttendanceCtrl',
+        params: {
+            "selected": null
+        },
+        resolve: {
+            // controller will not be loaded until $requireAuth resolves
+            // Auth refers to our $firebaseAuth wrapper in the example above
+            "currentAuth": ["Auth",
+                function (Auth) {
+                    // $requireAuth returns a promise so the resolve waits for it to complete
+                    // If the promise is rejected, it will throw a $stateChangeError (see above)
+                    return Auth.$requireAuth();
+                }]
+        }
     })
 
+    .state('viewAttendance', {
+        url: "/viewattendance",
+        templateUrl: "templates/view_attendance.html",
+        controller: 'ViewAttendanceCtrl',
+        params: {
+            "selected": null,
+            "totalStudents":0
+        },
+        resolve: {
+            // controller will not be loaded until $requireAuth resolves
+            // Auth refers to our $firebaseAuth wrapper in the example above
+            "currentAuth": ["Auth",
+                function (Auth) {
+                    // $requireAuth returns a promise so the resolve waits for it to complete
+                    // If the promise is rejected, it will throw a $stateChangeError (see above)
+                    return Auth.$requireAuth();
+                }]
+        }
+    })
 
 
 
