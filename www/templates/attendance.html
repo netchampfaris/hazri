@@ -1,0 +1,16 @@
+﻿
+<ion-view title="Take attendance">
+    <ion-content class="has-header">
+        <div class="padding">
+            <button style="margin:2% 1% 2% 1% !important;"
+                    ng-click="toggle(item, selected)" 
+                    ng-class="{'button button-fab button-balanced': !exists(item,selected), 'button button-fab button-assertive': exists(item,selected)}"
+                    ng-repeat="item in items">
+            {{ item }}
+            </button>
+        </div>
+    </ion-content>
+    <ion-footer-bar align-title="center" class="bar-positive" ng-click="showConfirm()">
+        <h1 class="title">Submit</h1>
+    </ion-footer-bar>
+</ion-view>
