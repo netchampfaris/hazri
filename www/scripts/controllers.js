@@ -1,9 +1,40 @@
 
-angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
+angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services', 'highcharts-ng'])
 
     .controller("LoginOptionCtrl", function () { })
 
-    .controller("StudentCtrl", function () { })
+    .controller("StudentCtrl", function ($scope) {
+
+            $scope.chartConfig = {
+                options: {
+                    chart: {
+                        type: 'line'
+                    }
+                },
+                xAxis: {
+                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    title: {
+                        text : 'Months'
+                    }
+                },
+
+                yAxis: {
+                    title: {
+                        text: 'Attendance %'
+                    }
+                },
+                series: [{
+                    name: 'Attendance Graph',
+                    data: [95, 75, 85, 77, 67, 75, 82, 85, 90, 95,91]
+                }],
+                title: {
+                    text: 'Demo Graph'
+                },
+
+                loading: false
+            }
+
+        })
 
 .controller("LoginCtrl", function ($scope, $ionicModal, $state, $ionicLoading, $ionicHistory, $ionicPopup, $q) {
       var ref = new Firebase("https://hazri.firebaseio.com");
