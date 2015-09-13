@@ -1,12 +1,9 @@
 
 
-angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.services', 'ionic-material', 'ngCordova'])
+angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.services', 'ionic-material'])
 
-.run(function ($ionicPlatform, $rootScope, $location, Auth, $ionicLoading, $cordovaSplashscreen) {
+.run(function ($ionicPlatform, $rootScope, $location, Auth, $ionicLoading) {
     $ionicPlatform.ready(function () {
-        setTimeout(function () {
-            $cordovaSplashscreen.hide()
-        }, 5000);
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
         //if (window.cordova && window.cordova.plugins.Keyboard) {
