@@ -328,7 +328,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
 .controller('AttendanceCtrl', ["$scope", "$firebaseArray", "$stateParams","$q","$ionicLoading","$ionicPopup","$state","FirebaseUrl",
   function ($scope, $firebaseArray, $stateParams, $q, $ionicLoading, $ionicPopup, $state, FirebaseUrl) {
 
-      //console.log($stateParams.selected);
+      console.log($stateParams.selected);
       var selectedOptions = $stateParams.selected;
       $scope.totalStudents = 0;
       $scope.selected = [];
@@ -386,7 +386,6 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
       $scope.updateAttendance = function () {
           var absent = $scope.selected.sort();
 
-
           var ref = new Firebase(FirebaseUrl.root);
           ref.child("attendances").push({
               absentno: absent,
@@ -431,7 +430,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
 
     var selectedOptions = $stateParams.selected;
     var totalStudents = $stateParams.totalStudents;
-    //console.log(selectedOptions);
+    console.log(selectedOptions);
 
     $scope.subjectName = selectedOptions.subject.value;
 
@@ -439,8 +438,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
 
     for (var i = 0; i < totalStudents; i++)
         cumulativeAttendance.push(0);
-
-    //console.log(cumulativeAttendance);
+    console.log(cumulativeAttendance);
 
     var totalLectures = 0;
     var computeAttendance = function () {
@@ -458,11 +456,13 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
                         cumulativeAttendance[i]++;
 
                     var absentno = data.val().absentno;
-                    //console.log(absentno);
 
+                    console.log(absentno);
                     var arraylength = absentno.length;
                     for (var i = 0; i < absentno.length ; i++)
                         cumulativeAttendance[absentno[i] - 1]--;
+
+
                 }
 
             });
