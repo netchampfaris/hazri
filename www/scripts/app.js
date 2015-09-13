@@ -4,20 +4,13 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
 
 .run(function ($ionicPlatform, $rootScope, $location, Auth, $ionicLoading) {
     $ionicPlatform.ready(function () {
-        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-        // for form inputs)
-        //if (window.cordova && window.cordova.plugins.Keyboard) {
-        //    cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-        //}
         if (window.StatusBar) {
             // org.apache.cordova.statusbar required
             StatusBar.styleDefault();
         }
 
-
         //for solving windows phone issues
         Firebase.INTERNAL.forceWebSockets(); 
-
 
         Auth.$onAuth(function (authData) {
             if (authData) {
@@ -25,9 +18,9 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
                 $location.path('/select');
             } else {
                 console.log("Logged out");
-                $location.path('/login');
+                $location.path('/loginOption');
             }
-        });
+     });
 
 
         $rootScope.logout = function () {
@@ -40,7 +33,7 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
             // We can catch the error thrown when the $requireAuth promise is rejected
             // and redirect the user back to the home page
             if (error === "AUTH_REQUIRED") {
-                $location.path("/login");
+                $location.path("/loginOption");
             }
         });
 
@@ -58,6 +51,12 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
     $stateProvider
 
     // State to represent Login View
+    .state('loginOption', {
+        url: "/loginOption",
+        templateUrl: "templates/loginoption.html",
+        controller: 'LoginOptionCtrl'
+    })
+
     .state('login', {
         url: "/login",
         templateUrl: "templates/login.html",
@@ -133,10 +132,16 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
         }
     })
 
+    .state('student', {
+        url: "/student",
+        templateUrl: "templates/student.html",
+        controller : "StudentCtrl"
+    })
+
 
 
 
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/login');
+    $urlRouterProvider.otherwise('/loginOption');
 
 });

@@ -1,6 +1,39 @@
+angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services', 'highcharts-ng'])
 
-angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
+    .controller("LoginOptionCtrl", function () { })
 
+    .controller("StudentCtrl", function ($scope) {
+
+            $scope.chartConfig = {
+                options: {
+                    chart: {
+                        type: 'line'
+                    }
+                },
+                xAxis: {
+                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    title: {
+                        text : 'Months'
+                    }
+                },
+
+                yAxis: {
+                    title: {
+                        text: 'Attendance %'
+                    }
+                },
+                series: [{
+                    name: 'Attendance Graph',
+                    data: [95, 75, 85, 77, 67, 75, 82, 85, 90, 95,91]
+                }],
+                title: {
+                    text: 'Demo Graph'
+                },
+
+                loading: false
+            }
+
+        })
 
 .controller("LoginCtrl", function ($scope, $ionicModal, $state, $ionicLoading, $ionicHistory, $ionicPopup, $q) {
       var ref = new Firebase("https://hazri.firebaseio.com");
@@ -328,7 +361,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
 .controller('AttendanceCtrl', ["$scope", "$firebaseArray", "$stateParams","$q","$ionicLoading","$ionicPopup","$state","FirebaseUrl",
   function ($scope, $firebaseArray, $stateParams, $q, $ionicLoading, $ionicPopup, $state, FirebaseUrl) {
 
-      console.log($stateParams.selected);
+      //console.log($stateParams.selected);
       var selectedOptions = $stateParams.selected;
       $scope.totalStudents = 0;
       $scope.selected = [];
@@ -386,6 +419,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
       $scope.updateAttendance = function () {
           var absent = $scope.selected.sort();
 
+
           var ref = new Firebase(FirebaseUrl.root);
           ref.child("attendances").push({
               absentno: absent,
@@ -430,7 +464,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
 
     var selectedOptions = $stateParams.selected;
     var totalStudents = $stateParams.totalStudents;
-    console.log(selectedOptions);
+    //console.log(selectedOptions);
 
     $scope.subjectName = selectedOptions.subject.value;
 
@@ -438,7 +472,8 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
 
     for (var i = 0; i < totalStudents; i++)
         cumulativeAttendance.push(0);
-    console.log(cumulativeAttendance);
+
+    //console.log(cumulativeAttendance);
 
     var totalLectures = 0;
     var computeAttendance = function () {
@@ -456,13 +491,11 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
                         cumulativeAttendance[i]++;
 
                     var absentno = data.val().absentno;
+                    //console.log(absentno);
 
-                    console.log(absentno);
                     var arraylength = absentno.length;
                     for (var i = 0; i < absentno.length ; i++)
                         cumulativeAttendance[absentno[i] - 1]--;
-
-
                 }
 
             });
