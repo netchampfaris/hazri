@@ -28,7 +28,7 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
                 $location.path('/select');
             } else {
                 console.log("Logged out");
-                $location.path('/loginOption');
+                $location.path('/login');
             }
         });
 
@@ -43,7 +43,7 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
             // We can catch the error thrown when the $requireAuth promise is rejected
             // and redirect the user back to the home page
             if (error === "AUTH_REQUIRED") {
-                $location.path("/loginOption");
+                $location.path("/login");
             }
         });
 
@@ -61,12 +61,6 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
     $stateProvider
 
     // State to represent Login View
-    .state('loginOption', {
-        url: "/loginOption",
-        templateUrl: "templates/loginoption.html",
-        controller: 'LoginOptionCtrl'
-    })
-
     .state('login', {
         url: "/login",
         templateUrl: "templates/login.html",
@@ -142,16 +136,10 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
         }
     })
 
-    .state('student', {
-        url: "/student",
-        templateUrl: "templates/student.html",
-        controller : "StudentCtrl"
-    })
-
 
 
 
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/loginOption');
+    $urlRouterProvider.otherwise('/login');
 
 });

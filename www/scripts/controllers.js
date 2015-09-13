@@ -1,9 +1,6 @@
 
 angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
 
-    .controller("LoginOptionCtrl", function () { })
-
-    .controller("StudentCtrl", function () { })
 
 .controller("LoginCtrl", function ($scope, $ionicModal, $state, $ionicLoading, $ionicHistory, $ionicPopup, $q) {
       var ref = new Firebase("https://hazri.firebaseio.com");
