@@ -1,9 +1,9 @@
 
-angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
+angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services','pickadate'])
 
 
-.controller("LoginCtrl", function ($scope, $ionicModal, $state, $ionicLoading, $ionicHistory, $ionicPopup, $q) {
-      var ref = new Firebase("https://hazri.firebaseio.com");
+.controller("LoginCtrl", function ($scope, $ionicModal, $state, $ionicLoading, $ionicHistory, $ionicPopup, $q, FirebaseUrl) {
+      var ref = new Firebase(FirebaseUrl.root);
 
 
       $ionicModal.fromTemplateUrl('templates/signup.html', function (modal) {
@@ -156,11 +156,28 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
         animation: 'slide-in-right'
     });
 
+    $ionicModal.fromTemplateUrl('templates/date_modal.html',
+        function(modal) {
+            $scope.datemodal = modal;
+    },
+    {
+        scope: $scope,
+        animation: 'slide-in-up'
+    });
+
+    $scope.opendateModal = function() {
+      $scope.datemodal.show();
+    };
+
+    $scope.closedateModal = function(date) {
+      $scope.datemodal.hide();
+      $scope.selected.date = date;
+    };
+
     
     //initialize values
     $scope.options = [];
     $scope.selected = {};
-    $scope.selected.date = '05-09-2015';
     
     $scope.showDeptOptions = function() {
 
@@ -218,14 +235,62 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
             $scope.showAlert("Uh uh..", "Please select semester field first");
     };
 
+    $scope.showBatchOptions = function () {
+        if ($scope.selected.type) {
+            var batchCount = 0;
+            var getBatch = function () {
+
+                var defer = $q.defer();
+                $ionicLoading.show({ template: "Getting Batch info..." });
+                var ref = new Firebase(FirebaseUrl.root);
+                ref.child("studentCount").on("value",
+                function (snapshot) {
+                    snapshot.forEach(function (data) {
+                        //console.log(data.key() + " : " + JSON.stringify(data.val()));
+                        if ($scope.selected.dept.id == data.val().dept && $scope.selected.year.id == data.val().year) {
+                            batchCount = Object.keys(data.val().batchno).length;
+                        }
+                    });
+                    defer.resolve();
+                }, function (error) {
+                    console.log(error.code);
+                    defer.reject();
+                });
+                return defer.promise;
+            };
+
+            var promise = getBatch();
+
+            promise.then(function () {
+                $ionicLoading.hide();
+
+                if (batchCount > 0)
+                {
+                    for(var i=1 ; i<=batchCount; i++)
+                    {
+                        $scope.options.push({id:i, name:"batchno", value:"Batch "+i});
+                    }
+                }
+
+                $scope.modal.show();
+                materialEffects();
+            }, function (reason) {
+                $ionicLoading.hide();
+                console.log(reason);
+            });
+        }
+        else
+            $scope.showAlert("Uh uh..", "Please select type field first");
+    };
+
     $scope.showSubOptions = function () {
         console.log(JSON.stringify($scope.selected));
         $scope.options = [];
 
-        if ($scope.selected.type) {
-            
+        //proceed only if type field is selected and if type is practical then make sure that batch field is selected
+        if (($scope.selected.type && $scope.selected.type.id == 'th') || ($scope.selected.type && $scope.selected.type.id == 'pr' && $scope.selected.batchno))
+        {    
             var getSub = function () {
-
                 var defer = $q.defer();
                 $ionicLoading.show({ template: "Getting subject list..." });
                 var ref = new Firebase(FirebaseUrl.root);
@@ -263,12 +328,8 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
 
         }
         else
-            $scope.showAlert("Uh uh..", "Please select type field first");
+            $scope.showAlert("Uh uh..", "Please select above fields first");
 
-    };
-
-    $scope.showDateOptions = function () {
-        $scope.selected.date = '05-09-2015';
     };
 
     $scope.setSelected = function (option) {
@@ -277,8 +338,15 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
         $scope.options = [];    //required to flush values
         $scope.modal.hide();
 
-        console.log(JSON.stringify($scope.selected));
+        if (option.name == 'year') {
+            $scope.selected.semester = undefined;
+        }
+        if (option.name == 'type')
+        {
+            $scope.selected.batchno = undefined;
+        }
 
+        console.log(JSON.stringify($scope.selected));
         //show button when all options are selected
         if ($scope.selected.dept && $scope.selected.year && $scope.selected.semester && $scope.selected.type && $scope.selected.subject)
             $scope.allSelected = true;
@@ -320,8 +388,11 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
       console.log($stateParams.selected);
       var selectedOptions = $stateParams.selected;
       $scope.totalStudents = 0;
+      var batchStart, batchEnd;
       $scope.selected = [];
       console.log($scope.selected);
+      console.log("batchstart:" + batchStart);
+      console.log("batchend:" + batchEnd);
 
       var getNo = function(){
           var deferred = $q.defer();
@@ -332,7 +403,16 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
               
               snapshot.forEach(function (data) {
                   if (selectedOptions.dept.id == data.val().dept && selectedOptions.year.id == data.val().year) //add batch code later
+                  {
                       $scope.totalStudents = data.val().count;
+                      if (selectedOptions.batchno) {
+                          batchStart = data.val().batchno[selectedOptions.batchno.id];
+                          if (selectedOptions.batchno.id == Object.keys(data.val().batchno).length) //if batch selected is last batch
+                              batchEnd = $scope.totalStudents;
+                          else
+                              batchEnd = data.val().batchno[selectedOptions.batchno.id + 1] - 1;
+                      }
+                  }
               });
 
               deferred.resolve();
@@ -348,7 +428,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
       promise.then(function () {
           $ionicLoading.hide();
           materialEffects();
-          $scope.setval($scope.totalStudents);
+          $scope.setval($scope.totalStudents, batchStart, batchEnd);
       }, function (reason) {
           $ionicLoading.hide();
           alert('Failed: ' + reason);
@@ -394,10 +474,15 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
           
       };
 
-      $scope.setval = function (rollno) {
+      $scope.setval = function (rollno, bStart, bEnd) {
           $scope.items = [];
-          for (var i = 0; i < rollno ; i++)
-              $scope.items.push(i + 1);
+          
+          if (bStart && bEnd)
+              for(var i = bStart; i<=bEnd ; i++)
+                  $scope.items.push(i);
+          else
+              for (var i = 1; i <= rollno ; i++)
+                  $scope.items.push(i);
       };
 
       $scope.toggle = function (item, list) {
