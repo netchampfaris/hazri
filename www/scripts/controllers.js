@@ -175,38 +175,6 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
 
         $scope.modal.show();
         materialEffects();
-        
-
-        //var getDept = function () {
-        //    var defer = $q.defer();
-        //    $ionicLoading.show({ template: 'Getting Dept list...' });
-        //    var ref = new Firebase(FirebaseUrl.root);
-        //    ref.child("departments").on("value",
-        //    function (snapshot) {
-        //        snapshot.forEach(function (data) {
-        //            $scope.options.push({ id: data.key(), name:"dept", value: data.val().name });
-
-        //        });
-
-        //        defer.resolve();
-        //    },
-        //    function (error) {
-        //        console.log(error);
-        //        defer.reject();
-        //    });
-        //    return defer.promise;
-        //};
-
-        //var promise = getDept();
-        //promise.then(function () {
-        //    $ionicLoading.hide();
-        //    console.log("success retrieving depts");
-        //    $scope.modal.show();
-        //}, function (reason) {
-        //    $ionicLoading.hide();
-        //    console.log("error: "+reason);
-        //});
-
     };
 
     $scope.showYearOptions = function () {
@@ -265,8 +233,13 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
                 function (snapshot) {
                     snapshot.forEach(function (data) {
                         console.log(data.key()+" : "+ JSON.stringify(data.val()));
-                        if ($scope.selected.dept.id == data.val().dept_id && $scope.selected.year.id == data.val().year && $scope.selected.semester.id == data.val().sem)
-                            $scope.options.push({ id: data.key(), name: "subject", value: data.val().fullname });
+                        if ($scope.selected.dept.id == data.val().dept_id && $scope.selected.year.id == data.val().year && $scope.selected.semester.id == data.val().sem )
+                        {
+                            if($scope.selected.type.id == "th" && data.val().theory)
+                                $scope.options.push({ id: data.key(), name: "subject", value: data.val().fullname });
+                            if($scope.selected.type.id == "pr" && data.val().practical)
+                                $scope.options.push({ id: data.key(), name: "subject", value: data.val().fullname });
+                        }
                     });
                     defer.resolve();
                 }, function (error) {
@@ -310,6 +283,11 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
         if ($scope.selected.dept && $scope.selected.year && $scope.selected.semester && $scope.selected.type && $scope.selected.subject)
             $scope.allSelected = true;
     };
+
+    $scope.hideModal = function () {
+        $scope.modal.hide();
+        $scope.options = [];    //required to flush values
+    };
     
     $scope.showAlert = function (title, message) {
 
@@ -325,13 +303,25 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
 
 })
 
-.controller('AttendanceCtrl', ["$scope", "$firebaseArray", "$stateParams","$q","$ionicLoading","$ionicPopup","$state","FirebaseUrl",
-  function ($scope, $firebaseArray, $stateParams, $q, $ionicLoading, $ionicPopup, $state, FirebaseUrl) {
+.controller('AttendanceCtrl', function ($scope, $firebaseArray, $stateParams, $q, $ionicLoading, $ionicPopup, $state, FirebaseUrl,
+      ionicMaterialInk, ionicMaterialMotion, $timeout) {
+
+      var materialEffects = function () {
+
+          $timeout(function () {
+              ionicMaterialInk.displayEffect();
+              ionicMaterialMotion.ripple();
+          }, 0);
+      }
+
+      materialEffects();
+
 
       console.log($stateParams.selected);
       var selectedOptions = $stateParams.selected;
       $scope.totalStudents = 0;
       $scope.selected = [];
+      console.log($scope.selected);
 
       var getNo = function(){
           var deferred = $q.defer();
@@ -357,6 +347,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
 
       promise.then(function () {
           $ionicLoading.hide();
+          materialEffects();
           $scope.setval($scope.totalStudents);
       }, function (reason) {
           $ionicLoading.hide();
@@ -424,21 +415,19 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
           return list.indexOf(item) > -1;
       };
 
-  }])
+  })
 
 .controller("ViewAttendanceCtrl", function ($scope, $firebaseArray, $stateParams, $ionicPopup, FirebaseUrl, $q, $ionicLoading, $ionicPlatform, $state) {
 
     var selectedOptions = $stateParams.selected;
     var totalStudents = $stateParams.totalStudents;
-    console.log(selectedOptions);
-
+    
     $scope.subjectName = selectedOptions.subject.value;
 
     var cumulativeAttendance = [];
 
     for (var i = 0; i < totalStudents; i++)
-        cumulativeAttendance.push(0);
-    console.log(cumulativeAttendance);
+        cumulativeAttendance.push(0); 
 
     var totalLectures = 0;
     var computeAttendance = function () {
@@ -454,15 +443,14 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
                     totalLectures++;
                     for (var i = 0; i < totalStudents; i++)
                         cumulativeAttendance[i]++;
-
                     var absentno = data.val().absentno;
-
-                    console.log(absentno);
-                    var arraylength = absentno.length;
-                    for (var i = 0; i < absentno.length ; i++)
-                        cumulativeAttendance[absentno[i] - 1]--;
-
-
+                    if (absentno != undefined) //absentno undefined means all present
+                    {
+                        var arraylength = absentno.length;
+                        for (var i = 0; i < arraylength ; i++)
+                            cumulativeAttendance[absentno[i] - 1]--;
+                    }
+                    //else all present
                 }
 
             });
@@ -483,9 +471,11 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
         $ionicLoading.hide();
         $scope.totalLectures = totalLectures;
         $scope.items = cumulativeAttendance;
+        cumulativeAttendance = []; //flush values
     }, function (reason) {
         $ionicLoading.hide();
         console.log(reason);
+        cumulativeAttendance = []; //flush values
     });
 
     $ionicPlatform.registerBackButtonAction(function (event) {
