@@ -1,142 +1,140 @@
 
-angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services','pickadate'])
+angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services', 'pickadate'])
 
 
 .controller("LoginCtrl", function ($scope, $ionicModal, $state, $ionicLoading, $ionicHistory, $ionicPopup, $q, FirebaseUrl) {
-      var ref = new Firebase(FirebaseUrl.root);
+    var ref = new Firebase(FirebaseUrl.root);
 
 
-      $ionicModal.fromTemplateUrl('templates/signup.html', function (modal) {
-          $scope.modal = modal;
-      }, {
-          scope: $scope,
-          animation: 'slide-in-up'
-      });
+    $ionicModal.fromTemplateUrl('templates/signup.html', function (modal) {
+        $scope.modal = modal;
+    }, {
+        scope: $scope,
+        animation: 'slide-in-up'
+    });
 
-      $scope.login = function (user) {
+    $scope.login = function (user) {
 
-          if (user && user.email && user.password) {
+        if (user && user.email && user.password) {
 
-              var log = function () {
-                  var deferred = $q.defer();
-                  $ionicLoading.show({
-                      template: 'Signing in<br><br><ion-spinner icon="android"></ion-spinner>'
-                  });
+            var log = function () {
+                var deferred = $q.defer();
+                $ionicLoading.show({
+                    template: 'Signing in<br><br><ion-spinner icon="android"></ion-spinner>'
+                });
 
-                  ref.authWithPassword({
-                      "email": user.email,
-                      "password": user.password
-                  }, function (error, authData) {
-                      if (error) {
-                          deferred.reject();
-                      } else {
-                          console.log("Authenticated successfully with payload:", authData);
-                          $ionicHistory.nextViewOptions({
-                              disableAnimate: true,
-                              disableBack: true,
-                              historyRoot: true
-                          });
-                          deferred.resolve();
-                      }
-                  });
-                  return deferred.promise;
-              };
+                ref.authWithPassword({
+                    "email": user.email,
+                    "password": user.password
+                }, function (error, authData) {
+                    if (error) {
+                        deferred.reject();
+                    } else {
+                        console.log("Authenticated successfully with payload:", authData);
+                        $ionicHistory.nextViewOptions({
+                            disableAnimate: true,
+                            disableBack: true,
+                            historyRoot: true
+                        });
+                        deferred.resolve();
+                    }
+                });
+                return deferred.promise;
+            };
 
-              var promise = log();
-              promise.then(function () {
-                  $ionicLoading.hide();
-              },
-              function (reason) {
-                  $ionicLoading.hide();
-                  console.log(reason);
-                  $scope.showAlert("Error", "Login Failed!");
-              });
-          }
-          else {
-              $scope.showAlert("Error","Enter email and password");
-          }
-      };
+            var promise = log();
+            promise.then(function () {
+                $ionicLoading.hide();
+            },
+            function (reason) {
+                $ionicLoading.hide();
+                console.log(reason);
+                $scope.showAlert("Error", "Login Failed!");
+            });
+        }
+        else {
+            $scope.showAlert("Error", "Enter email and password");
+        }
+    };
 
-      /*****************************************/
-      /* Commented out signup function for now */
-      /*****************************************/
-      //$scope.signup = function (user) {
+    /*****************************************/
+    /* Commented out signup function for now */
+    /*****************************************/
+    //$scope.signup = function (user) {
 
-      //    if (user && user.email && user.password) {
+    //    if (user && user.email && user.password) {
 
-      //        var reg = function () {
-                  
-      //            var deferred = $q.defer();
+    //        var reg = function () {
 
-      //            $ionicLoading.show({
-      //                template: 'Signing up<br><br><ion-spinner icon="android"></ion-spinner>'
-      //            });
+    //            var deferred = $q.defer();
 
-      //            ref.createUser({
-      //                email: user.email,
-      //                password: user.password
-      //            }, function (error, userData) {
-      //                if (error) {
-      //                    switch (error.code) {
-      //                        case "EMAIL_TAKEN":
-      //                            $scope.showAlert("Error","The new user account cannot be created because the email is already in use.");
-      //                            break;
-      //                        case "INVALID_EMAIL":
-      //                            $scope.showAlert("Error", "The specified email is not a valid email.");
-      //                            break;
-      //                        default:
-      //                            $scope.showAlert("Error", "Error creating user: ", error);
-      //                    }
-      //                    deferred.reject();
-      //                } else {
-      //                    deferred.resolve();
-      //                }
-      //            });
-      //            return deferred.promise;
-      //        };
+    //            $ionicLoading.show({
+    //                template: 'Signing up<br><br><ion-spinner icon="android"></ion-spinner>'
+    //            });
 
-      //        promise.then(function () {
-      //            $ionicLoading.hide();
-      //            $scope.showAlert("Successful", "Account created successfully");
-      //            $scope.hideModal();
-      //        }, function (reason) {
-      //            $ionicLoading.hide();
-      //            console.log(reason);
-      //        });
+    //            ref.createUser({
+    //                email: user.email,
+    //                password: user.password
+    //            }, function (error, userData) {
+    //                if (error) {
+    //                    switch (error.code) {
+    //                        case "EMAIL_TAKEN":
+    //                            $scope.showAlert("Error","The new user account cannot be created because the email is already in use.");
+    //                            break;
+    //                        case "INVALID_EMAIL":
+    //                            $scope.showAlert("Error", "The specified email is not a valid email.");
+    //                            break;
+    //                        default:
+    //                            $scope.showAlert("Error", "Error creating user: ", error);
+    //                    }
+    //                    deferred.reject();
+    //                } else {
+    //                    deferred.resolve();
+    //                }
+    //            });
+    //            return deferred.promise;
+    //        };
 
-      //    }
-      //    else
-      //        $scope.showAlert("Error","Enter email and password");
+    //        promise.then(function () {
+    //            $ionicLoading.hide();
+    //            $scope.showAlert("Successful", "Account created successfully");
+    //            $scope.hideModal();
+    //        }, function (reason) {
+    //            $ionicLoading.hide();
+    //            console.log(reason);
+    //        });
 
-      //};
+    //    }
+    //    else
+    //        $scope.showAlert("Error","Enter email and password");
 
-      $scope.hideModal = function () {
-          $ionicLoading.hide();
-          var alertPopup = $ionicPopup.alert({
-              title: 'Successful',
-              template: 'Account created successfully. Now login.'
-          });
-          alertPopup.then(function (res) {
-              $scope.modal.hide();
-          });
-      };
+    //};
 
-      $scope.showAlert = function (title,message) {
-          
-          var alertPopup = $ionicPopup.alert({
-              title: title,
-              template: message
-          });
-          alertPopup.then(function (res) {
-              console.log('ok clicked alert');
-          });
-      };
+    $scope.hideModal = function () {
+        $ionicLoading.hide();
+        var alertPopup = $ionicPopup.alert({
+            title: 'Successful',
+            template: 'Account created successfully. Now login.'
+        });
+        alertPopup.then(function (res) {
+            $scope.modal.hide();
+        });
+    };
 
- })
+    $scope.showAlert = function (title, message) {
 
-.controller("SelectCtrl", function ($ionicPlatform, $scope, $ionicLoading, $ionicModal,
-    $ionicActionSheet, $ionicPopup, $q, $firebaseObject, FirebaseUrl, $filter,
-    ionicMaterialInk, ionicMaterialMotion, $timeout) {
+        var alertPopup = $ionicPopup.alert({
+            title: title,
+            template: message
+        });
+        alertPopup.then(function (res) {
+            console.log('ok clicked alert');
+        });
+    };
+
+})
+
+.controller("SelectCtrl", function ($scope, $ionicLoading, $ionicModal, $ionicPopup, $q, FirebaseUrl, ionicMaterialInk, ionicMaterialMotion, $timeout) {
 
     var materialEffects = function () {
 
@@ -144,42 +142,42 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services','pick
             ionicMaterialInk.displayEffect();
             ionicMaterialMotion.ripple();
         }, 0);
-    }
-    
+    };
+
     materialEffects();
 
     $ionicModal.fromTemplateUrl('templates/options_modal.html', function (modal) {
         $scope.modal = modal;
-        
+
     }, {
         scope: $scope,
         animation: 'slide-in-right'
     });
 
     $ionicModal.fromTemplateUrl('templates/date_modal.html',
-        function(modal) {
+        function (modal) {
             $scope.datemodal = modal;
-    },
+        },
     {
         scope: $scope,
         animation: 'slide-in-up'
     });
 
-    $scope.opendateModal = function() {
-      $scope.datemodal.show();
+    $scope.opendateModal = function () {
+        $scope.datemodal.show();
     };
 
-    $scope.closedateModal = function(date) {
-      $scope.datemodal.hide();
-      $scope.selected.date = date;
+    $scope.closedateModal = function (date) {
+        $scope.datemodal.hide();
+        $scope.selected.date = date;
     };
 
-    
+
     //initialize values
     $scope.options = [];
     $scope.selected = {};
-    
-    $scope.showDeptOptions = function() {
+
+    $scope.showDeptOptions = function () {
 
         $scope.options = [
             { id: "ch", name: "dept", value: "Chemical" },
@@ -210,14 +208,14 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services','pick
     };
 
     $scope.showSemOptions = function () {
-        
+
         if ($scope.selected.year) {
             switch ($scope.selected.year.id) {
                 case "fe": $scope.options = [{ id: 1, name: "semester", value: "Semester 1" }, { id: 2, name: "semester", value: "Semester 2" }]; break;
                 case "se": $scope.options = [{ id: 3, name: "semester", value: "Semester 3" }, { id: 4, name: "semester", value: "Semester 4" }]; break;
                 case "te": $scope.options = [{ id: 5, name: "semester", value: "Semester 5" }, { id: 6, name: "semester", value: "Semester 6" }]; break;
                 case "be": $scope.options = [{ id: 7, name: "semester", value: "Semester 7" }, { id: 8, name: "semester", value: "Semester 8" }]; break;
-            };
+            }
             $scope.modal.show();
             materialEffects();
         }
@@ -264,11 +262,9 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services','pick
             promise.then(function () {
                 $ionicLoading.hide();
 
-                if (batchCount > 0)
-                {
-                    for(var i=1 ; i<=batchCount; i++)
-                    {
-                        $scope.options.push({id:i, name:"batchno", value:"Batch "+i});
+                if (batchCount > 0) {
+                    for (var i = 1 ; i <= batchCount; i++) {
+                        $scope.options.push({ id: i, name: "batchno", value: "Batch " + i });
                     }
                 }
 
@@ -288,8 +284,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services','pick
         $scope.options = [];
 
         //proceed only if type field is selected and if type is practical then make sure that batch field is selected
-        if (($scope.selected.type && $scope.selected.type.id == 'th') || ($scope.selected.type && $scope.selected.type.id == 'pr' && $scope.selected.batchno))
-        {    
+        if (($scope.selected.type && $scope.selected.type.id == 'th') || ($scope.selected.type && $scope.selected.type.id == 'pr' && $scope.selected.batchno)) {
             var getSub = function () {
                 var defer = $q.defer();
                 $ionicLoading.show({ template: "Getting subject list..." });
@@ -297,12 +292,11 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services','pick
                 ref.child("subjects").on("value",
                 function (snapshot) {
                     snapshot.forEach(function (data) {
-                        console.log(data.key()+" : "+ JSON.stringify(data.val()));
-                        if ($scope.selected.dept.id == data.val().dept_id && $scope.selected.year.id == data.val().year && $scope.selected.semester.id == data.val().sem )
-                        {
-                            if($scope.selected.type.id == "th" && data.val().theory)
+                        console.log(data.key() + " : " + JSON.stringify(data.val()));
+                        if ($scope.selected.dept.id == data.val().dept_id && $scope.selected.year.id == data.val().year && $scope.selected.semester.id == data.val().sem) {
+                            if ($scope.selected.type.id == "th" && data.val().theory)
                                 $scope.options.push({ id: data.key(), name: "subject", value: data.val().fullname });
-                            if($scope.selected.type.id == "pr" && data.val().practical)
+                            if ($scope.selected.type.id == "pr" && data.val().practical)
                                 $scope.options.push({ id: data.key(), name: "subject", value: data.val().fullname });
                         }
                     });
@@ -334,15 +328,14 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services','pick
 
     $scope.setSelected = function (option) {
 
-        $scope.selected[option.name] = { id:option.id , value:option.value };
+        $scope.selected[option.name] = { id: option.id, value: option.value };
         $scope.options = [];    //required to flush values
         $scope.modal.hide();
 
         if (option.name == 'year') {
             $scope.selected.semester = undefined;
         }
-        if (option.name == 'type')
-        {
+        if (option.name == 'type') {
             $scope.selected.batchno = undefined;
         }
 
@@ -356,7 +349,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services','pick
         $scope.modal.hide();
         $scope.options = [];    //required to flush values
     };
-    
+
     $scope.showAlert = function (title, message) {
 
         var alertPopup = $ionicPopup.alert({
@@ -371,148 +364,148 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services','pick
 
 })
 
-.controller('AttendanceCtrl', function ($scope, $firebaseArray, $stateParams, $q, $ionicLoading, $ionicPopup, $state, FirebaseUrl,
-      ionicMaterialInk, ionicMaterialMotion, $timeout) {
+.controller('AttendanceCtrl', function ($scope, $stateParams, $q, $ionicLoading, $ionicPopup, $state, FirebaseUrl, ionicMaterialInk, ionicMaterialMotion, $timeout) {
 
-      var materialEffects = function () {
+    var materialEffects = function () {
 
-          $timeout(function () {
-              ionicMaterialInk.displayEffect();
-              ionicMaterialMotion.ripple();
-          }, 0);
-      }
+        $timeout(function () {
+            ionicMaterialInk.displayEffect();
+            ionicMaterialMotion.ripple();
+        }, 0);
+    };
 
-      materialEffects();
+    materialEffects();
 
 
-      console.log($stateParams.selected);
-      var selectedOptions = $stateParams.selected;
-      $scope.totalStudents = 0;
-      var batchStart, batchEnd;
-      $scope.selected = [];
-      console.log($scope.selected);
-      console.log("batchstart:" + batchStart);
-      console.log("batchend:" + batchEnd);
+    console.log($stateParams.selected);
+    var selectedOptions = $stateParams.selected;
+    $scope.totalStudents = 0;
+    var batchStart, batchEnd;
+    $scope.selected = [];
+    console.log($scope.selected);
+    console.log("batchstart:" + batchStart);
+    console.log("batchend:" + batchEnd);
 
-      var getNo = function(){
-          var deferred = $q.defer();
-          $ionicLoading.show({ template: 'Loading student count..' });
+    var getNo = function () {
+        var deferred = $q.defer();
+        $ionicLoading.show({ template: 'Loading student count..' });
 
-          var ref = new Firebase(FirebaseUrl.root);
-          ref.child("studentCount").on("value", function (snapshot) {
-              
-              snapshot.forEach(function (data) {
-                  if (selectedOptions.dept.id == data.val().dept && selectedOptions.year.id == data.val().year) //add batch code later
-                  {
-                      $scope.totalStudents = data.val().count;
-                      if (selectedOptions.batchno) {
-                          batchStart = data.val().batchno[selectedOptions.batchno.id];
-                          if (selectedOptions.batchno.id == Object.keys(data.val().batchno).length) //if batch selected is last batch
-                              batchEnd = $scope.totalStudents;
-                          else
-                              batchEnd = data.val().batchno[selectedOptions.batchno.id + 1] - 1;
-                      }
-                  }
-              });
+        var ref = new Firebase(FirebaseUrl.root);
+        ref.child("studentCount").on("value", function (snapshot) {
 
-              deferred.resolve();
-          }, function (error) {
-              console.log("error:" + error.code);
-              deferred.reject();
-          });
+            snapshot.forEach(function (data) {
+                if (selectedOptions.dept.id == data.val().dept && selectedOptions.year.id == data.val().year) //add batch code later
+                {
+                    $scope.totalStudents = data.val().count;
+                    if (selectedOptions.batchno) {
+                        batchStart = data.val().batchno[selectedOptions.batchno.id];
+                        if (selectedOptions.batchno.id == Object.keys(data.val().batchno).length) //if batch selected is last batch
+                            batchEnd = $scope.totalStudents;
+                        else
+                            batchEnd = data.val().batchno[selectedOptions.batchno.id + 1] - 1;
+                    }
+                }
+            });
 
-          return deferred.promise;
-      }
-      var promise = getNo();
+            deferred.resolve();
+        }, function (error) {
+            console.log("error:" + error.code);
+            deferred.reject();
+        });
 
-      promise.then(function () {
-          $ionicLoading.hide();
-          materialEffects();
-          $scope.setval($scope.totalStudents, batchStart, batchEnd);
-      }, function (reason) {
-          $ionicLoading.hide();
-          alert('Failed: ' + reason);
-      }, function (update) {
-          $ionicLoading.hide();
-          alert('Got notification: ' + update);
-      });
+        return deferred.promise;
+    };
 
-      $scope.showConfirm = function () {
-          var confirmPopup = $ionicPopup.confirm({
-              title: 'Confirm Submit',
-              template: 'Are you sure you want to submit this list?'
-          });
-          confirmPopup.then(function (res) {
-              if (res) {
-                  console.log('You are sure');
-                  $ionicLoading.show({ template: 'Updating attendance...' });
-                  $scope.updateAttendance();
-                  $state.go("viewAttendance", { selected: selectedOptions, totalStudents:$scope.totalStudents });
-              } else {
-                  console.log('You are not sure');
-              }
-          });
-      };
+    var promise = getNo();
 
-      $scope.updateAttendance = function () {
-          var absent = $scope.selected.sort();
+    promise.then(function () {
+        $ionicLoading.hide();
+        materialEffects();
+        $scope.setval($scope.totalStudents, batchStart, batchEnd);
+    }, function (reason) {
+        $ionicLoading.hide();
+        alert('Failed: ' + reason);
+    }, function (update) {
+        $ionicLoading.hide();
+        alert('Got notification: ' + update);
+    });
 
-          var ref = new Firebase(FirebaseUrl.root);
-          ref.child("attendances").push({
-              absentno: absent,
-              batch: "2012-16",     //change later
-              date: selectedOptions.date,
-              dept: selectedOptions.dept.id,
-              semester: selectedOptions.semester.id,
-              subid: selectedOptions.subject.id,
-              type: selectedOptions.type.id,
-              year: selectedOptions.year.id
-          });
+    $scope.showConfirm = function () {
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Confirm Submit',
+            template: 'Are you sure you want to submit this list?'
+        });
+        confirmPopup.then(function (res) {
+            if (res) {
+                console.log('You are sure');
+                $ionicLoading.show({ template: 'Updating attendance...' });
+                $scope.updateAttendance();
+                $state.go("viewAttendance", { selected: selectedOptions, totalStudents: $scope.totalStudents });
+            } else {
+                console.log('You are not sure');
+            }
+        });
+    };
 
-          $ionicLoading.hide();
-          console.log("successfully took attendance");
-          
-      };
+    $scope.updateAttendance = function () {
+        var absent = $scope.selected.sort();
 
-      $scope.setval = function (rollno, bStart, bEnd) {
-          $scope.items = [];
-          
-          if (bStart && bEnd)
-              for(var i = bStart; i<=bEnd ; i++)
-                  $scope.items.push(i);
-          else
-              for (var i = 1; i <= rollno ; i++)
-                  $scope.items.push(i);
-      };
+        var ref = new Firebase(FirebaseUrl.root);
+        ref.child("attendances").push({
+            absentno: absent,
+            batch: "2012-16",     //change later
+            date: selectedOptions.date,
+            dept: selectedOptions.dept.id,
+            semester: selectedOptions.semester.id,
+            subid: selectedOptions.subject.id,
+            type: selectedOptions.type.id,
+            year: selectedOptions.year.id
+        });
 
-      $scope.toggle = function (item, list) {
-          var idx = list.indexOf(item);
-          if (idx > -1) {
-              list.splice(idx, 1);
-          }
-          
-          else {
-              list.push(item);
-          }
-      };
+        $ionicLoading.hide();
+        console.log("successfully took attendance");
 
-      $scope.exists = function (item, list) {
-          return list.indexOf(item) > -1;
-      };
+    };
 
-  })
+    $scope.setval = function (rollno, bStart, bEnd) {
+        $scope.items = [];
+        var i;
+        if (bStart && bEnd)
+            for (i = bStart; i <= bEnd ; i++)
+                $scope.items.push(i);
+        else
+            for (i = 1; i <= rollno ; i++)
+                $scope.items.push(i);
+    };
 
-.controller("ViewAttendanceCtrl", function ($scope, $firebaseArray, $stateParams, $ionicPopup, FirebaseUrl, $q, $ionicLoading, $ionicPlatform, $state) {
+    $scope.toggle = function (item, list) {
+        var idx = list.indexOf(item);
+        if (idx > -1) {
+            list.splice(idx, 1);
+        }
+
+        else {
+            list.push(item);
+        }
+    };
+
+    $scope.exists = function (item, list) {
+        return list.indexOf(item) > -1;
+    };
+
+})
+
+.controller("ViewAttendanceCtrl", function ($scope, $stateParams, FirebaseUrl, $q, $ionicLoading, $ionicPlatform, $state) {
 
     var selectedOptions = $stateParams.selected;
     var totalStudents = $stateParams.totalStudents;
-    
+
     $scope.subjectName = selectedOptions.subject.value;
 
     var cumulativeAttendance = [];
 
     for (var i = 0; i < totalStudents; i++)
-        cumulativeAttendance.push(0); 
+        cumulativeAttendance.push(0);
 
     var totalLectures = 0;
     var computeAttendance = function () {
@@ -523,16 +516,16 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services','pick
         ref.child("attendances").on("value", function (snapshot) {
             snapshot.forEach(function (data) {
 
-                if (selectedOptions.dept.id == data.val().dept && selectedOptions.year.id == data.val().year && selectedOptions.semester.id == data.val().semester && selectedOptions.subject.id == data.val().subid && selectedOptions.type.id == data.val().type)
-                {
+                if (selectedOptions.dept.id == data.val().dept && selectedOptions.year.id == data.val().year && selectedOptions.semester.id == data.val().semester && selectedOptions.subject.id == data.val().subid && selectedOptions.type.id == data.val().type) {
                     totalLectures++;
-                    for (var i = 0; i < totalStudents; i++)
+                    var i;
+                    for (i = 0; i < totalStudents; i++)
                         cumulativeAttendance[i]++;
                     var absentno = data.val().absentno;
-                    if (absentno != undefined) //absentno undefined means all present
+                    if (absentno !== undefined) //absentno undefined means all present
                     {
                         var arraylength = absentno.length;
-                        for (var i = 0; i < arraylength ; i++)
+                        for (i = 0; i < arraylength ; i++)
                             cumulativeAttendance[absentno[i] - 1]--;
                     }
                     //else all present
@@ -567,8 +560,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services','pick
 
         $state.go('select');
 
-    },100);
-        
+    }, 100);
+
 
 });
-
