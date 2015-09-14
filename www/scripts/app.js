@@ -2,7 +2,7 @@
 
 angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.services', 'ionic-material'])
 
-.run(function ($ionicPlatform, $rootScope, $location, Auth, $ionicLoading) {
+.run(function ($ionicPlatform, $rootScope, $location, Auth) {
     $ionicPlatform.ready(function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -14,10 +14,8 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
             StatusBar.styleDefault();
         }
 
-
         //for solving windows phone issues
         Firebase.INTERNAL.forceWebSockets(); 
-
 
         Auth.$onAuth(function (authData) {
             if (authData) {
@@ -29,12 +27,10 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
             }
         });
 
-
         $rootScope.logout = function () {
             console.log("Logging out from the app");
             Auth.$unauth();
         }
-
 
         $rootScope.$on("$stateChangeError", function (event, toState, toParams, fromState, fromParams, error) {
             // We can catch the error thrown when the $requireAuth promise is rejected
@@ -43,9 +39,6 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
                 $location.path("/login");
             }
         });
-
-       
-
     });
 })
 
@@ -132,9 +125,6 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
                 }]
         }
     })
-
-
-
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/login');
