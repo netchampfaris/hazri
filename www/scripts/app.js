@@ -1,6 +1,6 @@
 
 
-angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.services', 'ionic-material'])
+angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.services', 'hazri.filters', 'ionic-material'])
 
 .run(function ($ionicPlatform, $rootScope, $location, Auth) {
     $ionicPlatform.ready(function () {
@@ -112,7 +112,9 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
         controller: 'ViewAttendanceCtrl',
         params: {
             "selected": null,
-            "totalStudents":0
+            "totalStudents":0,
+            "bStart":null,
+            "bEnd":null
         },
         resolve: {
             // controller will not be loaded until $requireAuth resolves
@@ -124,6 +126,12 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
                     return Auth.$requireAuth();
                 }]
         }
+    })
+
+    .state('studentview', {
+        url: "/studentview",
+        templateUrl: "templates/student_view.html",
+        controller: 'StudentViewCtrl'  
     })
 
     // if none of the above states are matched, use this as the fallback

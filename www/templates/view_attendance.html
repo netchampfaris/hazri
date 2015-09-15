@@ -4,15 +4,16 @@
             <div class="item item-text-wrap">
                 Subject: {{ subjectName }} <br />
                 Total Lectures: {{ totalLectures }}
+                Batch: {{ batchinfo.bno }}
             </div>
         </div>
         <div class="row header">
             <div class="col">Roll No</div>
             <div class="col">Cumulative Attendance</div>
         </div>
-        <div class="row" ng-repeat="item in items track by $index">
-            <div class="col">{{ $index +1 }}</div>
-            <div class="col">{{ item }}</div>
+        <div class="row" ng-repeat="item in items | batch:batchinfo">
+            <div class="col">{{ item.roll }}</div>
+            <div class="col">{{ item.att }}</div>
         </div>
     </ion-content>
 </ion-view>

@@ -6,10 +6,10 @@
                 <div class="item item-icon-right ink" ng-click="showYearOptions()">Year<span class="item-note">{{ selected.year.value }}</span><i class="icon ion-chevron-right icon-accessory"></i></div>
                 <div class="item item-icon-right ink" ng-click="showSemOptions()">Semester<span class="item-note">{{ selected.semester.value }}</span><i class="icon ion-chevron-right icon-accessory"></i></div>
                 <div class="item item-icon-right ink" ng-click="showTypeOptions()">Type<span class="item-note">{{ selected.type.value }}</span><i class="icon ion-chevron-right icon-accessory"></i></div>
-                <div class="item item-icon-right ink" ng-click="showBatchOptions()" ng-show="selected.type.id == 'pr'" ng-hide="selected.type.id == 'th'">Batch<span class="item-note">{{ selected.batchno.value }}</span><i class="icon ion-chevron-right icon-accessory"></i></div>
+                <div class="item item-icon-right ink" ng-click="showBatchOptions()" ng-show="selected.type.id == 'pr'" ng-hide="selected.type.id == 'th' || !selected.type ">Batch<span class="item-note">{{ selected.batchno.value }}</span><i class="icon ion-chevron-right icon-accessory"></i></div>
                 <div class="item item-icon-right ink" ng-click="showSubOptions()">Subject<span class="item-note">{{ selected.subject.value }}</span><i class="icon ion-chevron-right icon-accessory"></i></div>
                 <div class="item item-icon-right ink" ng-click="opendateModal()">Date<span class="item-note">{{ selected.date | date}}</span><i class="icon ion-chevron-right icon-accessory"></i></div>
-                <button class="button button-block action-button button-positive ink" ng-show="allSelected" ui-sref="attendance({selected:selected})">Take attendance</button>
+                <button class="button button-block action-button button-positive ink" ng-show="allSelected" ng-click="gotoAtt(selected)">Take attendance</button>
             </div>
         </ion-list>    
     </ion-content>
