@@ -2,7 +2,7 @@
 
 angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.services', 'hazri.filters', 'ionic-material'])
 
-.run(function ($ionicPlatform, $rootScope, $location, Auth) {
+.run(function ($ionicPlatform, $rootScope, $location, Auth,$ionicPopup) {
     $ionicPlatform.ready(function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -28,8 +28,18 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
         });
 
         $rootScope.logout = function () {
-            console.log("Logging out from the app");
-            Auth.$unauth();
+            var confirmPopup = $ionicPopup.confirm({
+            title: 'Logout',
+            template: 'Are you sure you want to logout?'
+            });
+            confirmPopup.then(function (res) {
+                if (res) {
+                    console.log("Logging out from the app");
+                    Auth.$unauth();
+                } else {
+                    console.log("logout cancelled");
+                }
+            });
         }
 
         $rootScope.$on("$stateChangeError", function (event, toState, toParams, fromState, fromParams, error) {
