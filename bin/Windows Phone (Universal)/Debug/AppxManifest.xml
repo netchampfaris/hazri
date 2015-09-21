@@ -8,7 +8,7 @@
     For more information on package manifest files, see http://go.microsoft.com/fwlink/?LinkID=241727
   -->
   <Identity Name="io.cordova.myappc8ac77" Publisher="CN=$username$" Version="1.0.0.0" ProcessorArchitecture="x86" />
-  <mp:PhoneIdentity PhoneProductId="958059b0-54c7-11e5-a038-c9a623466872" PhonePublisherId="db093ed5-53b1-45f7-af72-751e8f36ab80" />
+  <mp:PhoneIdentity PhoneProductId="3f9bc5c0-5f94-11e5-991e-8d8c781b8ba2" PhonePublisherId="db093ed5-53b1-45f7-af72-751e8f36ab80" />
   <Properties>
     <DisplayName>HazriApp</DisplayName>
     <PublisherDisplayName>Apache Cordova Team</PublisherDisplayName>

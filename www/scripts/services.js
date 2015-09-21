@@ -12,4 +12,22 @@ angular.module('hazri.services', ['firebase'])
     return {
         root: "https://hazri.firebaseio.com/"
     };
+})
+
+.factory("AttendanceService", function ($q) {
+    
+    var getAttendances = function () {
+
+        var deferred = $q.defer();
+
+        localforage.getItem('attendances').then(function (data) {
+            deferred.resolve(data);
+        });
+
+        return deferred.promise;
+    };
+
+    return {
+        getAttendances: getAttendances
+    }
 });

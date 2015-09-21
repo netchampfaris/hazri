@@ -1,0 +1,62 @@
+﻿<ion-view title="Dashboard" has-subheader="true" ng-class="{'bar-subheader-slide-away': slideHeader}">
+
+    <ion-header-bar class="bar-light bar-subheader">
+        <h5 class="title">Your attendances</h5>
+        <button class="button button-clear" ng-click="clearData()">Clear data!</button>
+    </ion-header-bar>
+    <ion-content class="has-subheader" scroll-watch>
+        <div class="list card" ng-repeat="att in attendances track by $index">
+            <div class="item item-icon-left item-dark">
+                <i class="icon ion-card"></i>
+                <h2 class="light">{{ att.subid.value }}</h2>
+                <h4 class="light">{{ att.date | date:'d MMMM, yyyy' }}</h4>
+            </div>
+            <div class="item item-body" style="padding:0">
+                <div class="row">
+                    <div class="col">
+                        <div class="col-info">
+                            {{ att.year.id | uppercase }} {{ att.dept.value }}
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="col-info">{{ att.semester.value }}</div>
+                    </div>
+                    <div class="col">
+                        <div class="col-info">{{ att.batch }}</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="col-info"> {{ att.type.value }} </div>
+                    </div>
+                    <div class="col" ng-show="att.batchno">
+                        <div class="col-info">
+                            Batch no : {{ att.batchno.id }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="col-info">
+                            Absentees : <span ng-repeat="no in att.absentno">{{no}}  </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a class="item item-icon-left assertive" href="#" ng-click="showCumAtt(att)">
+                <i class="icon ion-android-list"></i>
+                Show cumulative attendance
+            </a>
+        </div>
+        <div class="padding"></div>
+    </ion-content>
+    <div class="float-button">
+        <span class="content">
+        </span>
+        <span class="height-fix">
+            <a ui-sref="select" class="content">
+                <i class="ion-android-create"></i>
+            </a>
+        </span>
+    </div>
+</ion-view>

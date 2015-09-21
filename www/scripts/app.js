@@ -1,8 +1,6 @@
+angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.services', 'hazri.filters', 'ngCordova', 'LocalForageModule'])
 
-
-angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.services', 'hazri.filters', 'ionic-material'])
-
-.run(function ($ionicPlatform, $rootScope, $location, Auth,$ionicPopup) {
+.run(function ($ionicPlatform, $rootScope, $location, Auth, $ionicPopup) {
     $ionicPlatform.ready(function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -15,12 +13,13 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
         }
 
         //for solving windows phone issues
-        Firebase.INTERNAL.forceWebSockets(); 
+        Firebase.INTERNAL.forceWebSockets();
+
 
         Auth.$onAuth(function (authData) {
             if (authData) {
                 console.log("Logged in as:", authData.uid);
-                $location.path('/select');
+                $location.path('/main');
             } else {
                 console.log("Logged out");
                 $location.path('/login');
@@ -49,6 +48,7 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
                 $location.path("/login");
             }
         });
+
     });
 })
 
@@ -81,9 +81,26 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
         controller: 'LoginCtrl'
     })
 
+    .state('main', {
+        url: "/main",
+        templateUrl: "templates/dashboard.html",
+        controller: 'MainCtrl',
+        resolve: {
+            // controller will not be loaded until $requireAuth resolves
+            // Auth refers to our $firebaseAuth wrapper in the example above
+            "currentAuth": ["Auth",
+                function (Auth) {
+                    // $requireAuth returns a promise so the resolve waits for it to complete
+                    // If the promise is rejected, it will throw a $stateChangeError (see above)
+                    return Auth.$requireAuth();
+                }]
+        }
+    })
+
+
     .state('select', {
         url: "/select",
-        templateUrl: "templates/select.html",
+        templateUrl: "templates/select2.html",
         controller: 'SelectCtrl',
         resolve: {
             // controller will not be loaded until $requireAuth resolves
@@ -147,4 +164,25 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/login');
 
+})
+
+
+.directive('scrollWatch', function ($rootScope) {
+    return function (scope, elem, attr) {
+        var start = 0;
+        var threshold = 150;
+
+        elem.bind('scroll', function (e) {
+            if (e.detail.scrollTop - start > threshold) {
+                $rootScope.slideHeader = true;
+            } else {
+                $rootScope.slideHeader = false;
+            }
+            if ($rootScope.slideHeaderPrevious >= e.detail.scrollTop - start) {
+                $rootScope.slideHeader = false;
+            }
+            $rootScope.slideHeaderPrevious = e.detail.scrollTop - start;
+            $rootScope.$apply();
+        });
+    };
 });
