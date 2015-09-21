@@ -7,11 +7,42 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
         //if (window.cordova && window.cordova.plugins.Keyboard) {
         //    cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
         //}
+        //if (window.StatusBar) {
+        //    // org.apache.cordova.statusbar required
+        //    StatusBar.styleDefault();
+        //}
+
         if (window.StatusBar) {
-            // org.apache.cordova.statusbar required
-            StatusBar.styleDefault();
+            if (ionic.Platform.isAndroid()) {
+                StatusBar.backgroundColorByHexString("#608628");
+            } else {
+                StatusBar.styleLightContent();
+            }
         }
 
+        if (window.plugins && window.plugins.AdMob) {
+            var admob_key = device.platform == "Android" ? "pub-7044182556888101" : "";
+            var admob = window.plugins.AdMob;
+            admob.createBannerView(
+                {
+                    'publisherId': admob_key,
+                    'adSize': admob.AD_SIZE.BANNER,
+                    'bannerAtTop': false
+                },
+                function () {
+                    admob.requestAd(
+                        { 'isTesting': false },
+                        function () {
+                            admob.showAd(true);
+                        },
+                        function () { console.log('failed to request ad'); }
+                    );
+                },
+                function () { console.log('failed to create banner view'); }
+            );
+        }
+
+        
         //for solving windows phone issues
         Firebase.INTERNAL.forceWebSockets();
 

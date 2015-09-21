@@ -14,5 +14,29 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "cordova-plugin-statusbar": {
+        "source": {
+            "type": "local",
+            "path": "D:\\Users\\FarisAnsari\\Downloads\\cordova-plugin-statusbar-master\\cordova-plugin-statusbar-master"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-admobpro": {
+        "source": {
+            "type": "local",
+            "path": "D:\\Users\\FarisAnsari\\Downloads\\cordova-admob-pro-master\\cordova-admob-pro-master"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-extension": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-extension"
+        },
+        "is_top_level": false,
+        "variables": {}
     }
 }

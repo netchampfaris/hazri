@@ -18,6 +18,9 @@
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\plugins\cordova-plugin-admobpro\GoogleAds.dll">
+      <PackagePath>GoogleAds.dll</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\images\SplashScreen.scale-100.png">
       <PackagePath>images\SplashScreen.scale-100.png</PackagePath>
     </AppxPackagedFile>
@@ -76,6 +79,9 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\img\icon.png">
       <PackagePath>www\img\icon.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\img\splash.png">
+      <PackagePath>www\img\splash.png</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\cordova-js-src\exec.js">
       <PackagePath>www\cordova-js-src\exec.js</PackagePath>
@@ -170,6 +176,9 @@
     <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\windows-js-compat\winstore-jscompat.js">
       <PackagePath>www\lib\windows-js-compat\winstore-jscompat.js</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\plugins\cordova-plugin-admobpro\www\AdMob.js">
+      <PackagePath>www\plugins\cordova-plugin-admobpro\www\AdMob.js</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\plugins\cordova-plugin-network-information\src\windows\NetworkInfoProxy.js">
       <PackagePath>www\plugins\cordova-plugin-network-information\src\windows\NetworkInfoProxy.js</PackagePath>
     </AppxPackagedFile>
@@ -178,6 +187,12 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\plugins\cordova-plugin-network-information\www\network.js">
       <PackagePath>www\plugins\cordova-plugin-network-information\www\network.js</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\plugins\cordova-plugin-statusbar\src\windows\StatusBarProxy.js">
+      <PackagePath>www\plugins\cordova-plugin-statusbar\src\windows\StatusBarProxy.js</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\plugins\cordova-plugin-statusbar\www\statusbar.js">
+      <PackagePath>www\plugins\cordova-plugin-statusbar\www\statusbar.js</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\scripts\app.js">
       <PackagePath>www\scripts\app.js</PackagePath>
@@ -236,6 +251,9 @@
     <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\templates\select.html">
       <PackagePath>www\templates\select.html</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\templates\select2.html">
+      <PackagePath>www\templates\select2.html</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\templates\signup.html">
       <PackagePath>www\templates\signup.html</PackagePath>
     </AppxPackagedFile>
@@ -262,6 +280,12 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\config.xml">
       <PackagePath>config.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\plugins\cordova-plugin-admobpro\AdMobPlugin.cs">
+      <PackagePath>plugins\cordova-plugin-admobpro\AdMobPlugin.cs</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\plugins\cordova-plugin-admobpro\AdMobOptions.cs">
+      <PackagePath>plugins\cordova-plugin-admobpro\AdMobOptions.cs</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\build\phone\debug\x86\resources.pri">
       <PackagePath>resources.pri</PackagePath>

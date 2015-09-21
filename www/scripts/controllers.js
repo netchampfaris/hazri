@@ -5,7 +5,6 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services', 'pic
 .controller("LoginCtrl", function ($scope, $ionicModal, $state, $ionicLoading, $ionicHistory, $ionicPopup, $q, FirebaseUrl) {
     var ref = new Firebase(FirebaseUrl.root);
 
-
     $ionicModal.fromTemplateUrl('templates/signup.html', function (modal) {
         $scope.modal = modal;
     }, {
@@ -134,7 +133,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services', 'pic
 
 })
 
-.controller("MainCtrl", function ($scope, Firebase, FirebaseUrl, AttendanceService, $ionicPlatform, $ionicPopup, $ionicLoading,$state, $ionicScrollDelegate, $rootScope, $cordovaNetwork) {
+.controller("MainCtrl", function ($scope, Firebase, FirebaseUrl, AttendanceService, $ionicPlatform, $ionicPopup, $ionicLoading, $state, $ionicScrollDelegate, $rootScope, $cordovaNetwork) {
 
     $rootScope.slideHeader = false;
     $rootScope.slideHeaderPrevious = 0;

@@ -9,218 +9,263 @@
     <SolutionConfiguration>debug|x64</SolutionConfiguration>
     <PackageArchitecture>x64</PackageArchitecture>
     <PackageIdentityName>io.cordova.myappc8ac77</PackageIdentityName>
-    <IntermediateOutputPath>D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\build\windows\bld\</IntermediateOutputPath>
+    <IntermediateOutputPath>D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\build\windows\bld\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <AppXManifest Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\build\windows\debug\x64\AppxManifest.xml">
+    <AppXManifest Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\build\windows\debug\x64\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\images\SplashScreen.scale-100.png">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\plugins\cordova-plugin-admobpro\GoogleAds.dll">
+      <PackagePath>GoogleAds.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\images\SplashScreen.scale-100.png">
       <PackagePath>images\SplashScreen.scale-100.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\images\Square150x150Logo.scale-100.png">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\images\Square150x150Logo.scale-100.png">
       <PackagePath>images\Square150x150Logo.scale-100.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\images\Square30x30Logo.scale-100.png">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\images\Square30x30Logo.scale-100.png">
       <PackagePath>images\Square30x30Logo.scale-100.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\images\Square310x310Logo.scale-100.png">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\images\Square310x310Logo.scale-100.png">
       <PackagePath>images\Square310x310Logo.scale-100.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\images\Square44x44Logo.scale-100.png">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\images\Square44x44Logo.scale-100.png">
       <PackagePath>images\Square44x44Logo.scale-100.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\images\Square70x70Logo.scale-100.png">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\images\Square70x70Logo.scale-100.png">
       <PackagePath>images\Square70x70Logo.scale-100.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\images\Square71x71Logo.scale-100.png">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\images\Square71x71Logo.scale-100.png">
       <PackagePath>images\Square71x71Logo.scale-100.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\images\StoreLogo.scale-100.png">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\images\StoreLogo.scale-100.png">
       <PackagePath>images\StoreLogo.scale-100.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\images\Wide310x150Logo.scale-100.png">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\images\Wide310x150Logo.scale-100.png">
       <PackagePath>images\Wide310x150Logo.scale-100.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\img\icon.png">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\img\icon.png">
       <PackagePath>www\img\icon.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\cordova-js-src\exec.js">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\img\splash.png">
+      <PackagePath>www\img\splash.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\cordova-js-src\exec.js">
       <PackagePath>www\cordova-js-src\exec.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\cordova-js-src\platform.js">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\cordova-js-src\platform.js">
       <PackagePath>www\cordova-js-src\platform.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\cordova.js">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\cordova.js">
       <PackagePath>www\cordova.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\cordova_plugins.js">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\cordova_plugins.js">
       <PackagePath>www\cordova_plugins.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\lib\angular-fire\angularfire.js">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\angular-fire\angularfire.js">
       <PackagePath>www\lib\angular-fire\angularfire.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\lib\angular-fire\angularfire.min.js">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\angular-fire\angularfire.min.js">
       <PackagePath>www\lib\angular-fire\angularfire.min.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\lib\firebase\firebase.js">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\angular-localforage\angular-localForage.min.js">
+      <PackagePath>www\lib\angular-localforage\angular-localForage.min.js</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\angular-localforage\localforage.min.js">
+      <PackagePath>www\lib\angular-localforage\localforage.min.js</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\firebase\firebase.js">
       <PackagePath>www\lib\firebase\firebase.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\lib\ion-md-input\ion-md-input.min.js">
-      <PackagePath>www\lib\ion-md-input\ion-md-input.min.js</PackagePath>
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\highcharts\highcharts-ng.js">
+      <PackagePath>www\lib\highcharts\highcharts-ng.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\lib\ionic-material\ionic.material.min.js">
-      <PackagePath>www\lib\ionic-material\ionic.material.min.js</PackagePath>
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\highcharts\highcharts.js">
+      <PackagePath>www\lib\highcharts\highcharts.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\lib\ionic\js\angular-ui\angular-ui-router.js">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\highcharts\standalone-framework.js">
+      <PackagePath>www\lib\highcharts\standalone-framework.js</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\ionic\js\angular-ui\angular-ui-router.js">
       <PackagePath>www\lib\ionic\js\angular-ui\angular-ui-router.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\lib\ionic\js\angular-ui\angular-ui-router.min.js">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\ionic\js\angular-ui\angular-ui-router.min.js">
       <PackagePath>www\lib\ionic\js\angular-ui\angular-ui-router.min.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\lib\ionic\js\angular\angular-animate.js">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\ionic\js\angular\angular-animate.js">
       <PackagePath>www\lib\ionic\js\angular\angular-animate.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\lib\ionic\js\angular\angular-animate.min.js">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\ionic\js\angular\angular-animate.min.js">
       <PackagePath>www\lib\ionic\js\angular\angular-animate.min.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\lib\ionic\js\angular\angular-resource.js">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\ionic\js\angular\angular-resource.js">
       <PackagePath>www\lib\ionic\js\angular\angular-resource.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\lib\ionic\js\angular\angular-resource.min.js">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\ionic\js\angular\angular-resource.min.js">
       <PackagePath>www\lib\ionic\js\angular\angular-resource.min.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\lib\ionic\js\angular\angular-sanitize.js">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\ionic\js\angular\angular-sanitize.js">
       <PackagePath>www\lib\ionic\js\angular\angular-sanitize.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\lib\ionic\js\angular\angular-sanitize.min.js">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\ionic\js\angular\angular-sanitize.min.js">
       <PackagePath>www\lib\ionic\js\angular\angular-sanitize.min.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\lib\ionic\js\angular\angular.js">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\ionic\js\angular\angular.js">
       <PackagePath>www\lib\ionic\js\angular\angular.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\lib\ionic\js\angular\angular.min.js">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\ionic\js\angular\angular.min.js">
       <PackagePath>www\lib\ionic\js\angular\angular.min.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\lib\ionic\js\ionic-angular.js">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\ionic\js\ionic-angular.js">
       <PackagePath>www\lib\ionic\js\ionic-angular.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\lib\ionic\js\ionic-angular.min.js">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\ionic\js\ionic-angular.min.js">
       <PackagePath>www\lib\ionic\js\ionic-angular.min.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\lib\ionic\js\ionic.bundle.js">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\ionic\js\ionic.bundle.js">
       <PackagePath>www\lib\ionic\js\ionic.bundle.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\lib\ionic\js\ionic.bundle.min.js">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\ionic\js\ionic.bundle.min.js">
       <PackagePath>www\lib\ionic\js\ionic.bundle.min.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\lib\ionic\js\ionic.js">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\ionic\js\ionic.js">
       <PackagePath>www\lib\ionic\js\ionic.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\lib\ionic\js\ionic.min.js">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\ionic\js\ionic.min.js">
       <PackagePath>www\lib\ionic\js\ionic.min.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\lib\material-light\material.min.js">
-      <PackagePath>www\lib\material-light\material.min.js</PackagePath>
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\ngCordova\ng-cordova.min.js">
+      <PackagePath>www\lib\ngCordova\ng-cordova.min.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\lib\windows-js-compat\winstore-jscompat.js">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\pickadate\js\angular-pickadate.js">
+      <PackagePath>www\lib\pickadate\js\angular-pickadate.js</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\windows-js-compat\winstore-jscompat.js">
       <PackagePath>www\lib\windows-js-compat\winstore-jscompat.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\scripts\app.js">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\plugins\cordova-plugin-admobpro\www\AdMob.js">
+      <PackagePath>www\plugins\cordova-plugin-admobpro\www\AdMob.js</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\plugins\cordova-plugin-network-information\src\windows\NetworkInfoProxy.js">
+      <PackagePath>www\plugins\cordova-plugin-network-information\src\windows\NetworkInfoProxy.js</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\plugins\cordova-plugin-network-information\www\Connection.js">
+      <PackagePath>www\plugins\cordova-plugin-network-information\www\Connection.js</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\plugins\cordova-plugin-network-information\www\network.js">
+      <PackagePath>www\plugins\cordova-plugin-network-information\www\network.js</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\plugins\cordova-plugin-statusbar\src\windows\StatusBarProxy.js">
+      <PackagePath>www\plugins\cordova-plugin-statusbar\src\windows\StatusBarProxy.js</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\plugins\cordova-plugin-statusbar\www\statusbar.js">
+      <PackagePath>www\plugins\cordova-plugin-statusbar\www\statusbar.js</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\scripts\app.js">
       <PackagePath>www\scripts\app.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\scripts\controllers.js">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\scripts\controllers.js">
       <PackagePath>www\scripts\controllers.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\scripts\index.js">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\scripts\filters.js">
+      <PackagePath>www\scripts\filters.js</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\scripts\index.js">
       <PackagePath>www\scripts\index.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\scripts\platformOverrides.js">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\scripts\platformOverrides.js">
       <PackagePath>www\scripts\platformOverrides.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\scripts\services.js">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\scripts\services.js">
       <PackagePath>www\scripts\services.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\scripts\winstore-jscompat.js">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\scripts\winstore-jscompat.js">
       <PackagePath>www\scripts\winstore-jscompat.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\css\index.css">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\css\index.css">
       <PackagePath>www\css\index.css</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\lib\ion-md-input\ion-md-input.min.css">
-      <PackagePath>www\lib\ion-md-input\ion-md-input.min.css</PackagePath>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\lib\ionic-material\ionic.material.min.css">
-      <PackagePath>www\lib\ionic-material\ionic.material.min.css</PackagePath>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\lib\ionic\css\ionic.css">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\ionic\css\ionic.css">
       <PackagePath>www\lib\ionic\css\ionic.css</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\lib\ionic\css\ionic.min.css">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\ionic\css\ionic.min.css">
       <PackagePath>www\lib\ionic\css\ionic.min.css</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\lib\material-light\material.min.css">
-      <PackagePath>www\lib\material-light\material.min.css</PackagePath>
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\pickadate\css\angular-pickadate.css">
+      <PackagePath>www\lib\pickadate\css\angular-pickadate.css</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\lib\material-light\material2.min.css">
-      <PackagePath>www\lib\material-light\material2.min.css</PackagePath>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\img\login.jpg">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\img\login.jpg">
       <PackagePath>www\img\login.jpg</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\index.html">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\index.html">
       <PackagePath>www\index.html</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\templates\attendance.html">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\templates\attendance.html">
       <PackagePath>www\templates\attendance.html</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\templates\login.html">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\templates\dashboard.html">
+      <PackagePath>www\templates\dashboard.html</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\templates\date_modal.html">
+      <PackagePath>www\templates\date_modal.html</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\templates\login.html">
       <PackagePath>www\templates\login.html</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\templates\options_modal.html">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\templates\options_modal.html">
       <PackagePath>www\templates\options_modal.html</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\templates\select.html">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\templates\select.html">
       <PackagePath>www\templates\select.html</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\templates\select2.html">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\templates\select2.html">
       <PackagePath>www\templates\select2.html</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\templates\signup.html">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\templates\signup.html">
       <PackagePath>www\templates\signup.html</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\templates\view_attendance.html">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\templates\student_view.html">
+      <PackagePath>www\templates\student_view.html</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\templates\view_attendance.html">
       <PackagePath>www\templates\view_attendance.html</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\lib\ionic\fonts\ionicons.eot">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\ionic\fonts\ionicons.eot">
       <PackagePath>www\lib\ionic\fonts\ionicons.eot</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\lib\ionic\fonts\ionicons.svg">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\ionic\fonts\ionicons.svg">
       <PackagePath>www\lib\ionic\fonts\ionicons.svg</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\lib\ionic\fonts\ionicons.ttf">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\ionic\fonts\ionicons.ttf">
       <PackagePath>www\lib\ionic\fonts\ionicons.ttf</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\lib\ionic\fonts\ionicons.woff">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\ionic\fonts\ionicons.woff">
       <PackagePath>www\lib\ionic\fonts\ionicons.woff</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\www\lib\ionic\version.json">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\www\lib\ionic\version.json">
       <PackagePath>www\lib\ionic\version.json</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\config.xml">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\config.xml">
       <PackagePath>config.xml</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\HazriApp2\hazri\platforms\windows\build\windows\debug\x64\resources.pri">
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\plugins\cordova-plugin-admobpro\AdMobPlugin.cs">
+      <PackagePath>plugins\cordova-plugin-admobpro\AdMobPlugin.cs</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\plugins\cordova-plugin-admobpro\AdMobOptions.cs">
+      <PackagePath>plugins\cordova-plugin-admobpro\AdMobOptions.cs</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Users\FarisAnsari\Documents\capp\Hazri4\hazri\platforms\windows\build\windows\debug\x64\resources.pri">
       <PackagePath>resources.pri</PackagePath>
     </AppxPackagedFile>
   </ItemGroup>

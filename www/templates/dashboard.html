@@ -1,8 +1,7 @@
 ﻿<ion-view title="Dashboard" has-subheader="true" ng-class="{'bar-subheader-slide-away': slideHeader}">
-
     <ion-header-bar class="bar-light bar-subheader">
-        <h5 class="title">Your attendances</h5>
-        <button class="button button-clear" ng-click="clearData()">Clear data!</button>
+        <h6 class="title" style="font-weight:200;font-size:medium">Your attendances</h6>
+        <button class="button button-icon button-clear ion-android-settings"></button>
     </ion-header-bar>
     <ion-content class="has-subheader" scroll-watch>
         <div class="list card" ng-repeat="att in attendances track by $index">
@@ -43,7 +42,7 @@
                     </div>
                 </div>
             </div>
-            <a class="item item-icon-left assertive" href="#" ng-click="showCumAtt(att)">
+            <a class="item item-icon-left positive" href="#" ng-click="showCumAtt(att)">
                 <i class="icon ion-android-list"></i>
                 Show cumulative attendance
             </a>

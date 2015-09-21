@@ -2,7 +2,7 @@
     <ion-content padding="true" scroll="true" class="has-header">
         <ion-list>
             <div ng-repeat="option in options">
-                <ion-item class="item item-icon-right item-stable"
+                <ion-item class="item item-icon-right"
                           ng-click="showOptions(option)"
                           ng-class="{active: isOptionShown(option)}"
                           ng-show="option.show == undefined || option.show">
@@ -17,7 +17,7 @@
                     {{item.value}}
                 </ion-item>
             </div>
-                <ion-item class="item item-icon-right item-stable"
+                <ion-item class="item item-icon-right"
                           ng-click="opendateModal()">
                     Date
                     <span class="item-note">{{ selected.date | date }}</span>
