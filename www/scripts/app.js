@@ -1,4 +1,6 @@
-angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.services', 'hazri.filters', 'ngCordova', 'LocalForageModule'])
+angular.module("ionic").provider("$ionicMaterialConfig",function(){var e=this;this.allPlatforms=!1,e.$get=function(){return e}}),angular.module("ionic").directive("button",["$ionicPlatform",function(e){return{restrict:"E",compile:function(n,t){t.hasOwnProperty("noRipple")||n.addClass("mdl-js-button mdl-js-ripple-effect"),e.ready(function(){componentHandler.upgradeElement(n[0],"MaterialButton"),componentHandler.upgradeElement(n[0],"MaterialRipple")})}}}]),angular.module("ionic").directive("ionTabNav",["$ionicPlatform",function(e){return{restrict:"E",compile:function(n,t){t.hasOwnProperty("noRipple")||n.addClass("mdl-tabs__tab"),e.ready(function(){componentHandler.upgradeElement(n[0],"MaterialButton"),componentHandler.upgradeElement(n[0],"MaterialRipple")})}}}]),angular.module("ionic").directive("ionTabs",["$ionicPlatform",function(e){return{restrict:"E",compile:function(n,t){t.hasOwnProperty("noRipple")||n.addClass("mdl-js-tabs mdl-js-ripple-effect"),e.ready(function(){componentHandler.upgradeElement(n[0],"MaterialTabs"),componentHandler.upgradeElement(n[0],"MaterialRipple")})}}}]);
+
+angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.services', 'hazri.filters', 'ngCordova', 'LocalForageModule','angular.filter'])
 
 .run(function ($ionicPlatform, $rootScope, $location, Auth, $ionicPopup) {
     $ionicPlatform.ready(function () {
@@ -14,7 +16,7 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
 
         if (window.StatusBar) {
             if (ionic.Platform.isAndroid()) {
-                StatusBar.backgroundColorByHexString("#608628");
+                StatusBar.backgroundColorByHexString("#388E3C");
             } else {
                 StatusBar.styleLightContent();
             }
@@ -59,8 +61,10 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
 
         $rootScope.logout = function () {
             var confirmPopup = $ionicPopup.confirm({
-            title: 'Logout',
-            template: 'Are you sure you want to logout?'
+            title: 'Logout ?',
+            template: '',
+            okType: 'default-primary-color text-primary-color',
+            okText: 'Logout'
             });
             confirmPopup.then(function (res) {
                 if (res) {
@@ -127,6 +131,26 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
                 }]
         }
     })
+
+    .state('details', {
+        url: "/details",
+        templateUrl: "templates/details.html",
+        controller: 'DetailCtrl',
+        params: {
+            "att":null
+        },
+        resolve: {
+            // controller will not be loaded until $requireAuth resolves
+            // Auth refers to our $firebaseAuth wrapper in the example above
+            "currentAuth": ["Auth",
+                function (Auth) {
+                    // $requireAuth returns a promise so the resolve waits for it to complete
+                    // If the promise is rejected, it will throw a $stateChangeError (see above)
+                    return Auth.$requireAuth();
+                }]
+        }
+    })
+
 
 
     .state('select', {

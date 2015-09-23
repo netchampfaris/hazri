@@ -1,55 +1,26 @@
 ﻿<ion-view title="Dashboard" has-subheader="true" ng-class="{'bar-subheader-slide-away': slideHeader}">
+    <ion-nav-buttons side="primary">
+        <button class="button button-icon button-clear ion-android-settings text-primary-color"></button>
+        <button class="button button-clear icon ion-log-out text-primary-color" ng-click="logout()"></button>
+    </ion-nav-buttons>
     <ion-header-bar class="bar-light bar-subheader">
         <h6 class="title" style="font-weight:200;font-size:medium">Your attendances</h6>
-        <button class="button button-icon button-clear ion-android-settings"></button>
     </ion-header-bar>
     <ion-content class="has-subheader" scroll-watch>
-        <div class="list card" ng-repeat="att in attendances track by $index">
-            <div class="item item-icon-left item-dark">
-                <i class="icon ion-card"></i>
-                <h2 class="light">{{ att.subid.value }}</h2>
-                <h4 class="light">{{ att.date | date:'d MMMM, yyyy' }}</h4>
+        <div class="list" ng-repeat="(key , value) in attendances | groupBy:'date'">
+            <div class="item item-divider">
+                {{key | date:'d MMMM, yyyy'}}
             </div>
-            <div class="item item-body" style="padding:0">
-                <div class="row">
-                    <div class="col">
-                        <div class="col-info">
-                            {{ att.year.id | uppercase }} {{ att.dept.value }}
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="col-info">{{ att.semester.value }}</div>
-                    </div>
-                    <div class="col">
-                        <div class="col-info">{{ att.batch }}</div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="col-info"> {{ att.type.value }} </div>
-                    </div>
-                    <div class="col" ng-show="att.batchno">
-                        <div class="col-info">
-                            Batch no : {{ att.batchno.id }}
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="col-info">
-                            Absentees : <span ng-repeat="no in att.absentno">{{no}}  </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <a class="item item-icon-left positive" href="#" ng-click="showCumAtt(att)">
-                <i class="icon ion-android-list"></i>
-                Show cumulative attendance
+            <a class="item item-icon-left" href="#" ng-repeat="att in value" ui-sref="details({att:att})">
+              <i class="icon ion-arrow-right-b secondary-text-color"></i>
+              <h2 class="primary-text-color">{{ att.subid.value }}</h2>
+              <p class="secondary-text-color">{{ att.year.id | uppercase }} {{ att.dept.value }}, {{ att.type.value }}</p>
             </a>
         </div>
-        <div class="padding"></div>
+        <div class="padding">
+        </div>
     </ion-content>
-    <div class="float-button">
+    <div class="float-button accent-color">
         <span class="content">
         </span>
         <span class="height-fix">

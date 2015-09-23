@@ -160,6 +160,12 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services', 'pic
     };
 
     
+})
+
+.controller("DetailCtrl", function ($scope, $stateParams, $state) {
+
+    $scope.att = $stateParams.att;
+
     $scope.showCumAtt = function (att) {
 
         console.log(att);

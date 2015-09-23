@@ -1,40 +1,76 @@
-﻿
+﻿angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.services', 'hazri.filters', 'ngCordova', 'LocalForageModule'])
 
-angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.services', 'ionic-material'])
-
-.run(function ($ionicPlatform, $rootScope, $location, Auth, $ionicLoading) {
+.run(function ($ionicPlatform, $rootScope, $location, Auth, $ionicPopup) {
     $ionicPlatform.ready(function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
         //if (window.cordova && window.cordova.plugins.Keyboard) {
         //    cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
         //}
+        //if (window.StatusBar) {
+        //    // org.apache.cordova.statusbar required
+        //    StatusBar.styleDefault();
+        //}
+
         if (window.StatusBar) {
-            // org.apache.cordova.statusbar required
-            StatusBar.styleDefault();
+            if (ionic.Platform.isAndroid()) {
+                StatusBar.backgroundColorByHexString("#608628");
+            } else {
+                StatusBar.styleLightContent();
+            }
         }
 
+        if (window.plugins && window.plugins.AdMob) {
+            var admob_key = device.platform == "Android" ? "pub-7044182556888101" : "";
+            var admob = window.plugins.AdMob;
+            admob.createBannerView(
+                {
+                    'publisherId': admob_key,
+                    'adSize': admob.AD_SIZE.BANNER,
+                    'bannerAtTop': false
+                },
+                function () {
+                    admob.requestAd(
+                        { 'isTesting': false },
+                        function () {
+                            admob.showAd(true);
+                        },
+                        function () { console.log('failed to request ad'); }
+                    );
+                },
+                function () { console.log('failed to create banner view'); }
+            );
+        }
 
+        
         //for solving windows phone issues
-        Firebase.INTERNAL.forceWebSockets(); 
+        Firebase.INTERNAL.forceWebSockets();
 
 
         Auth.$onAuth(function (authData) {
             if (authData) {
                 console.log("Logged in as:", authData.uid);
-                $location.path('/select');
+                $location.path('/main');
             } else {
                 console.log("Logged out");
                 $location.path('/login');
             }
         });
 
-
         $rootScope.logout = function () {
-            console.log("Logging out from the app");
-            Auth.$unauth();
+            var confirmPopup = $ionicPopup.confirm({
+            title: 'Logout',
+            template: 'Are you sure you want to logout?'
+            });
+            confirmPopup.then(function (res) {
+                if (res) {
+                    console.log("Logging out from the app");
+                    Auth.$unauth();
+                } else {
+                    console.log("logout cancelled");
+                }
+            });
         }
-
 
         $rootScope.$on("$stateChangeError", function (event, toState, toParams, fromState, fromParams, error) {
             // We can catch the error thrown when the $requireAuth promise is rejected
@@ -43,8 +79,6 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
                 $location.path("/login");
             }
         });
-
-       
 
     });
 })
@@ -78,9 +112,26 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
         controller: 'LoginCtrl'
     })
 
+    .state('main', {
+        url: "/main",
+        templateUrl: "templates/dashboard.html",
+        controller: 'MainCtrl',
+        resolve: {
+            // controller will not be loaded until $requireAuth resolves
+            // Auth refers to our $firebaseAuth wrapper in the example above
+            "currentAuth": ["Auth",
+                function (Auth) {
+                    // $requireAuth returns a promise so the resolve waits for it to complete
+                    // If the promise is rejected, it will throw a $stateChangeError (see above)
+                    return Auth.$requireAuth();
+                }]
+        }
+    })
+
+
     .state('select', {
         url: "/select",
-        templateUrl: "templates/select.html",
+        templateUrl: "templates/select2.html",
         controller: 'SelectCtrl',
         resolve: {
             // controller will not be loaded until $requireAuth resolves
@@ -119,7 +170,9 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
         controller: 'ViewAttendanceCtrl',
         params: {
             "selected": null,
-            "totalStudents":0
+            "totalStudents":0,
+            "bStart":null,
+            "bEnd":null
         },
         resolve: {
             // controller will not be loaded until $requireAuth resolves
@@ -133,10 +186,34 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
         }
     })
 
-
-
+    .state('studentview', {
+        url: "/studentview",
+        templateUrl: "templates/student_view.html",
+        controller: 'StudentViewCtrl'  
+    })
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/login');
 
+})
+
+
+.directive('scrollWatch', function ($rootScope) {
+    return function (scope, elem, attr) {
+        var start = 0;
+        var threshold = 150;
+
+        elem.bind('scroll', function (e) {
+            if (e.detail.scrollTop - start > threshold) {
+                $rootScope.slideHeader = true;
+            } else {
+                $rootScope.slideHeader = false;
+            }
+            if ($rootScope.slideHeaderPrevious >= e.detail.scrollTop - start) {
+                $rootScope.slideHeader = false;
+            }
+            $rootScope.slideHeaderPrevious = e.detail.scrollTop - start;
+            $rootScope.$apply();
+        });
+    };
 });
