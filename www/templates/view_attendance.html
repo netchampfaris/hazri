@@ -9,12 +9,12 @@
         </div>
         <div id="cumAttTable">
             <div class="row header">
-                <div class="col">Roll No</div>
-                <div class="col">Cumulative Attendance</div>
+                <div class="col col-25">Roll No</div>
+                <div class="col col-75">Cumulative Attendance</div>
             </div>
             <div class="row" ng-repeat="item in items | batch:batchinfo">
-                <div class="col">{{ item.roll }}</div>
-                <div class="col">{{ item.att }}</div>
+            <div class="col col-25"><strong>{{ item.roll }}</strong></div>
+                <div class="col col-75">{{ item.att }}</div>
             </div>
         </div>
     </ion-content>

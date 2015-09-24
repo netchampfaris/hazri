@@ -330,7 +330,19 @@
     "res\\screens\\android\\screen-mdpi-portrait.png",
     "plugins\\cordova-plugin-statusbar\\doc\\it\\index.md",
     "plugins\\cordova-plugin-network-information\\doc\\zh\\README.md",
-    "plugins\\cordova-plugin-network-information\\src\\blackberry10\\index.js"
+    "plugins\\cordova-plugin-network-information\\src\\blackberry10\\index.js",
+    ".git\\objects\\aa\\e76818be42f100c1630ccf7b83ffe84a792d3f",
+    ".git\\objects\\a7\\4c840263ac456f2dedc1cf5b7cf4328bd2a086",
+    ".git\\objects\\38\\4cfcd5116eb0879edd74a92c4634e36a44664c",
+    ".git\\objects\\a5\\e0b5d662a7237f8fcf190dd81cda00aa32d253",
+    ".git\\objects\\de\\6db7ec189ac014aaf65d358827d41ef0e59907",
+    ".git\\objects\\09\\8fee7743733a41c4d136d14210bd88e45d9d6a",
+    ".git\\objects\\d9\\376177846a0faa49c33ebef5f5a25e76d9d859",
+    ".git\\objects\\88\\4183504f2f40d1e703447392d8ba396ea7f261",
+    ".git\\objects\\50\\5cdaa1c77d8e8524a848ba07f018ae06282d3d",
+    ".git\\objects\\bf\\b34f73be7aa41595fbeece07ac1ecfa9702979",
+    ".git\\objects\\d3\\bd5db83fb9fd8bb7453d7fa4dc29fa06d96f5c",
+    ".git\\objects\\e7\\3115e7f10d7493624a485b5d512cddaefd2cf5"
   ],
   "deletedFilesIos": [],
   "addedPluginsIos": [
@@ -340,8 +352,7 @@
   ],
   "deletedPluginsIos": [],
   "changedFiles": [
-    "www\\scripts\\controllers.js",
-    "www\\css\\index.css"
+    "www\\templates\\view_attendance.html"
   ],
   "deletedFiles": [],
   "addedPlugins": [],
