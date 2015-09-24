@@ -1,44 +1,50 @@
 
-angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services', 'pickadate', 'highcharts-ng'])
+angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services', 'highcharts-ng'])
 
-
-.controller("LoginCtrl", function ($scope, $ionicModal, $state, $ionicLoading, $ionicHistory, $ionicPopup, $q, FirebaseUrl) {
+.controller("LoginCtrl", function ($scope, $state, $ionicLoading, $ionicHistory, $ionicPopup, $q, FirebaseUrl, $ionicPlatform, $cordovaNetwork, $ionicViewService) {
     var ref = new Firebase(FirebaseUrl.root);
-
-    $ionicModal.fromTemplateUrl('templates/signup.html', function (modal) {
-        $scope.modal = modal;
-    }, {
-        scope: $scope,
-        animation: 'slide-in-up'
-    });
 
     $scope.login = function (user) {
 
         if (user && user.email && user.password) {
+            
+            var isOnline;
+            $ionicPlatform.ready(function () {
+                isOnline = $cordovaNetwork.isOnline();
+            });
 
             var log = function () {
-                var deferred = $q.defer();
-                $ionicLoading.show({
-                    template: 'Signing in<br><br><ion-spinner icon="android"></ion-spinner>'
-                });
+                
+                if (isOnline) {
+                    var deferred = $q.defer();
+                    $ionicLoading.show({
+                        template: 'Signing in<br><br><ion-spinner icon="android"></ion-spinner>',
+                        animation: 'fade-in',
+                        showBackdrop: true,
+                        maxWidth: 200,
+                        showDelay: 500
+                    });
 
-                ref.authWithPassword({
-                    "email": user.email,
-                    "password": user.password
-                }, function (error, authData) {
-                    if (error) {
-                        deferred.reject();
-                    } else {
-                        console.log("Authenticated successfully with payload:", authData);
-                        $ionicHistory.nextViewOptions({
-                            disableAnimate: true,
-                            disableBack: true,
-                            historyRoot: true
-                        });
-                        deferred.resolve();
-                    }
-                });
-                return deferred.promise;
+                    ref.authWithPassword({
+                        "email": user.email,
+                        "password": user.password
+                    }, function (error, authData) {
+                        if (error) {
+                            deferred.reject();
+                        } else {
+                            console.log("Authenticated successfully with payload:", authData);
+                            $ionicHistory.nextViewOptions({
+                                disableAnimate: true,
+                                disableBack: true,
+                                historyRoot: true
+                            });
+                            deferred.resolve();
+                        }
+                    });
+                    return deferred.promise;
+                }
+                else
+                    $scope.showAlert("No Internet");
             };
 
             var promise = log();
@@ -109,31 +115,36 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services', 'pic
 
     //};
 
-    $scope.hideModal = function () {
-        $ionicLoading.hide();
-        var alertPopup = $ionicPopup.alert({
-            title: 'Successful',
-            template: 'Account created successfully. Now login.'
-        });
-        alertPopup.then(function (res) {
-            $scope.modal.hide();
-        });
-    };
+    //$scope.hideModal = function () {
+    //    $ionicLoading.hide();
+    //    var alertPopup = $ionicPopup.alert({
+    //        title: 'Successful',
+    //        template: 'Account created successfully. Now login.'
+    //    });
+    //    alertPopup.then(function (res) {
+    //        $scope.modal.hide();
+    //    });
+    //};
 
     $scope.showAlert = function (title, message) {
 
         var alertPopup = $ionicPopup.alert({
             title: title,
-            template: message
+            template: message,
+            okType: 'default-primary-color text-primary-color'
         });
         alertPopup.then(function (res) {
             console.log('ok clicked alert');
         });
     };
 
+    $ionicViewService.nextViewOptions({
+        disableBack: true
+    });
+
 })
 
-.controller("MainCtrl", function ($scope, Firebase, FirebaseUrl, AttendanceService, $ionicPlatform, $ionicPopup, $ionicLoading, $state, $ionicScrollDelegate, $rootScope, $cordovaNetwork) {
+.controller("MainCtrl", function ($scope, Firebase, FirebaseUrl, AttendanceService, $ionicPlatform, $ionicPopup, $ionicLoading, $state, $ionicScrollDelegate,$rootScope,$timeout) {
 
     $rootScope.slideHeader = false;
     $rootScope.slideHeaderPrevious = 0;
@@ -153,11 +164,6 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services', 'pic
             $ionicLoading.hide();
         });
     });
-
-    $scope.clearData = function () {
-
-        localforage.clear();
-    };
 
     
 })
@@ -187,7 +193,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services', 'pic
     
 })
 
-.controller("SelectCtrl", function ($scope, $ionicLoading, $ionicModal, $ionicPopup, $q, $state, FirebaseUrl) {
+.controller("SelectCtrl", function ($scope, $ionicLoading, $ionicPopup, $q, $state,$ionicScrollDelegate,$timeout, FirebaseUrl) {
     
     $scope.selected = {};
 
@@ -271,23 +277,37 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services', 'pic
         return $scope.shownOption === option;
     };
 
-    $ionicModal.fromTemplateUrl('templates/date_modal.html',
-        function (modal) {
-            $scope.datemodal = modal;
-        },
-    {
-        scope: $scope,
-        animation: 'slide-in-up'
-    });
+    function formatDate() {
+        var d = new Date(),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
 
-    $scope.opendateModal = function () {
-        $scope.datemodal.show();
-    };
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
 
-    $scope.closedateModal = function (date) {
-        $scope.datemodal.hide();
-        $scope.selected.date = date;
-    };
+        return [year, month, day].join('-');
+    }
+
+    $scope.selected.date = formatDate();
+    $scope.showDate = false;
+    $scope.toggleDate = function(){
+        $scope.showDate = !($scope.showDate);
+        if($scope.showDate)
+            $timeout(function () {
+                $ionicScrollDelegate.scrollBottom(true);
+            }, 200);
+        else
+            $timeout(function () {
+                $ionicScrollDelegate.scrollTop(true);
+            }, 200);
+    }
+    $scope.hideDate = function () {
+        $scope.showDate = false;
+        $timeout(function () {
+                $ionicScrollDelegate.scrollTop(true);
+            }, 200);
+    }
     
     $scope.showBatchOptions = function () {
         
@@ -471,7 +491,8 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services', 'pic
 
         var alertPopup = $ionicPopup.alert({
             title: title,
-            template: message
+            template: message,
+            okType: 'default-primary-color text-primary-color'
         });
         alertPopup.then(function (res) {
             console.log('ok clicked alert');
@@ -484,7 +505,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services', 'pic
 
 })
 
-.controller("AttendanceCtrl", function ($scope, $rootScope, $stateParams, $q, $ionicLoading, $ionicPopup, $state, FirebaseUrl, $ionicPlatform, $cordovaNetwork) {
+.controller("AttendanceCtrl", function ($scope, $rootScope, $stateParams, $q, $ionicLoading, $ionicPopup, $state, FirebaseUrl, $ionicPlatform, $cordovaNetwork, $ionicViewService) {
     var selectedOptions;
     var batchStart, batchEnd;
     $scope.$on('$ionicView.beforeEnter', function () {
@@ -544,7 +565,8 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services', 'pic
     $scope.showConfirm = function () {
         var confirmPopup = $ionicPopup.confirm({
             title: 'Confirm Submit',
-            template: 'Are you sure you want to submit this list?'
+            template: 'Are you sure you want to submit this list?',
+            okType: 'default-primary-color text-primary-color'
         });
         confirmPopup.then(function (res) {
             if (res) {
@@ -617,7 +639,8 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services', 'pic
         else {
             $ionicPopup.confirm({
                 title: "No Internet",
-                content: "Cannot send data without Internet"
+                content: "Cannot send data without Internet",
+                okType: 'default-primary-color text-primary-color'
             });
         }
     };
@@ -673,6 +696,11 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services', 'pic
     $scope.exists = function (item, list) {
         return list.indexOf(item) > -1;
     };
+
+    $ionicViewService.nextViewOptions({
+        disableBack: true
+    });
+
 
 })
 

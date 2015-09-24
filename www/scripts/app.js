@@ -1,6 +1,4 @@
-angular.module("ionic").provider("$ionicMaterialConfig",function(){var e=this;this.allPlatforms=!1,e.$get=function(){return e}}),angular.module("ionic").directive("button",["$ionicPlatform",function(e){return{restrict:"E",compile:function(n,t){t.hasOwnProperty("noRipple")||n.addClass("mdl-js-button mdl-js-ripple-effect"),e.ready(function(){componentHandler.upgradeElement(n[0],"MaterialButton"),componentHandler.upgradeElement(n[0],"MaterialRipple")})}}}]),angular.module("ionic").directive("ionTabNav",["$ionicPlatform",function(e){return{restrict:"E",compile:function(n,t){t.hasOwnProperty("noRipple")||n.addClass("mdl-tabs__tab"),e.ready(function(){componentHandler.upgradeElement(n[0],"MaterialButton"),componentHandler.upgradeElement(n[0],"MaterialRipple")})}}}]),angular.module("ionic").directive("ionTabs",["$ionicPlatform",function(e){return{restrict:"E",compile:function(n,t){t.hasOwnProperty("noRipple")||n.addClass("mdl-js-tabs mdl-js-ripple-effect"),e.ready(function(){componentHandler.upgradeElement(n[0],"MaterialTabs"),componentHandler.upgradeElement(n[0],"MaterialRipple")})}}}]);
-
-angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.services', 'hazri.filters', 'ngCordova', 'LocalForageModule','angular.filter'])
+angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.services', 'hazri.filters', 'ngCordova','pickadate' ,'angular.filter'])
 
 .run(function ($ionicPlatform, $rootScope, $location, Auth, $ionicPopup) {
     $ionicPlatform.ready(function () {
@@ -14,13 +12,13 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
         //    StatusBar.styleDefault();
         //}
 
-        if (window.StatusBar) {
-            if (ionic.Platform.isAndroid()) {
-                StatusBar.backgroundColorByHexString("#388E3C");
-            } else {
-                StatusBar.styleLightContent();
-            }
-        }
+        //if (window.StatusBar) {
+        //    if (ionic.Platform.isAndroid()) {
+        //        StatusBar.backgroundColorByHexString("#388E3C");
+        //    } else {
+        //        StatusBar.styleLightContent();
+        //    }
+        //}
 
         if (window.plugins && window.plugins.AdMob) {
             var admob_key = device.platform == "Android" ? "pub-7044182556888101" : "";
@@ -155,7 +153,7 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
 
     .state('select', {
         url: "/select",
-        templateUrl: "templates/select2.html",
+        templateUrl: "templates/select.html",
         controller: 'SelectCtrl',
         resolve: {
             // controller will not be loaded until $requireAuth resolves

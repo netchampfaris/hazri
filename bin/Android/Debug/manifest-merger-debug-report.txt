@@ -12,7 +12,7 @@ ADDED from AndroidManifest.xml:2:1
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
 	xmlns:android
-		ADDED from AndroidManifest.xml:2:135
+		ADDED from AndroidManifest.xml:2:133
 supports-screens
 ADDED from AndroidManifest.xml:3:5
 	android:largeScreens
@@ -50,7 +50,7 @@ MERGED from com.android.support:support-v4:22.2.0:22:5
 		ADDED from AndroidManifest.xml:5:18
 	android:icon
 		ADDED from AndroidManifest.xml:5:53
-activity#io.cordova.myappc8ac77.MainActivity
+activity#com.attendance.hazri.MainActivity
 ADDED from AndroidManifest.xml:6:9
 	android:label
 		ADDED from AndroidManifest.xml:6:97

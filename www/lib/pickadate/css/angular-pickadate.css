@@ -27,17 +27,18 @@
 .pickadate-cell li {
   display: block;
   float: left;
-  border: 1px solid #DCDCDC;
-  border-width: 0 1px 1px 0;
+  //border: 1px solid #DCDCDC;
+  //border-width: 0 1px 1px 0;
   width: 14.285%;
   padding: 1.3% 0 1.3% 0;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
+  border-radius:50%;
 }
 
 .pickadate-cell li:nth-child(7n+0) {
-  border-right: 1px solid #DCDCDC;
+  //border-right: 1px solid #DCDCDC;
 }
 
 .pickadate-cell li:nth-child(1),
@@ -46,7 +47,7 @@
 .pickadate-cell li:nth-child(22),
 .pickadate-cell li:nth-child(29),
 .pickadate-cell li:nth-child(36) {
-  border-left: 1px solid #DCDCDC;
+  //border-left: 1px solid #DCDCDC;
 }
 
 .pickadate-cell .pickadate-disabled,
@@ -65,7 +66,7 @@
 }
 
 .pickadate-cell .pickadate-active {
-  background-color: #b52a00;
+  background-color:  #388E3C;
 }
 
 .pickadate-cell .pickadate-active {
@@ -75,6 +76,7 @@
 .pickadate-cell .pickadate-head {
   border-top: 1px solid #DCDCDC;
   background: #f3f3f3;
+  border-radius:0;
 }
 
 .pickadate-cell .pickadate-head:nth-child(1),
@@ -85,14 +87,15 @@
 .pickadate-centered-heading {
   font-weight: normal;
   text-align: center;
-  font-size: 1em;
-  margin: 13px 0 13px 0;
+  font-size: 1.3em !important;
+  margin: 13px 2px 13px 2px !important;
 }
 
 .pickadate-controls {
   position: absolute;
   z-index: 10;
   width: 100%;
+  font-size:1.3em;
 }
 
 .pickadate-controls .pickadate-next {

@@ -1,16 +1,37 @@
-<ion-view title="Select your class and subject">
-    <ion-content padding="true" scroll="true" class="has-header">
+﻿<ion-view title="Select your class and subject">
+    <ion-content>
         <ion-list>
-            <div class="list animate-ripple">
-                <div class="item item-icon-right ink" ng-click="showDeptOptions()">Department<span class="item-note">{{ selected.dept.value }}</span><i class="icon ion-chevron-right icon-accessory"></i></div>
-                <div class="item item-icon-right ink" ng-click="showYearOptions()">Year<span class="item-note">{{ selected.year.value }}</span><i class="icon ion-chevron-right icon-accessory"></i></div>
-                <div class="item item-icon-right ink" ng-click="showSemOptions()">Semester<span class="item-note">{{ selected.semester.value }}</span><i class="icon ion-chevron-right icon-accessory"></i></div>
-                <div class="item item-icon-right ink" ng-click="showTypeOptions()">Type<span class="item-note">{{ selected.type.value }}</span><i class="icon ion-chevron-right icon-accessory"></i></div>
-                <div class="item item-icon-right ink" ng-click="showBatchOptions()" ng-show="selected.type.id == 'pr'" ng-hide="selected.type.id == 'th' || !selected.type ">Batch<span class="item-note">{{ selected.batchno.value }}</span><i class="icon ion-chevron-right icon-accessory"></i></div>
-                <div class="item item-icon-right ink" ng-click="showSubOptions()">Subject<span class="item-note">{{ selected.subject.value }}</span><i class="icon ion-chevron-right icon-accessory"></i></div>
-                <div class="item item-icon-right ink" ng-click="opendateModal()">Date<span class="item-note">{{ selected.date | date}}</span><i class="icon ion-chevron-right icon-accessory"></i></div>
-                <button class="button button-block action-button button-positive ink" ng-show="allSelected" ng-click="gotoAtt(selected)">Take attendance</button>
+            <div ng-repeat="option in options">
+                <ion-item class="item item-icon-right"
+                          ng-click="showOptions(option)"
+                          ng-class="{active: isOptionShown(option)}"
+                          ng-show="option.show == undefined || option.show">
+                    {{option.name}}
+                    <span class="item-note">{{ selected[option.id].value }}</span>
+                    <i class="icon ion-chevron-down icon-accessory"></i>
+                </ion-item>
+                <ion-item class="item-accordion"
+                          style="padding-left:3em !important;"
+                          ng-repeat="item in option.values as selectedoption"
+                          ng-show="isOptionShown(option)"
+                          ng-click="setSelected(item, option)">
+                    {{item.value}}
+                </ion-item>
             </div>
-        </ion-list>    
+                <ion-item class="item item-icon-right"
+                          ng-click="toggleDate()">
+                    Date
+                    <span class="item-note">{{ selected.date | date }}</span>
+                    <i class="icon ion-chevron-down icon-accessory"></i>
+                </ion-item>
+                <ion-item class="item-accordion" ng-show="showDate" ng-repeat="a in ['a']">
+                    <div  style="margin-top:10px;">
+                        <div pickadate ng-model="selected.date" ng-change="hideDate()" no-extra-rows></div>
+                    </div>
+                </ion-item>
+        </ion-list>
+        <div class="center">
+            <button class="button button-primary-outline center" ng-show="allSelected" ng-click="gotoAtt(selected)">Take attendance</button>
+        </div>
     </ion-content>
 </ion-view>
