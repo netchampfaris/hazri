@@ -179,3 +179,14 @@
     background: #C8E6C9;
     color:#212121;
 }
+
+.custom-icon svg{
+  stroke: #ae3!important;
+  .stop1{
+    stop-color:#ae3;
+  }
+  .stop2{
+    stop-color:#ae3;
+  } 
+
+}

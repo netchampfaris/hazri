@@ -18,7 +18,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services', 'hig
                 if (isOnline) {
                     var deferred = $q.defer();
                     $ionicLoading.show({
-                        template: 'Signing in<br><br><ion-spinner icon="android"></ion-spinner>',
+                        template: 'Signing in<br><br><ion-spinner icon="spiral" class="custom-icon"></ion-spinner>',
                         animation: 'fade-in',
                         showBackdrop: true,
                         maxWidth: 200,
