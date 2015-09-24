@@ -12,13 +12,13 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
         //    StatusBar.styleDefault();
         //}
 
-        //if (window.StatusBar) {
-        //    if (ionic.Platform.isAndroid()) {
-        //        StatusBar.backgroundColorByHexString("#388E3C");
-        //    } else {
-        //        StatusBar.styleLightContent();
-        //    }
-        //}
+        if (window.StatusBar) {
+            if (ionic.Platform.isAndroid()) {
+                StatusBar.backgroundColorByHexString("#388E3C");
+            } else {
+                StatusBar.styleLightContent();
+            }
+        }
 
         if (window.plugins && window.plugins.AdMob) {
             var admob_key = device.platform == "Android" ? "pub-7044182556888101" : "";
