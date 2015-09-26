@@ -1,12 +1,4 @@
 {
-    "cordova-plugin-whitelist": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-whitelist@1"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "cordova-plugin-extension": {
         "source": {
             "type": "registry",
@@ -35,6 +27,14 @@
         "source": {
             "type": "local",
             "path": "D:\\Users\\FarisAnsari\\Downloads\\cordova-admob-pro-master\\cordova-admob-pro-master"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-whitelist": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-whitelist@1"
         },
         "is_top_level": true,
         "variables": {}

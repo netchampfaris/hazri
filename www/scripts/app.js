@@ -1,6 +1,6 @@
 angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.services', 'hazri.filters', 'ngCordova','pickadate' ,'angular.filter'])
 
-.run(function ($ionicPlatform, $rootScope, $location, Auth, $ionicPopup) {
+.run(function ($ionicPlatform, $rootScope, $location, Auth, $ionicPopup, $state, $ionicHistory, $cordovaGoogleAds) {
     $ionicPlatform.ready(function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -20,26 +20,31 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
             }
         }
 
-        if (window.plugins && window.plugins.AdMob) {
-            var admob_key = device.platform == "Android" ? "pub-7044182556888101" : "";
-            var admob = window.plugins.AdMob;
-            admob.createBannerView(
-                {
-                    'publisherId': admob_key,
-                    'adSize': admob.AD_SIZE.BANNER,
-                    'bannerAtTop': false
-                },
-                function () {
-                    admob.requestAd(
-                        { 'isTesting': false },
-                        function () {
-                            admob.showAd(true);
-                        },
-                        function () { console.log('failed to request ad'); }
-                    );
-                },
-                function () { console.log('failed to create banner view'); }
-            );
+        if (AdMob) {
+            var admobid = {};
+            if (/(android)/i.test(navigator.userAgent)) { // for android
+                admobid = {
+                    banner: 'ca-app-pub-7044182556888101/2854065270',
+                    interstitial: 'ca-app-pub-7044182556888101/9603446074'
+                };
+            } else if (/(ipod|iphone|ipad)/i.test(navigator.userAgent)) { // for ios
+                admobid = {
+                    banner: 'ca-app-pub-xxx/zzz',
+                    interstitial: 'ca-app-pub-xxx/kkk'
+                };
+            } else { // for windows phone
+                admobid = {
+                    banner: 'ca-app-pub-7044182556888101/1800977670',
+                    interstitial: 'ca-app-pub-xxx/kkk'
+                };
+            }
+            console.log("showing ads");
+            if (AdMob) AdMob.createBanner({
+                adId: admobid.banner,
+                position: AdMob.AD_POSITION.BOTTOM_CENTER,
+                autoShow: true
+            });
+
         }
 
         
@@ -81,8 +86,26 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
                 $location.path("/login");
             }
         });
-
     });
+
+
+    $ionicPlatform.registerBackButtonAction(function (event) {
+        if ($state.current.name == "main" || $state.current.name == "login") {
+            event.preventDefault();
+            $ionicPopup.confirm({
+                title: 'Exit Hazri',
+                template: 'Are you sure you want to exit?',
+                okText: 'Exit',
+                okType: 'accent-color text-primary-color'
+            }).then(function (res) {
+                if (res) {
+                    ionic.Platform.exitApp();
+                }
+            })
+        }
+        else
+            $ionicHistory.goBack();
+    }, 101);
 })
 
 .config(function ($stateProvider, $urlRouterProvider) {

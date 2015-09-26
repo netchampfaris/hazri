@@ -144,7 +144,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services', 'hig
 
 })
 
-.controller("MainCtrl", function ($scope, Firebase, FirebaseUrl, AttendanceService, $ionicPlatform, $ionicPopup, $ionicLoading, $state, $ionicScrollDelegate,$rootScope,$timeout) {
+.controller("MainCtrl", function ($scope, Firebase, FirebaseUrl, AttendanceService, $ionicPlatform, $ionicPopup, $ionicLoading, $state, $ionicScrollDelegate, $rootScope, $timeout) {
 
     $rootScope.slideHeader = false;
     $rootScope.slideHeaderPrevious = 0;
@@ -565,8 +565,10 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services', 'hig
     $scope.showConfirm = function () {
         var confirmPopup = $ionicPopup.confirm({
             title: 'Confirm Submit',
-            template: 'Are you sure you want to submit this list?',
-            okType: 'default-primary-color text-primary-color'
+            template: 'Are you sure you want to submit?',
+            okType: 'default-primary-color text-primary-color',
+            okText: 'Yes',
+            cancelText: 'No'
         });
         confirmPopup.then(function (res) {
             if (res) {
@@ -630,16 +632,31 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services', 'hig
                 subid: attInfo.subid.id,
                 type: attInfo.type.id,
                 batchno: (attInfo.batchno) ? attInfo.batchno.id : null,
-                year: attInfo.year.id
+                year: attInfo.year.id,
+                uploaded: true
             };
             var ref = new Firebase(FirebaseUrl.root);
             ref.child("attendances").push(att);
             storeLocal(attInfo);
         }
         else {
+
+            //var att = {
+            //    absentno: attInfo.absentno,
+            //    batch: attInfo.batch,
+            //    date: attInfo.date,
+            //    dept: attInfo.dept.id,
+            //    semester: attInfo.semester.id,
+            //    subid: attInfo.subid.id,
+            //    type: attInfo.type.id,
+            //    batchno: (attInfo.batchno) ? attInfo.batchno.id : null,
+            //    year: attInfo.year.id,
+            //    uploaded: false
+            //};
+            //storeLocal(attInfo);
             $ionicPopup.confirm({
                 title: "No Internet",
-                content: "Cannot send data without Internet",
+                content: "Please ensure that you're connected to the internet.",
                 okType: 'default-primary-color text-primary-color'
             });
         }
