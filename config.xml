@@ -7,12 +7,12 @@
   <content src="index.html" />
   <access origin="*" />
   <vs:features />
-  <preference name="SplashScreen" value="screen" />
   <preference name="windows-target-version" value="8.1" />
   <preference name="KeepRunning" value="True" />
   <preference name="ShowTitle" value="False" />
   <preference name="InAppBrowserStorageEnabled" value="True" />
   <preference name="SuppressesIncrementalRendering" value="False" />
+  <preference name="SplashScreen" value="screen" />
   <preference name="SplashScreenDelay" value="3000" />
   <allow-intent href="http://*/*" />
   <allow-intent href="https://*/*" />
@@ -85,16 +85,6 @@
     <icon src="res/icons/wp8/ApplicationIcon.png" width="62" height="62" />
     <icon src="res/icons/wp8/Background.png" width="173" height="173" />
   </platform>
-  <platform name="android">
-    <splash src="res/screens/android/screen-hdpi-landscape.png" density="land-hdpi" />
-    <splash src="res/screens/android/screen-ldpi-landscape.png" density="land-ldpi" />
-    <splash src="res/screens/android/screen-mdpi-landscape.png" density="land-mdpi" />
-    <splash src="res/screens/android/screen-xhdpi-landscape.png" density="land-xhdpi" />
-    <splash src="res/screens/android/screen-hdpi-portrait.png" density="port-hdpi" />
-    <splash src="res/screens/android/screen-ldpi-portrait.png" density="port-ldpi" />
-    <splash src="res/screens/android/screen-mdpi-portrait.png" density="port-mdpi" />
-    <splash src="res/screens/android/screen-xhdpi-portrait.png" density="port-xhdpi" />
-  </platform>
   <platform name="ios">
     <splash src="res/screens/ios/screen-iphone-portrait.png" width="320" height="480" />
     <splash src="res/screens/ios/screen-iphone-portrait-2x.png" width="640" height="960" />
@@ -120,4 +110,5 @@
   <vs:plugin name="cordova-plugin-statusbar" version="2.0.0-dev" src="D:\Users\FarisAnsari\Downloads\cordova-plugin-statusbar-master\cordova-plugin-statusbar-master" />
   <vs:plugin name="cordova-plugin-admobpro" version="2.9.2" src="D:\Users\FarisAnsari\Downloads\cordova-admob-pro-master\cordova-admob-pro-master" />
   <vs:plugin name="cordova-plugin-whitelist" version="1.1.0" />
+  <vs:plugin name="cordova-plugin-splashscreen" version="2.1.0" />
 </widget>
