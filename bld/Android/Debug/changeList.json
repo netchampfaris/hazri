@@ -411,14 +411,44 @@
     "plugins\\cordova-plugin-network-information\\src\\blackberry10\\index.js",
     "plugins\\cordova-plugin-splashscreen\\plugin.xml",
     "config.xml",
-    "resources\\android\\splash\\New folder\\drawable-port-xxxhdpi-screen.png",
+    ".git\\objects\\22\\b8256f29b03838e91bd65540f68727a76f606d",
+    ".git\\objects\\03\\2a578d324ff9e51cb45bf6e54c5385cd6fba1f",
+    ".git\\objects\\ac\\334ddbe7d5d89abe29d5536e819338186bb3cf",
+    ".git\\objects\\81\\3300272210f2668424a77e56d8b345a8e70acd",
+    ".git\\objects\\be\\dc5b8af9dc19c54848e591a9ba5450d8c65164",
+    ".git\\objects\\b3\\7b93596c4433286401107098afa8b1a4941695",
+    ".git\\objects\\c8\\3e188c8c88217e2e8ed93ddfff61e9a02f68d9",
+    ".git\\objects\\97\\575f3879d7576f85d8c93db0bfb80c0c62c1d4",
+    ".git\\objects\\51\\9f66c593f16c0ac961228330d64b5144db7f50",
+    ".git\\objects\\92\\9d13ac69c14020f5a19db8d29cd3a26b70c5bb",
+    ".git\\objects\\6e\\0c3b378ff19db532360ab6a51d9f2f2f32941c",
+    ".git\\objects\\44\\f0c46fbaaaaaa48e9d93567f743745fa978e51",
+    ".git\\objects\\4e\\e5ab4b0d81c3fcab41d6d9714d5be853034f8a",
+    ".git\\objects\\e1\\80ff86f9ceecae903009317381806d6ea3f680",
+    ".git\\objects\\86\\8d9a3239dc5c7990a1125389b645124ee1d779",
+    ".git\\objects\\2d\\ebf912b275b9c7920c947b961af10d1f8244e4",
+    ".git\\objects\\61\\0971b227e46ce3e0e34ff81fc37d45649cda3f",
+    ".git\\objects\\95\\8a28480c57e9476f44a91df3b742176efbc44c",
+    ".git\\objects\\52\\2546a6dedd907357420bef66021f0063203d50",
+    ".git\\objects\\30\\c9c95c343d1084012d3b047c593953ea67ebc2",
+    ".git\\objects\\ff\\e71a0260966611539bfe25084c8d32d8e96653",
+    ".git\\objects\\71\\dc7651a35359729169779067b4ad70a525610c",
+    ".git\\objects\\ac\\7d70576881ab81af45630c072054b58c517931",
+    ".git\\objects\\fb\\2cead52ed224361c4da8d2f8d747525c08566c",
+    ".git\\objects\\22\\4d336d2018505169bf40f4d238b425bdece45a",
+    ".git\\objects\\39\\6ed891e1bc6366c4b1cb2baec1ec884ec83a25",
+    ".git\\FETCH_HEAD",
+    ".git\\refs\\remotes\\origin\\master",
+    ".git\\logs\\refs\\remotes\\origin\\master"
+  ],
+  "deletedFilesIos": [
     "resources\\android\\splash\\New folder\\drawable-port-xxhdpi-screen.png",
+    "resources\\android\\splash\\New folder\\drawable-port-ldpi-screen.png",
     "resources\\android\\splash\\New folder\\drawable-port-xhdpi-screen.png",
     "resources\\android\\splash\\New folder\\drawable-port-hdpi-screen.png",
     "resources\\android\\splash\\New folder\\drawable-port-mdpi-screen.png",
-    "resources\\android\\splash\\New folder\\drawable-port-ldpi-screen.png"
+    "resources\\android\\splash\\New folder\\drawable-port-xxxhdpi-screen.png"
   ],
-  "deletedFilesIos": [],
   "addedPluginsIos": [
     "cordova-plugin-network-information@1.0.1",
     "cordova-plugin-statusbar@2.0.0-dev",
@@ -428,15 +458,10 @@
   ],
   "deletedPluginsIos": [],
   "changedFiles": [
-    "config.xml"
+    "www\\css\\index.css",
+    "www\\lib\\pickadate\\css\\angular-pickadate.css"
   ],
   "deletedFiles": [],
-  "addedPlugins": [
-    "cordova-plugin-network-information@1.0.1",
-    "cordova-plugin-statusbar@2.0.0-dev",
-    "cordova-plugin-admobpro@2.9.2",
-    "cordova-plugin-whitelist@1.1.0",
-    "cordova-plugin-splashscreen@2.1.0"
-  ],
+  "addedPlugins": [],
   "deletedPlugins": []
 }

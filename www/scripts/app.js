@@ -91,7 +91,6 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
 
     $ionicPlatform.registerBackButtonAction(function (event) {
         if ($state.current.name == "main" || $state.current.name == "login") {
-            event.preventDefault();
             $ionicPopup.confirm({
                 title: 'Exit Hazri',
                 template: 'Are you sure you want to exit?',

@@ -26,7 +26,6 @@
   max-height: initial;
   max-width: initial;
   border-radius: 50%;
-  border-radius: 50%;
   overflow: hidden;
   padding: 0; 
 }
@@ -144,6 +143,7 @@
 
 }
 .list .item.item-accordion.ng-hide {
+    display:none;
     line-height: 0px;
 }
 .list .item.item-accordion.ng-hide-add,
@@ -184,4 +184,9 @@
 .custom-icon svg{
   stroke: #ae3!important;
 
+}
+
+#datediv {
+    margin-top:10px;
+    width:100%;
 }

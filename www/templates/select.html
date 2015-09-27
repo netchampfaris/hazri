@@ -25,7 +25,7 @@
                     <i class="icon ion-chevron-down icon-accessory"></i>
                 </ion-item>
                 <ion-item class="item-accordion" ng-show="showDate" ng-repeat="a in ['a']">
-                    <div  style="margin-top:10px;">
+                    <div id="datediv">
                         <div pickadate ng-model="selected.date" ng-change="hideDate()" no-extra-rows></div>
                     </div>
                 </ion-item>
