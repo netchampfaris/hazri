@@ -1,6 +1,15 @@
 ﻿body {
 }
 
+.scroll-content{
+ background: url(../img/bg.png) no-repeat center center fixed; 
+  background-size: cover;
+}
+
+.wrap {
+padding:10px 10px 10px 10px;
+}
+
 .slide-in-right {
   -webkit-transform: translateX(100%);
     transform: translateX(100%); }

@@ -7,19 +7,21 @@
         <h6 class="title" style="font-weight:200;font-size:medium">Your attendances</h6>
     </ion-header-bar>
     <ion-content class="has-subheader" scroll-watch>
-        <div class="list" ng-repeat="(key , value) in attendances | groupBy:'date'">
-            <div class="item item-divider">
-                {{key | date:'d MMMM, yyyy'}}
+        <div class="wrap">
+            <div class="list" ng-repeat="(key , value) in attendances | groupBy:'date'">
+                <div class="item item-divider">
+                    {{key | date:'d MMMM, yyyy'}}
+                </div>
+                <a class="item item-icon-left" href="#" ng-repeat="att in value" ui-sref="details({att:att})">
+                    <i class="icon ion-arrow-right-b secondary-text-color"></i>
+                    <h2 class="primary-text-color">{{ att.subid.value }}</h2>
+                    <p class="secondary-text-color">{{ att.year.id | uppercase }} {{ att.dept.value }}, {{ att.type.value }}</p>
+                </a>
             </div>
-            <a class="item item-icon-left" href="#" ng-repeat="att in value" ui-sref="details({att:att})">
-              <i class="icon ion-arrow-right-b secondary-text-color"></i>
-              <h2 class="primary-text-color">{{ att.subid.value }}</h2>
-              <p class="secondary-text-color">{{ att.year.id | uppercase }} {{ att.dept.value }}, {{ att.type.value }}</p>
-            </a>
-        </div>
-        <div class="padding">
-        </div>
-    </ion-content>
+            <div class="padding">
+            </div>
+            </div>
+</ion-content>
     <div class="float-button accent-color">
         <span class="content">
         </span>

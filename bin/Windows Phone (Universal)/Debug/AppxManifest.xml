@@ -8,7 +8,7 @@
     For more information on package manifest files, see http://go.microsoft.com/fwlink/?LinkID=241727
   -->
   <Identity Name="com.attendance.hazri" Publisher="CN=$username$" Version="1.0.0.0" ProcessorArchitecture="x86" />
-  <mp:PhoneIdentity PhoneProductId="5f17f570-6103-11e5-84e8-7787bcc024b6" PhonePublisherId="db093ed5-53b1-45f7-af72-751e8f36ab80" />
+  <mp:PhoneIdentity PhoneProductId="3cad2d10-6541-11e5-9cf4-0dd4fc8f88de" PhonePublisherId="db093ed5-53b1-45f7-af72-751e8f36ab80" />
   <Properties>
     <DisplayName>HazriApp</DisplayName>
     <PublisherDisplayName>Faris and Suraj</PublisherDisplayName>
@@ -47,7 +47,7 @@
     <build:Item Name="VisualStudioEdition" Value="Microsoft Visual Studio Community 2015" />
     <build:Item Name="OperatingSystem" Version="10.0.10240.16384 (th1.150709-1700)" />
     <build:Item Name="Microsoft.Build.AppxPackage.dll" Version="14.0.23121.0" />
-    <build:Item Name="ProjectGUID" Value="cee4c217-e360-4062-8aa4-234227513594" />
+    <build:Item Name="ProjectGUID" Value="31b67a35-9503-4213-857e-f44eb42ae549" />
     <build:Item Name="MakePri.exe" Version="6.3.9600.17336 (winblue.150226-1500)" />
   </build:Metadata>
 </Package>
