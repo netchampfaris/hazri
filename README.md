@@ -5,6 +5,7 @@ It will automate the process of defaulter list generation.
 
 
 To Do :
+
 1. Full Screen Splash (not possible)
  
 2. Attendance button long press name display
