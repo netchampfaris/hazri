@@ -130,12 +130,7 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
                 }]
         }
     })
-    .state('signup', {
-        url: "/signup",
-        templateUrl: "templates/signup.html",
-        controller: 'LoginCtrl'
-    })
-
+    
     .state('main', {
         url: "/main",
         templateUrl: "templates/dashboard.html",
@@ -229,13 +224,6 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
                 }]
         }
     })
-
-    .state('studentview', {
-        url: "/studentview",
-        templateUrl: "templates/student_view.html",
-        controller: 'StudentViewCtrl'  
-    })
-
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/login');
 
