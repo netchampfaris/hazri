@@ -1,10 +1,10 @@
 {
      "android": {
          "release": {
-             "keystore": "",
-             "storePassword": "",
-             "alias": "",
-             "password" : "",
+             "keystore": "Hazri.keystore",
+             "storePassword": "hazri123",
+             "alias": "Hazri",
+             "password" : "hazri123",
              "keystoreType": ""
          }
      }

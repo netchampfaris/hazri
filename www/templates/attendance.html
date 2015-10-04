@@ -1,13 +1,14 @@
 ﻿
 <ion-view title="Take attendance">
     <ion-content class="has-header">
-        <div style="margin-left:5%">
-            <button style="margin:1% 1% 1% 1% !important;"
-                    ng-click="toggle(item, selected)" 
-                    ng-class="{'button button-fab button-balanced': !exists(item,selected), 'button button-fab button-assertive': exists(item,selected)}"
-                    ng-repeat="item in items">
-            {{ item }}
-            </button>
+        <div id="btn-container">
+            <div style="padding:2%" ng-repeat="student in students">
+                <button class="button button-fab button-balanced" ng-class="{'absentClass':student.absent}"
+                        ng-click="toggle(student)"
+                        on-hold="showInfo($event,student)">
+                    {{student.rollno}}
+                </button>
+            </div>
         </div>
     </ion-content>
     <ion-footer-bar align-title="center" class="bar-light">
