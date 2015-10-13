@@ -639,7 +639,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
     };
 
     $scope.showInfo = function ($event,student) {
-        var template = '<ion-popover-view><ion-header style="text-align:center"><h5>'+student.name+'</h5></ion-header></ion-popover-view>';
+        var template = '<ion-popover-view><ion-header style="text-align:center"><strong>'+student.name+'</strong></ion-header></ion-popover-view>';
         $scope.popover = $ionicPopover.fromTemplate(template, {
              scope: $scope
         });

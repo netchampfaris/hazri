@@ -221,6 +221,9 @@ padding:10px 10px 10px 10px;
   box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
   border-radius: 10px; 
   height: auto !important;
+  width :auto;
+  padding:5px;
+  margin-top:-90px;
 }
 .platform-android .popover .bar-header {
   -webkit-border-top-right-radius: 10px;
@@ -235,13 +238,14 @@ padding:10px 10px 10px 10px;
 .platform-android .popover-arrow {
   position: absolute;
   display: block;
-  top: -17px;
   width: 30px;
   height: 19px;
-  overflow: hidden; }
+  overflow: hidden; 
+  transform:rotate(-180deg);
+}
   .platform-android .popover-arrow:after {
     position: absolute;
-    top: 12px;
+    top: 13px;
     left: 5px;
     width: 20px;
     height: 20px;
