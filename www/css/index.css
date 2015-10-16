@@ -50,15 +50,19 @@ padding:10px 10px 10px 10px;
   height: 56px;
   max-height: initial;
   max-width: initial;
-  font-weight:700;
   border-radius: 50%;
   overflow: hidden;
   padding: 0; 
+  background:#33cd5f;
 }
 
 .absentClass {
     background:red !important;
+    color:white;
 }
+    .absentClass:hover {
+    color:white;
+    }
 
 
 /* table view */
@@ -259,3 +263,22 @@ padding:10px 10px 10px 10px;
   bottom: -10px; }
   .platform-android .popover-bottom .popover-arrow:after {
     top: -6px; }
+
+.icon1 {
+color:#33cd5f;
+}
+.icon2 {
+color:red;
+}
+#info {
+background-color:rgba(0, 0, 0, 0.5);
+height: auto;
+padding:5px;
+color:white;
+position:absolute;
+bottom:50px;
+right:5px;
+border-radius:5px;
+z-index:999;
+
+}
