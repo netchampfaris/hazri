@@ -8,7 +8,7 @@
                               ng-class="{active: isOptionShown(option)}"
                               ng-show="option.show == undefined || option.show">
                         {{option.name}}
-                        <span class="item-note">{{ selected[option.id].value }}</span>
+                        <span class="item-note" style="width:30%;overflow:hidden">{{ selected[option.id].value }}</span>
                         <i class="icon ion-chevron-down icon-accessory"></i>
                     </ion-item>
                     <ion-item class="item-accordion"

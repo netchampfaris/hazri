@@ -2,11 +2,10 @@
     <ion-content class="has-header" > 
        
         <div id="btn-container" style="padding-bottom:50px;">
-            <div style="padding:2%" ng-repeat="student in students">
+            <div style="padding:2%" ng-repeat="student in students" on-hold="showInfo($event,student)">
                 <button class="button button-fab " ng-class="{'absentClass':student.absent}"
-                        ng-click="toggle(student)"
-                        on-hold="showInfo($event,student)"><strong>
-                    {{student.rollno}}</strong>
+                        ng-click="toggle(student)">
+                    <strong style="color:white">{{student.rollno}}</strong>
                 </button>
             </div>
         </div>
@@ -16,6 +15,6 @@
         <div><i class="icon ion-record icon2"></i> Absent</div>
     </div>
     <ion-footer-bar align-title="center" class="bar-light">
-        <button class="button icon-right ion-android-send button-clear button-full button-dark" style="margin-top:2px" ng-click="showConfirm()"><strong>Submit</strong></button>
+        <button class="button button-clear button-full button-dark" style="margin-top:2px" ng-click="showConfirm()"><strong>Submit&nbsp;<i class="ion-android-send"></i></strong></button>
     </ion-footer-bar>
 </ion-view>

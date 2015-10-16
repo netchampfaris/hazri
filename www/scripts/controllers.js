@@ -101,6 +101,10 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
         });
     });
 
+    $scope.gotoDetails = function (att) {
+        $state.go('details', { att: att });
+    }
+
 
 })
 
@@ -639,7 +643,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
     };
 
     $scope.showInfo = function ($event,student) {
-        var template = '<ion-popover-view><ion-header style="text-align:center"><strong>'+student.name+'</strong></ion-header></ion-popover-view>';
+        var template = '<ion-popover-view><ion-header style="text-align:center;color:white;"><strong>'+student.name+'</strong></ion-header></ion-popover-view>';
         $scope.popover = $ionicPopover.fromTemplate(template, {
              scope: $scope
         });
@@ -657,7 +661,6 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
 
 })
 
-
 .controller("ViewAttendanceCtrl", function ($scope, $stateParams, FirebaseUrl, $q, $ionicLoading, $ionicPlatform, $state) {
     var selectedOptions;
     var totalStudents;
@@ -665,6 +668,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
     var totalLectures;
     var bStart, bEnd;
     $scope.batchinfo = { pr: false };
+
     $scope.$on('$ionicView.beforeEnter', function () {
 
         selectedOptions = $stateParams.selected;
@@ -686,8 +690,42 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
         cumulativeAttendance = [];
         totalLectures = 0;
 
-        for (var i = 1; i <= totalStudents; i++)
-            cumulativeAttendance.push({ roll: i, att: 0 });
+        var getStudentInfo = function () {
+            var deferred = $q.defer();
+            $ionicLoading.show({ template: 'Loading student info..' });
+            var ref = new Firebase(FirebaseUrl.root);
+            ref.child("students/" + selectedOptions.dept.id).on("value", function (snapshot) {
+
+                snapshot.forEach(function (data) {
+                    if (selectedOptions.year.id == data.val().year) //add batch code later
+                    {
+                        var studentObj = {rollno:data.val().rollno, name:data.val().name, att:0};
+                        if (selectedOptions.type.id == 'pr') {
+                            if (studentObj.rollno >= bStart && studentObj.rollno <= bEnd)
+                                cumulativeAttendance.push(studentObj);
+                        }
+                        else
+                            cumulativeAttendance.push(studentObj);
+                    }
+                });
+
+                deferred.resolve();
+            }, function (error) {
+                console.log("error:" + error.code);
+                deferred.reject();
+            });
+
+            return deferred.promise;
+        };
+
+        var promise = getStudentInfo();
+
+        promise.then(function () {
+            $ionicLoading.hide();
+        }, function (reason) {
+            $ionicLoading.hide();
+            console.log('Failed: ' + reason);
+        });
 
         var computeAttendance = function () {
             var defer = $q.defer();
@@ -720,14 +758,14 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
                             if (selectedOptions.batchno.id == data.val().batchno) {
                                 totalLectures++;
                                 var i;
-                                for (i = bStart - 1; i < bEnd; i++)
+                                for (i = 0; i < bEnd - bStart + 1; i++)
                                     cumulativeAttendance[i].att++;
                                 var absentno = data.val().absentno;
                                 if (absentno !== undefined) //absentno undefined means all present
                                 {
                                     var arraylength = absentno.length;
                                     for (i = 0; i < arraylength ; i++)
-                                        cumulativeAttendance[absentno[i] - 1].att--;
+                                        cumulativeAttendance[absentno[i] - bStart].att--;
                                 }
                                 //else all present
                             }
