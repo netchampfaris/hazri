@@ -1,22 +1,35 @@
-<ion-view title="Hazri">
+<ion-view title="Login">
     <ion-content>
-        <div class="wrap">
+        <div class="wrap" id="login">
+            <div class="center" >
+            <img src="../img/attendr.png" style="margin-top:50px; width:150px;height:auto;" />
+            </div>
+        <div style="width:70%; margin-left:50%; transform:translate(-50%); margin-top:2em; margin-bottom:50px !important;">
         <div class="list">
             <label class="item item-input">
-                <span class="input-label">Email</span>
-                <input type="text" ng-model="user.email">
+               <i class="icon ion-android-person" style="padding-right:5%"></i>
+                <input type="text" placeholder="Username" ng-model="user.email">
             </label>
             <label class="item item-input">
-                <span class="input-label">Password</span>
-                <input type="password" ng-model="user.password">
+                <i class="icon ion-lock-combination" style="padding-right:5%"></i>
+                <input type="password" placeholder="Password" ng-model="user.password">
             </label>
         </div>
         <div class="center">
-            <button ng-click="login(user)" class="button button-primary-outline">
-                Sign In
+            <button ng-click="login(user)" class="button button-balanced icon-right ion-log-in button-outline ">
+                SIGN IN
             </button>
         </div>
         </div>
-        <!-- <button class="button button-full button-positive ink" ui-sref="studentview">student</button> -->
+        </div>
+
+           
     </ion-content>
+    <div class="bar bar-footer" style="background-color:darkgrey;color:ghostwhite" >
+        <div class="center" style="margin-left:50%;transform:translate(-50%);vertical-align:middle;">
+            Developed by<br />
+            Faris | Suraj
+        </div>
+    </div> 
+   
 </ion-view>
