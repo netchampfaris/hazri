@@ -18,11 +18,11 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
                 if (isOnline) {
                     var deferred = $q.defer();
                     $ionicLoading.show({
-                        template: 'Signing in<br><br><ion-spinner icon="spiral" class="custom-icon"></ion-spinner>',
+                        template: 'Signing in<br><br><ion-spinner icon="android" class="spinner-balanced"></ion-spinner>',
                         animation: 'fade-in',
                         showBackdrop: true,
-                        maxWidth: 200,
-                        showDelay: 500
+                        maxWidth: 250,
+                        showDelay: 100
                     });
 
                     ref.authWithPassword({
