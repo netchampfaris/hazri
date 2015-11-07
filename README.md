@@ -8,5 +8,5 @@ To Do :
 
 1. Full Screen Splash (not possible)
 
-3. Cummulative page name display
+3. Cummulative page name display (done)
  
