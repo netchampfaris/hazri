@@ -1,4 +1,4 @@
-angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.services', 'hazri.filters', 'ngCordova','pickadate' ,'angular.filter'])
+angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.services', 'hazri.filters', 'ngCordova', 'pickadate' ,'angular.filter'])
 
 .run(function ($ionicPlatform, $rootScope, $location, Auth, $ionicPopup, $state, $ionicHistory, $cordovaGoogleAds) {
     $ionicPlatform.ready(function () {
@@ -6,10 +6,6 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
         // for form inputs)
         //if (window.cordova && window.cordova.plugins.Keyboard) {
         //    cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-        //}
-        //if (window.StatusBar) {
-        //    // org.apache.cordova.statusbar required
-        //    StatusBar.styleDefault();
         //}
 
         if (window.StatusBar) {
@@ -42,15 +38,12 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
             if (AdMob) AdMob.createBanner({
                 adId: admobid.banner,
                 position: AdMob.AD_POSITION.BOTTOM_CENTER,
-                autoShow: true
+                autoShow: false
             });
-
         }
-
         
         //for solving windows phone issues
         Firebase.INTERNAL.forceWebSockets();
-
 
         Auth.$onAuth(function (authData) {
             if (authData) {

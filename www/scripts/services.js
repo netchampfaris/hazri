@@ -1,36 +1,57 @@
 angular.module('hazri.services', ['firebase'])
 
 
-.factory("Auth", ["$firebaseAuth",
+    .factory("Auth", ["$firebaseAuth",
     function ($firebaseAuth) {
         var ref = new Firebase("https://hazri.firebaseio.com/");
         return $firebaseAuth(ref);
     }])
 
 
-.factory("FirebaseUrl", function () {
-    return {
-        root: "https://hazri.firebaseio.com/"
-    };
-})
+    .factory("FirebaseUrl", function () {
+        return {
+            root: "https://hazri.firebaseio.com/"
+        };
+    })
 
-.factory("AttendanceService", function ($q) {
+    .factory("AttendanceService", function ($q) {
     
-    var getAttendances = function () {
+        var getAttendances = function () {
 
-        var deferred = $q.defer();
+            var deferred = $q.defer();
 
-        localforage.getItem('attendances').then(function (data) {
-            deferred.resolve(data);
-        });
+            localforage.getItem('attendances').then(function (data) {
+                deferred.resolve(data);
+            });
 
-        return deferred.promise;
-    };
+            return deferred.promise;
+        };
 
-    return {
-        getAttendances: getAttendances
-    }
-})
+        return {
+            getAttendances: getAttendances
+        }
+    })
+
+    .factory("DBService", function ($q, FirebaseUrl) {
+
+        var getData = function () {
+
+            var deferred = $q.defer();
+            var ref = new Firebase("https://hazri.firebaseio.com/");
+            ref.on("value",
+            function (snapshot) {
+                deferred.resolve(snapshot);
+            }, function (error) {
+                console.log(error.code);
+                defer.reject();
+            });
+            return deferred.promise;
+        };
+
+        return {
+            getData: getData
+        }
+    })
 
   .factory('$cordovaGoogleAds', ['$q', '$window', function ($q, $window) {
 

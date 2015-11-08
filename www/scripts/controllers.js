@@ -1,7 +1,14 @@
 
 angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
 
-.controller("LoginCtrl", function ($scope, $state, $ionicLoading, $ionicHistory, $ionicPopup, $q, FirebaseUrl, $ionicPlatform, $cordovaNetwork, $ionicViewService) {
+.controller("LoginCtrl", function ($scope, $state, $ionicLoading, $ionicHistory, $ionicPopup, $q, FirebaseUrl, $ionicPlatform, $cordovaNetwork, $ionicViewService, $cordovaGoogleAds) {
+    
+    $scope.$on('$ionicView.enter', function () {
+
+        if (AdMob) AdMob.hideBanner();
+
+    });
+    
     var ref = new Firebase(FirebaseUrl.root);
 
     $scope.login = function (user) {
@@ -80,13 +87,19 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
 
 })
 
-.controller("MainCtrl", function ($scope, Firebase, FirebaseUrl, AttendanceService, $ionicPlatform, $ionicPopup, $ionicLoading, $state, $ionicScrollDelegate, $rootScope, $timeout) {
+.controller("MainCtrl", function ($scope, Firebase, FirebaseUrl, AttendanceService, DBService, $ionicPopup, $ionicLoading, $state, $rootScope, $cordovaGoogleAds) {
 
     $rootScope.slideHeader = false;
     $rootScope.slideHeaderPrevious = 0;
 
+
+
     $scope.$on('$ionicView.enter', function () {
         console.log("in main");
+
+        if(AdMob)
+            AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);
+
         $ionicLoading.show({
             content: 'Loading Data',
             animation: 'fade-in',
@@ -99,12 +112,16 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
             $scope.attendances = attendances;
             $ionicLoading.hide();
         });
+
+        DBService.getData().then(function (data) {
+            console.log('getting data');
+            console.log(data);
+        });
     });
 
     $scope.gotoDetails = function (att) {
         $state.go('details', { att: att });
     }
-
 
 })
 
@@ -195,8 +212,6 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
             }
 
         ];
-
-
 
         $scope.allSelected = false;
         if ($scope.selected.type) $scope.selected.type = undefined;
