@@ -87,12 +87,10 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
 
 })
 
-.controller("MainCtrl", function ($scope, Firebase, FirebaseUrl, AttendanceService, DBService, $ionicPopup, $ionicLoading, $state, $rootScope, $cordovaGoogleAds) {
+.controller("MainCtrl", function ($scope, Firebase, FirebaseUrl, AttendanceService, DBService, $ionicPopup, $ionicLoading, $state, $rootScope, $cordovaGoogleAds,$ionicPlatform,$cordovaNetwork,$ionicPopup) {
 
     $rootScope.slideHeader = false;
     $rootScope.slideHeaderPrevious = 0;
-
-
 
     $scope.$on('$ionicView.enter', function () {
         console.log("in main");
@@ -113,11 +111,57 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
             $ionicLoading.hide();
         });
 
-        DBService.getData().then(function (data) {
-            console.log('getting data');
-            console.log(data);
+        localforage.getItem('hazridata').then(function (data) {
+            if(!data)
+            {
+                console.log('no data');
+                DBService.getData().then(function (data) {
+                    console.log('getting data');
+                    localforage.setItem('hazridata', data).then(function(){
+                        console.log('firebase data retrieved successfully');
+                    });
+                });
+            }
+            else
+            {
+                console.log('yes data');
+            }
         });
     });
+
+    $scope.syncFb = function (att) {
+
+        var isOnline;
+        $ionicPlatform.ready(function () {
+            isOnline = $cordovaNetwork.isOnline();
+        });
+
+        if (isOnline) {
+            att = JSON.parse(angular.toJson(att));
+            var ref = new Firebase(FirebaseUrl.root);
+            ref.child("attendances").push(att);
+            att.uploaded = true;
+
+            localforage.getItem('attendances').then(function(attendances) {
+                attendances.splice(att.id, 1); //remove item
+                attendances.splice(att.id, 0, att); //add new item at the same position
+                localforage.setItem('attendances',attendances).then(function(){
+                    console.log('updated attendance successfully');
+                });
+            });
+        }
+        else {
+            $ionicPopup.confirm({
+                title: "No Internet",
+                content: "Cannot connect to internet. This attendance will not by synced to database. Make sure to sync when internet is available.",
+                okType: 'default-primary-color text-primary-color'
+            });
+        }
+    };
+
+    $scope.clear = function () {
+        localforage.clear();
+    }
 
     $scope.gotoDetails = function (att) {
         $state.go('details', { att: att });
@@ -153,10 +197,15 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
 .controller("SelectCtrl", function ($scope, $ionicLoading, $ionicPopup, $q, $state, $ionicScrollDelegate, $timeout, FirebaseUrl) {
 
     $scope.selected = {};
+    var hazridata;
 
     $scope.$on('$ionicView.beforeEnter', function () {
         console.log("entered state select");
         //initialize values
+        
+        localforage.getItem('hazridata').then(function (data) {
+            hazridata = data;
+        })
 
         $scope.options = [
             {
@@ -267,40 +316,26 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
     $scope.showBatchOptions = function () {
 
         var batchCount = 0;
-        var getBatch = function () {
+        var studentCount;
 
-            var defer = $q.defer();
-            $ionicLoading.show({ template: "Getting Batch info..." });
-            var ref = new Firebase(FirebaseUrl.root);
-            ref.child("studentCount/"+$scope.selected.dept.id).on("value",
-            function (snapshot) {
-                snapshot.forEach(function (data) {
-                    if ($scope.selected.year.id == data.val().year) {
-                        batchCount = Object.keys(data.val().batchno).length;
-                    }
-                });
-                defer.resolve();
-            }, function (error) {
-                console.log(error.code);
-                defer.reject();
-            });
-            return defer.promise;
-        };
+        $ionicLoading.show({ template: "Getting Batch info..." });
+        studentCount = hazridata.studentCount[$scope.selected.dept.id];
 
-        var promise = getBatch();
-
-        promise.then(function () {
-            $ionicLoading.hide();
-
-            if (batchCount > 0) {
-                for (var i = 1 ; i <= batchCount; i++) {
-                    $scope.options[4].values.push({ id: i, value: "Batch " + i });
+        for (var key in studentCount) {
+            if (studentCount.hasOwnProperty(key)) {
+                var data = studentCount[key];
+                if ($scope.selected.year.id == data.year) {
+                    batchCount = Object.keys(data.batchno).length;
                 }
             }
-        }, function (reason) {
-            $ionicLoading.hide();
-            console.log(reason);
-        });
+        }
+                
+        if (batchCount > 0) {
+            for (var i = 1 ; i <= batchCount; i++) {
+                $scope.options[4].values.push({ id: i, value: "Batch " + i });
+            }
+        }
+        $ionicLoading.hide();
 
     };
 
@@ -308,38 +343,24 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
 
         //proceed only if type field is selected and if type is practical then make sure that batch field is selected
 
-        var getSub = function () {
-            var defer = $q.defer();
-            $ionicLoading.show({ template: "Getting subject list..." });
-            var ref = new Firebase(FirebaseUrl.root);
-            ref.child("subjects/" + $scope.selected.dept.id).on("value",
-            function (snapshot) {
-                snapshot.forEach(function (data) {
-                    //console.log(data.key() + " : " + JSON.stringify(data.val()));
-                    if ($scope.selected.dept.id == data.val().dept_id && $scope.selected.year.id == data.val().year && $scope.selected.semester.id == data.val().sem) {
-                        if ($scope.selected.type.id == "th" && data.val().theory)
-                            $scope.options[5].values.push({ id: data.key(), value: data.val().fullname });
-                        if ($scope.selected.type.id == "pr" && data.val().practical)
-                            $scope.options[5].values.push({ id: data.key(), value: data.val().fullname });
-                    }
-                });
-                defer.resolve();
-            }, function (error) {
-                console.log(error.code);
-                defer.reject();
-            });
-            return defer.promise;
-        };
+        $ionicLoading.show({ template: "Getting subject list..." });
+        
+        subjects = hazridata.subjects[$scope.selected.dept.id];
 
-        var promise = getSub();
+        for (var key in subjects) {
+            if (subjects.hasOwnProperty(key)) {
+                var data = subjects[key];
+                if ($scope.selected.dept.id == data.dept_id && $scope.selected.year.id == data.year && $scope.selected.semester.id == data.sem) {
+                        if ($scope.selected.type.id == "th" && data.theory)
+                            $scope.options[5].values.push({ id: key, value: data.fullname });
+                        if ($scope.selected.type.id == "pr" && data.practical)
+                            $scope.options[5].values.push({ id: key, value: data.fullname });
+                }
+            }
+        }
+                
+        $ionicLoading.hide();
 
-        promise.then(function () {
-            $ionicLoading.hide();
-            console.log("success retrieving subjects");
-        }, function (reason) {
-            $ionicLoading.hide();
-            console.log(reason);
-        });
     };
 
     $scope.showOptions = function (option) {
@@ -448,9 +469,10 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
 
 })
 
-.controller("AttendanceCtrl", function ($scope, $rootScope, $stateParams, $q, $ionicLoading, $ionicPopup, $ionicPopover, $state, FirebaseUrl, $ionicPlatform, $cordovaNetwork, $ionicViewService) {
+.controller("AttendanceCtrl", function ($scope, $rootScope, $stateParams, $q, $ionicLoading, $ionicPopup, $ionicPopover, $state, FirebaseUrl, $ionicPlatform, $cordovaNetwork, $ionicViewService, $timeout) {
     var selectedOptions;
     var batchStart, batchEnd;
+    var hazridata;
 
     $scope.$on('$ionicView.beforeEnter', function () {
         console.log("entered state take attendance");
@@ -459,85 +481,49 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
         selectedOptions = $stateParams.selected;
         $scope.totalStudents = 0;
 
-        var getNo = function () {
-            var deferred = $q.defer();
-            $ionicLoading.show({ template: 'Loading student count..' });
+        $ionicLoading.show({ template: "Loading student count..." });
+        
+        localforage.getItem('hazridata').then(function (data) {
+            hazridata = data;
 
-            var ref = new Firebase(FirebaseUrl.root);
-            ref.child("studentCount/"+selectedOptions.dept.id).on("value", function (snapshot) {
-                snapshot.forEach(function (data) {
-                    if (selectedOptions.year.id == data.val().year) //add batch code later
+            studentCount = hazridata.studentCount[selectedOptions.dept.id];
+
+            for (var key in studentCount) {
+                if (studentCount.hasOwnProperty(key)) {
+                    var data = studentCount[key];
+                    if (selectedOptions.year.id == data.year) //add batch code later
                     {
-                        $scope.totalStudents = data.val().count;
+                        $scope.totalStudents = data.count;
                         if (selectedOptions.batchno) {
-                            batchStart = data.val().batchno[selectedOptions.batchno.id];
-                            if (selectedOptions.batchno.id == Object.keys(data.val().batchno).length) //if batch selected is last batch
+                            batchStart = data.batchno[selectedOptions.batchno.id];
+                            if (selectedOptions.batchno.id == Object.keys(data.batchno).length) //if batch selected is last batch
                                 batchEnd = $scope.totalStudents;
                             else
-                                batchEnd = data.val().batchno[selectedOptions.batchno.id + 1] - 1;
+                                batchEnd = data.batchno[selectedOptions.batchno.id + 1] - 1;
                         }
                     }
-                });
-                deferred.resolve();
-            }, function (error) {
-                console.log("error:" + error.code);
-                deferred.reject();
-            });
+                }
+            }
 
-            return deferred.promise;
-        };
+            students = hazridata.students[selectedOptions.dept.id];
 
-        var promise = getNo();
-
-        promise.then(function () {
-            $ionicLoading.hide();
-        }, function (reason) {
-            $ionicLoading.hide();
-            alert('Failed: ' + reason);
-        }, function (update) {
-            $ionicLoading.hide();
-            alert('Got notification: ' + update);
-        });
-
-
-        var getStudentInfo = function () {
-            var deferred = $q.defer();
-            $ionicLoading.show({ template: 'Loading student info..' });
-
-            var ref = new Firebase(FirebaseUrl.root);
-            ref.child("students/" + selectedOptions.dept.id).on("value", function (snapshot) {
-
-                snapshot.forEach(function (data) {
-                    if (selectedOptions.year.id == data.val().year) //add batch code later
+            for (var key in students) {
+                if (students.hasOwnProperty(key)) {
+                    var data = students[key];
+                    if (selectedOptions.year.id == data.year) //add batch code later
                     {
                         if (selectedOptions.type.id == 'pr') {
-                            if(data.val().rollno >= batchStart && data.val().rollno <= batchEnd)
-                                $scope.students.push({ id: data.key(), name: data.val().name, rollno: data.val().rollno, absent:false });
+                            if(data.rollno >= batchStart && data.rollno <= batchEnd)
+                                $scope.students.push({ id: key, name: data.name, rollno: data.rollno, absent:false });
                         }
                         else
-                                $scope.students.push({ id: data.key(), name: data.val().name, rollno: data.val().rollno, absent:false });
+                                $scope.students.push({ id: key, name: data.name, rollno: data.rollno, absent:false });
                     }
-                });
+                }
+            }
 
-                deferred.resolve();
-            }, function (error) {
-                console.log("error:" + error.code);
-                deferred.reject();
-            });
-
-            return deferred.promise;
-        };
-
-        var promise = getStudentInfo();
-
-        promise.then(function () {
             $ionicLoading.hide();
-        }, function (reason) {
-            $ionicLoading.hide();
-            alert('Failed: ' + reason);
-        }, function (update) {
-            $ionicLoading.hide();
-            alert('Got notification: ' + update);
+
         });
 
     });
@@ -556,7 +542,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
                 console.log('You are sure');
                 $ionicLoading.show({ template: 'Updating attendance...' });
                 updateAttendance();
-                $state.go("main");
+                //$state.go("main"); //state.go moved to syncFb function
 
             } else {
                 console.log('You are not sure');
@@ -569,7 +555,6 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
         for (var i = 0 ; i < $scope.students.length ; i++)
             if ($scope.students[i].absent === true)
                 absent.push($scope.students[i].rollno);
-        console.log(absent);
         //Natural sort
         function compareNumbers(a, b) {
             return a - b;
@@ -590,14 +575,12 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
             bEnd: (batchEnd) ? batchEnd : null,
             year: selectedOptions.year
         };
-
-        syncFb(attInfo); //sync to firebase
-
+        syncFb(attInfo);
         $ionicLoading.hide();
         console.log("successfully took attendance");
     };
 
-    //sync to firebase
+    //sync if internet is available, else store in local
     var syncFb = function (attInfo) {
 
         var isOnline;
@@ -606,27 +589,28 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
         });
 
         if (isOnline) {
-            var att = {
-                absentno: attInfo.absentno,
-                batch: attInfo.batch,
-                date: attInfo.date,
-                dept: attInfo.dept.id,
-                semester: attInfo.semester.id,
-                subid: attInfo.subid.id,
-                type: attInfo.type.id,
-                batchno: (attInfo.batchno) ? attInfo.batchno.id : null,
-                year: attInfo.year.id,
-                uploaded: true
-            };
+            var att = attInfo;
+            att.bStart = null;
+            att.bEnd = null;
+            att.uploaded = true;
             var ref = new Firebase(FirebaseUrl.root);
             ref.child("attendances").push(att);
-            storeLocal(attInfo);
+            storeLocal(att);
         }
         else {
-            $ionicPopup.confirm({
+            var att = attInfo;
+            att.bStart = null;
+            att.bEnd = null;
+            att.uploaded = false;
+            storeLocal(att);
+
+            var alertPopup = $ionicPopup.alert({
                 title: "No Internet",
-                content: "Please ensure that you're connected to the internet.",
+                template: "Cannot connect to internet. This attendance will not by synced to database. Make sure to sync when internet is available.",
                 okType: 'default-primary-color text-primary-color'
+            });
+            alertPopup.then(function (res) {
+                $state.go("main");
             });
         }
     };
@@ -635,6 +619,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
         localforage.getItem('attendances').then(function (data) {
             if (data == null || data.length == 0) {
                 var arr = [];
+                attInfo.id = arr.length;
                 arr.push(attInfo);
                 localforage.setItem('attendances', arr).then(function () {
                     localforage.getItem('attendances').then(function (data) {
@@ -645,6 +630,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
             }
             else {
                 localforage.getItem('attendances').then(function (data) {
+                    attInfo.id = data.length;
                     data.push(attInfo);
                     localforage.setItem('attendances', data).then(function () {
                         localforage.getItem('attendances').then(function (data) {
