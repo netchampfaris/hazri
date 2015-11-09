@@ -198,7 +198,7 @@
 }
 
 .accent-color {
-    background: #FF5252;
+    background: #FF5252 !important;
 }
 
 .primary-text-color {

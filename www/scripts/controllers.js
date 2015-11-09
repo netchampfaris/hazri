@@ -87,7 +87,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
 
 })
 
-.controller("MainCtrl", function ($scope, Firebase, FirebaseUrl, AttendanceService, DBService, $ionicPopup, $ionicLoading, $state, $rootScope, $cordovaGoogleAds,$ionicPlatform,$cordovaNetwork,$ionicPopup) {
+.controller("MainCtrl", function ($scope, Firebase, FirebaseUrl, AttendanceService, DBService, $ionicPopup, $ionicLoading, $state, $rootScope, $q, $cordovaGoogleAds,$ionicPlatform,$cordovaNetwork,$ionicPopup) {
 
     $rootScope.slideHeader = false;
     $rootScope.slideHeaderPrevious = 0;
@@ -97,14 +97,6 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
 
         if(AdMob)
             AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);
-
-        $ionicLoading.show({
-            content: 'Loading Data',
-            animation: 'fade-in',
-            showBackdrop: false,
-            maxWidth: 200,
-            showDelay: 500
-        });
 
         updateAttendance();
 
@@ -133,31 +125,51 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
             isOnline = $cordovaNetwork.isOnline();
         });
 
-        if (isOnline) {
-            att = JSON.parse(angular.toJson(att));
-            var ref = new Firebase(FirebaseUrl.root);
-            ref.child("attendances").push(att);
-            att.uploaded = true;
+        var sync = function () {
 
-            localforage.getItem('attendances').then(function(attendances) {
-                attendances.splice(att.id, 1); //remove item
-                attendances.splice(att.id, 0, att); //add new item at the same position
-                localforage.setItem('attendances',attendances).then(function(){
-                    console.log('updated attendance successfully');
+            if (isOnline) {
+                var defer = $q.defer();
+
+                att = JSON.parse(angular.toJson(att));
+                var ref = new Firebase(FirebaseUrl.root);
+                ref.child("attendances").push(att);
+                att.uploaded = true;
+
+                localforage.getItem('attendances').then(function(attendances) {
+                    attendances.splice(att.id, 1); //remove item
+                    attendances.splice(att.id, 0, att); //add new item at the same position
+                    localforage.setItem('attendances', attendances).then(function () {
+                        console.log('updated attendance successfully');
+                        updateAttendance();
+                    });
+                    defer.resolve();
                 });
-            });
-            updateAttendance();
+                return defer.promise;
+            }
+            else {
+                $ionicPopup.confirm({
+                    title: "No Internet",
+                    content: "Cannot connect to internet. This attendance will not by synced to database. Make sure to sync when internet is available.",
+                    okType: 'default-primary-color text-primary-color'
+                });
+           }
         }
-        else {
-            $ionicPopup.confirm({
-                title: "No Internet",
-                content: "Cannot connect to internet. This attendance will not by synced to database. Make sure to sync when internet is available.",
-                okType: 'default-primary-color text-primary-color'
-            });
-        }
+
+        var promise = sync();
+        promise.then(function () {
+            console.log("sucessfull");
+        });
+        
     };
 
-    var updateAttendance = function(){
+    var updateAttendance = function () {
+        $ionicLoading.show({
+            content: 'Loading Data',
+            animation: 'fade-in',
+            showBackdrop: false,
+            maxWidth: 200,
+            showDelay: 500
+        });
         AttendanceService.getAttendances().then(function (attendances) {
             $scope.attendances = attendances;
             $ionicLoading.hide();

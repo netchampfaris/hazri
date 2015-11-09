@@ -435,7 +435,32 @@
     ".git\\objects\\95\\a0c8fdf84dfb9d90d1736cf93791fae5ab639a",
     ".git\\objects\\91\\3852f4004a481d2c2bb2057f3de7c464d8d758",
     ".git\\objects\\d6\\1ad5004d6251d291fc3fd1bebb67c25f90ae2b",
-    ".git\\objects\\12\\c249dcf412fffe06b5bdab7ff406a7fb46f32e"
+    ".git\\objects\\12\\c249dcf412fffe06b5bdab7ff406a7fb46f32e",
+    ".git\\objects\\36\\9f5c5d576a53781bf2619ad8f0c0893cd7debe",
+    ".git\\objects\\fa\\234841c4c7d8110a4019f92249a61e841783f5",
+    ".git\\objects\\02\\5b93751123a1069c81e98920b48e525d2da7a9",
+    ".git\\objects\\ca\\90f02edebc34a00dd0d997786e131fa9304e3b",
+    ".git\\objects\\e5\\f8b2dfdbccacb79be7e7bbee37143ce6a31b80",
+    ".git\\objects\\9a\\0731e11366d4778436335e1f2f9fd5156e5e52",
+    ".git\\objects\\05\\ddfa238eb973674a909bc32e554f451a34d391",
+    ".git\\objects\\d9\\986b3070e35382e90b768b01d7b350e997c320",
+    ".git\\objects\\41\\5cbe6af89ab38355067f0f32ba27e5d89f3c1e",
+    ".git\\objects\\fc\\831a0053e472f020437b9f7365fd7a259fda2a",
+    ".git\\objects\\95\\d28793b771fd00fc76e9671434cfb68031ec04",
+    ".git\\objects\\23\\74cc290eb7f22bd1fa84860f0f9a439b4c5ce6",
+    ".git\\objects\\a1\\425f1a9b7c17f1520626133d83b39c7b5ea417",
+    ".git\\objects\\bb\\c6225da3c05d41202736731f40fa3f83b92620",
+    ".git\\objects\\3e\\b69fbc07092045e138c6585b59e568bd4c8bb2",
+    ".git\\objects\\cd\\d9eccfbb3d54935ecc6d33d7c754e7c4b328d0",
+    ".git\\objects\\b7\\49b3b78201b3a9624129ec0f4542f5ce5340c6",
+    ".git\\objects\\5f\\3bb9bc4f5b3a9dd74934c2784d7e278e1fb10f",
+    ".git\\objects\\30\\43210acdc3b162a62f63ddea62dc901f5cec80",
+    ".git\\objects\\0a\\b12e10565be8a7bc134b859b65d6cf27dd1089",
+    ".git\\objects\\60\\e51299e5137d7fd965942616fcfdec541d6a17",
+    ".git\\objects\\6f\\fe154dc9b12af08e7de98114af0dd624f9ad23",
+    ".git\\objects\\21\\15398fdf26bc55064b0fbdac13bf35b0035d9d",
+    ".git\\objects\\3a\\cfffaa9322e4e3228960d4a205cc63b4051482",
+    ".git\\objects\\e8\\943dcc4dab4f8a4a417b39ae6ddd9c7d67db70"
   ],
   "deletedFilesIos": [],
   "addedPluginsIos": [
@@ -446,9 +471,7 @@
     "cordova-plugin-splashscreen@2.1.0"
   ],
   "deletedPluginsIos": [],
-  "changedFiles": [
-    "www\\scripts\\controllers.js"
-  ],
+  "changedFiles": [],
   "deletedFiles": [],
   "addedPlugins": [],
   "deletedPlugins": []

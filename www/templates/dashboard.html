@@ -5,13 +5,14 @@
     </ion-nav-buttons>
     <ion-header-bar class="bar-light bar-subheader">
         <h6 class="title" style="font-weight:200;font-size:medium">Your attendances</h6>
+        <button class="button button-assertive" ui-sref="select"><i class="ion-android-create"></i> New Attendance</button>
     </ion-header-bar>
     <ion-content class="has-subheader" scroll-watch>
         <div class="list" ng-repeat="(key , value) in attendances | groupBy:'date'">
             <div class="item item-divider">
                 {{key | date:'d MMMM, yyyy'}}
             </div>
-            <div class="item item-icon-left item-button-right waves-effect" style="width:100% !important" href="#" ng-repeat="att in value" ng-click="gotoDetails(att)">
+            <div class="item item-icon-left item-button-right" href="#" ng-repeat="att in value" ng-click="gotoDetails(att)">
                 <i ng-class="{'icon ion-android-cloud-done':att.uploaded, 'icon ion-android-cloud':!att.uploaded}"></i>
                 <h2 class="primary-text-color">{{ att.subid.value }}</h2>
                 <p class="secondary-text-color">{{ att.year.id | uppercase }} {{ att.dept.value }}, {{ att.type.value }}</p>
@@ -24,7 +25,7 @@
         <div class="padding">
         </div>       
     </ion-content>
-    <div class="waves-effect float-button accent-color " ui-sref="select">
+    <!--<div class="float-button accent-color " ui-sref="select">
         <span class="content">
         </span>
         <span class="height-fix">
@@ -32,5 +33,5 @@
                 <i class="ion-android-create"></i>
             </a>
         </span>
-    </div>
+    </div>-->
 </ion-view>
