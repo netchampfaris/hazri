@@ -1,48 +1,8 @@
 <ion-view title="Details">
+    <ion-nav-buttons side="left">
+        <button class="button button-clear icon ion-android-home text-primary-color" ng-click="goHome()"></button>
+    </ion-nav-buttons>
     <ion-content>
-        <!--<div class="list card">
-            <div class="item item-icon-left item-dark">
-                <i class="icon ion-card"></i>
-                <h2 class="light">{{ att.subid.value }}</h2>
-                <h4 class="light">{{ att.date | date:'d MMMM, yyyy' }}</h4>
-            </div>
-            <div class="item item-body" style="padding:0">
-                <div class="row">
-                    <div class="col">
-                        <div class="col-info">
-                            {{ att.year.id | uppercase }} {{ att.dept.value }}
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="col-info">{{ att.semester.value }}</div>
-                    </div>
-                    <div class="col">
-                        <div class="col-info">{{ att.batch }}</div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="col-info"> {{ att.type.value }} </div>
-                    </div>
-                    <div class="col" ng-show="att.batchno">
-                        <div class="col-info">
-                            Batch no : {{ att.batchno.id }}
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="col-info">
-                            Absentees : <span ng-repeat="no in att.absentno">{{no}}  </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <a class="item item-icon-left positive" href="#" ng-click="showCumAtt(att)">
-                <i class="icon ion-android-list"></i>
-                View cumulative attendance
-            </a>
-        </div>-->
         <div class="padding">
             <h3>{{ att.subid.value }}</h3>
             <h5>{{ att.date | date:'d MMMM, yyyy' }}</h5>

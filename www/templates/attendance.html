@@ -1,6 +1,8 @@
 ﻿<ion-view title="Take attendance">  
+    <ion-nav-buttons side="left">
+        <button class="button button-clear icon ion-android-home text-primary-color" ng-click="goHome()"></button>
+    </ion-nav-buttons>
     <ion-content class="has-header" > 
-       
         <div id="btn-container" style="padding-bottom:50px;">
             <div id="studentbtn" style="padding:5px" ng-repeat="student in students" on-hold="showInfo($event,student)">
                 <button class="button button-fab waves-effect" ng-class="{'absentClass':student.absent}"

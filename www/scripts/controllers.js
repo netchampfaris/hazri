@@ -106,10 +106,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
             showDelay: 500
         });
 
-        AttendanceService.getAttendances().then(function (attendances) {
-            $scope.attendances = attendances;
-            $ionicLoading.hide();
-        });
+        updateAttendance();
 
         localforage.getItem('hazridata').then(function (data) {
             if(!data)
@@ -149,6 +146,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
                     console.log('updated attendance successfully');
                 });
             });
+            updateAttendance();
         }
         else {
             $ionicPopup.confirm({
@@ -158,6 +156,13 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
             });
         }
     };
+
+    var updateAttendance = function(){
+        AttendanceService.getAttendances().then(function (attendances) {
+            $scope.attendances = attendances;
+            $ionicLoading.hide();
+        });
+    }
 
     $scope.clear = function () {
         localforage.clear();
@@ -596,6 +601,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
             var ref = new Firebase(FirebaseUrl.root);
             ref.child("attendances").push(att);
             storeLocal(att);
+            $state.go("main");
         }
         else {
             var att = attInfo;

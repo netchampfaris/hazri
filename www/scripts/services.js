@@ -40,7 +40,7 @@ angular.module('hazri.services', ['firebase'])
             var ref = new Firebase("https://hazri.firebaseio.com/");
             ref.on("value",
             function (snapshot) {
-                deferred.resolve(snapshot);
+                deferred.resolve(snapshot.val());
             }, function (error) {
                 console.log(error.code);
                 defer.reject();

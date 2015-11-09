@@ -71,6 +71,9 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
                 }
             });
         }
+        $rootScope.goHome = function () {
+            $state.go('main');
+        }
 
         $rootScope.$on("$stateChangeError", function (event, toState, toParams, fromState, fromParams, error) {
             // We can catch the error thrown when the $requireAuth promise is rejected
@@ -97,7 +100,7 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
         }
         else
             $ionicHistory.goBack();
-    }, 101);
+    }, 501);
 })
 
 .config(function ($stateProvider, $urlRouterProvider) {

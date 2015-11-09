@@ -92,7 +92,7 @@
     border-color: #28a54c;
     background-color: #33cd5f;
     color: #fff;
-    position: fixed;
+    position: fixed !important;
     bottom: 20px; /* Adjust to where you want it */
     right: 20px; /* Adjust to where you want it */
     z-index: 9999;
