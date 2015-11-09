@@ -1,40 +1,38 @@
 ﻿<ion-view title="Select your class and subject">
     <ion-content>
-        <div class="wrap">
-            <ion-list>
-                <div ng-repeat="option in options">
-                    <ion-item class="item item-icon-right"
-                              ng-click="showOptions(option)"
-                              ng-class="{active: isOptionShown(option)}"
-                              ng-show="option.show == undefined || option.show">
-                        {{option.name}}
-                        <span class="item-note" style="width:30%;overflow:hidden">{{ selected[option.id].value }}</span>
-                        <i class="icon ion-chevron-down icon-accessory"></i>
-                    </ion-item>
-                    <ion-item class="item-accordion"
-                              style="padding-left:3em !important;"
-                              ng-repeat="item in option.values as selectedoption"
-                              ng-show="isOptionShown(option)"
-                              ng-click="setSelected(item, option)">
-                        {{item.value}}
-                    </ion-item>
-                </div>
+        <ion-list>
+            <div ng-repeat="option in options">
                 <ion-item class="item item-icon-right"
-                          ng-click="toggleDate()">
-                    Date
-                    <span class="item-note">{{ selected.date | date }}</span>
+                            ng-click="showOptions(option)"
+                            ng-class="{active: isOptionShown(option)}"
+                            ng-show="option.show == undefined || option.show">
+                    {{option.name}}
+                    <span class="item-note" style="width:30%;overflow:hidden">{{ selected[option.id].value }}</span>
                     <i class="icon ion-chevron-down icon-accessory"></i>
                 </ion-item>
-                <ion-item class="item-accordion" ng-show="showDate" ng-repeat="a in ['a']">
-                    <div id="datediv">
-                        <div pickadate ng-model="selected.date" ng-change="hideDate()" no-extra-rows></div>
-                    </div>
+                <ion-item class="item-accordion"
+                            style="padding-left:3em !important;"
+                            ng-repeat="item in option.values as selectedoption"
+                            ng-show="isOptionShown(option)"
+                            ng-click="setSelected(item, option)">
+                    {{item.value}}
                 </ion-item>
-            </ion-list>
             </div>
-            <div class="center">
-                <button class="button button-balanced button-clear center waves-effect " ng-show="allSelected" ng-click="gotoAtt(selected)">Take attendance</button>
-            </div>
+            <ion-item class="item item-icon-right"
+                        ng-click="toggleDate()">
+                Date
+                <span class="item-note">{{ selected.date | date }}</span>
+                <i class="icon ion-chevron-down icon-accessory"></i>
+            </ion-item>
+            <ion-item class="item-accordion" ng-show="showDate" ng-repeat="a in ['a']">
+                <div id="datediv">
+                    <div pickadate ng-model="selected.date" ng-click="hideDate()" ng-change="hideDate()" no-extra-rows></div>
+                </div>
+            </ion-item>
+        </ion-list>
+        <div class="center">
+            <button class="button button-balanced button-clear center waves-effect " ng-show="allSelected" ng-click="gotoAtt(selected)">Take attendance</button>
+        </div>
             
 </ion-content>
 </ion-view>
