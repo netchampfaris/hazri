@@ -1,6 +1,6 @@
 ﻿<ion-view title="Dashboard" has-subheader="true" ng-class="{'bar-subheader-slide-away': slideHeader}">
     <ion-nav-buttons side="primary">
-        <!--<button class="button button-icon button-clear ion-android-settings text-primary-color" ng-click="clear()"></button>-->
+        <button class="button button-icon button-clear ion-android-settings text-primary-color" ng-click="clear()"></button>
         <button class="button button-clear icon ion-log-out text-primary-color" ng-click="logout()"></button>
     </ion-nav-buttons>
     <ion-header-bar class="bar-light bar-subheader">
@@ -8,30 +8,22 @@
         <button class="button button-assertive" ui-sref="select"><i class="ion-android-create"></i> New Attendance</button>
     </ion-header-bar>
     <ion-content class="has-subheader" scroll-watch>
-        <div class="list" ng-repeat="(key , value) in attendances | groupBy:'date'">
-            <div class="item item-divider">
-                {{key | date:'d MMMM, yyyy'}}
-            </div>
-            <div class="item item-icon-left item-button-right" href="#" ng-repeat="att in value" ng-click="gotoDetails(att)">
+        <ion-list>
+            <ion-item auto-list-divider auto-list-divider-value="{{att.date}}" auto-list-divider-function="dividerFunction" 
+                      class="item-icon-left" 
+                      ng-repeat="att in attendances"
+                      ng-click="gotoDetails(att)"
+                      can-swipe="att.uploaded == false">
+                
                 <i ng-class="{'icon ion-android-cloud-done':att.uploaded, 'icon ion-android-cloud':!att.uploaded}"></i>
                 <h2 class="primary-text-color">{{ att.subid.value }}</h2>
                 <p class="secondary-text-color">{{ att.year.id | uppercase }} {{ att.dept.value }}, {{ att.type.value }}</p>
-                <button class="button button-balanced button-clear waves-effect" style="margin-top:10px !important;"
-                        ng-if="!att.uploaded" 
-                        ng-click="syncFb(att,$index)"
-                        ion-stop-event="click" >SYNC</button>
-            </div>
-        </div>
+                <ion-option-button class="button-primary"
+                                   ng-if="!att.uploaded"
+                                   ion-stop-event="click"
+                                   ng-click="syncFb(att,$index)">SYNC</ion-item>
+        </ion-list>
         <div class="padding">
         </div>       
     </ion-content>
-    <!--<div class="float-button accent-color " ui-sref="select">
-        <span class="content">
-        </span>
-        <span class="height-fix">
-            <a class="content">
-                <i class="ion-android-create"></i>
-            </a>
-        </span>
-    </div>-->
 </ion-view>

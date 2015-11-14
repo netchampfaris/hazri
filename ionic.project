@@ -1,4 +1,5 @@
 {
   "name": "hazri",
-  "app_id": "662890af"
+  "app_id": "662890af",
+  "defaultBrowser": "chrome"
 }

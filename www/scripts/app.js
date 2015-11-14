@@ -1,4 +1,4 @@
-angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.services', 'hazri.filters', 'ngCordova', 'pickadate' ,'angular.filter'])
+angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.services', 'hazri.filters', 'ngCordova', 'pickadate'])
 
 .run(function ($ionicPlatform, $rootScope, $location, Auth, $ionicPopup, $state, $ionicHistory, $cordovaGoogleAds) {
     $ionicPlatform.ready(function () {
@@ -41,7 +41,7 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
                 autoShow: false
             });
         }
-        
+
         //for solving windows phone issues
         Firebase.INTERNAL.forceWebSockets();
 
@@ -57,10 +57,10 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
 
         $rootScope.logout = function () {
             var confirmPopup = $ionicPopup.confirm({
-            title: 'Logout ?',
-            template: '',
-            okType: 'default-primary-color text-primary-color',
-            okText: 'Logout'
+                title: 'Logout ?',
+                template: '',
+                okType: 'default-primary-color text-primary-color',
+                okText: 'Logout'
             });
             confirmPopup.then(function (res) {
                 if (res) {
@@ -70,10 +70,11 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
                     console.log("logout cancelled");
                 }
             });
-        }
+        };
+
         $rootScope.goHome = function () {
             $state.go('main');
-        }
+        };
 
         $rootScope.$on("$stateChangeError", function (event, toState, toParams, fromState, fromParams, error) {
             // We can catch the error thrown when the $requireAuth promise is rejected
@@ -96,7 +97,7 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
                 if (res) {
                     ionic.Platform.exitApp();
                 }
-            })
+            });
         }
         else
             $ionicHistory.goBack();
@@ -104,7 +105,7 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
 })
 
 .config(function ($stateProvider, $urlRouterProvider) {
-    
+
     // Ionic uses AngularUI Router which uses the concept of states
     // Learn more here: https://github.com/angular-ui/ui-router
     // Set up the various states which the app can be in.
@@ -126,8 +127,9 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
                 }]
         }
     })
-    
+
     .state('main', {
+        cache: false,
         url: "/main",
         templateUrl: "templates/dashboard.html",
         controller: 'MainCtrl',
@@ -139,7 +141,13 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
                     // $requireAuth returns a promise so the resolve waits for it to complete
                     // If the promise is rejected, it will throw a $stateChangeError (see above)
                     return Auth.$requireAuth();
-                }]
+                }],
+            "attendances": function (AttendanceService) {
+                return AttendanceService.getAttendances();
+            },
+            "fetchData": function (DBService) {
+                return DBService.fetchData();
+            }
         }
     })
 
@@ -148,7 +156,7 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
         templateUrl: "templates/details.html",
         controller: 'DetailCtrl',
         params: {
-            "att":null
+            "att": null
         },
         resolve: {
             // controller will not be loaded until $requireAuth resolves
@@ -181,11 +189,16 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
     })
 
     .state('attendance', {
+        cache: false,
         url: "/attendance",
         templateUrl: "templates/attendance.html",
         controller: 'AttendanceCtrl',
         params: {
-            "selected": null
+            "selected": null,
+            "students": null,
+            "totalStudents": null,
+            "batchStart": null,
+            "batchEnd": null
         },
         resolve: {
             // controller will not be loaded until $requireAuth resolves
@@ -205,9 +218,9 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
         controller: 'ViewAttendanceCtrl',
         params: {
             "selected": null,
-            "totalStudents":0,
-            "bStart":null,
-            "bEnd":null
+            "totalStudents": 0,
+            "bStart": null,
+            "bEnd": null
         },
         resolve: {
             // controller will not be loaded until $requireAuth resolves
@@ -219,7 +232,7 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
                     return Auth.$requireAuth();
                 }]
         }
-    })
+    });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/login');
 
@@ -243,5 +256,34 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
             $rootScope.slideHeaderPrevious = e.detail.scrollTop - start;
             $rootScope.$apply();
         });
+    };
+})
+
+.directive('autoListDivider', function ($timeout, $filter) {
+    var lastDivideKey = "";
+
+    return {
+        link: function (scope, element, attrs) {
+            var key = attrs.autoListDividerValue;
+
+            var defaultDivideFunction = function (k) {
+                return k.slice(0, 1).toUpperCase();
+            };
+
+            var doDivide = function () {
+                var divideFunction = scope.$apply(attrs.autoListDividerFunction) || defaultDivideFunction;
+                var divideKey = divideFunction(key);
+
+                if (divideKey != lastDivideKey) {
+                    var keyString = $filter('date')(divideKey, "d MMMM, yyyy");
+                    var contentTr = angular.element("<div class='item item-divider'>" + keyString + "</div>");
+                    element[0].parentNode.insertBefore(contentTr[0], element[0]);
+                }
+
+                lastDivideKey = divideKey;
+            };
+
+            $timeout(doDivide, 0);
+        }
     };
 });
