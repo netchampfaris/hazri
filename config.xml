@@ -116,4 +116,5 @@
       <vs:name>Attendr</vs:name>
     </vs:platformSpecificWidget>
   </vs:platformSpecificValues>
+  <vs:plugin name="cordova-plugin-app-version" version="0.1.8" src="D:\Users\FarisAnsari\Downloads\cordova-plugin-app-version-develop" />
 </widget>

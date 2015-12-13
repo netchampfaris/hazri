@@ -89,7 +89,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
 
 })
 
-.controller("MainCtrl", function ($scope, Firebase, FirebaseUrl, AttendanceService, attendances, fetchData, DBService, $ionicPopup, $ionicLoading, $timeout, $state, $rootScope, $q, $cordovaGoogleAds, $ionicPlatform, $cordovaNetwork) {
+.controller("MainCtrl", function ($scope, Firebase, FirebaseUrl, AttendanceService, attendances, fetchData, DBService, $ionicPopup, $ionicLoading, $ionicModal, $timeout, $state, $rootScope, $q, $cordovaGoogleAds, $cordovaAppVersion, $ionicPlatform, $cordovaNetwork) {
 
     $rootScope.slideHeader = false;
     $rootScope.slideHeaderPrevious = 0;
@@ -98,7 +98,6 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
     $scope.$on('$ionicView.beforeEnter', function () {
         $ionicLoading.show({
             content: 'Loading',
-            animation: 'fade-in',
             showBackdrop: true,
             maxWidth: 200,
             showDelay: 0
@@ -145,7 +144,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
             type: att.type.id,
             batchno: (att.batchno) ? att.batchno.id : null,
             year: att.year.id,
-            timestamp: Math.floor(Date.now() / 1000)
+            timestamp: Firebase.ServerValue.TIMESTAMP
         };
 
         var isOnline;
@@ -159,7 +158,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
             if (isOnline) {
 
                 var ref = new Firebase(FirebaseUrl.root);
-                ref.child("attendances").push(attFb, function (error) {
+                ref.child("attendances/" + att.dept.id).push(attFb, function (error) {
                     if (error) {
                         console.log("firebase push error");
                         defer.reject();
@@ -209,13 +208,53 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
 
     };
 
-    $scope.clear = function () {
-        localforage.clear();
-    };
-
-
     $scope.gotoDetails = function (att) {
         $state.go('details', { att: att });
+    };
+
+    $ionicModal.fromTemplateUrl('templates/settings.html', function($ionicModal) {
+        $scope.modal = $ionicModal;
+    }, {
+        // Use our scope for the scope of the modal to keep it simple
+        scope: $scope,
+        // The animation we want to use for the modal entrance
+        animation: 'slide-in-up'
+    });
+
+    $scope.clear = function () {
+        console.log('clear');
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Delete Data',
+            template: 'Are you sure you want to delete all attendance data from your device?',
+            okType: 'accent-color text-primary-color',
+            okText: 'Delete',
+            cancelText: 'Cancel'
+        });
+        confirmPopup.then(function (res) {
+            if (res) {
+                localforage.removeItem('attendances').then(function () {
+                    $scope.attendances = {};
+                    console.log('data deleted successfully');
+                });
+            } else {
+                console.log('delete cancelled');
+            }
+        });
+    };
+
+    $scope.about = function () {
+
+        var appVersion = $rootScope.appVersion;
+        
+
+        var alertPopup = $ionicPopup.alert({
+            title: "About",
+            template: "<p style='text-align:center'>Attendr v"+appVersion+"<br>codename: hazri<br> Copyright &copy 2015</p>",
+            okType: 'default-primary-color text-primary-color'
+        });
+        alertPopup.then(function (res) {
+            console.log('ok clicked alert');
+        });
     };
 
 })
@@ -639,7 +678,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
             type: selectedOptions.type.id,
             batchno: (selectedOptions.batchno) ? selectedOptions.batchno.id : null,
             year: selectedOptions.year.id,
-            timestamp: Math.floor(Date.now() / 1000)
+            timestamp: Firebase.ServerValue.TIMESTAMP
         };
 
 
@@ -651,7 +690,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
 
         if (isOnline) {
             var ref = new Firebase(FirebaseUrl.root);
-            ref.child("attendances").push(attFb, function (error) {
+            ref.child("attendances/"+selectedOptions.dept.id).push(attFb, function (error) {
                 if (error) {
                     console.log("firebase push error");
                     attLocal.uploaded = false;

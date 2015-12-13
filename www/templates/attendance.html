@@ -6,7 +6,7 @@
         <div id="btn-container" style="padding-bottom:50px;">
             <div id="studentbtn" style="padding:5px" ng-repeat="student in students" on-hold="showInfo($event,student)">
                 <button class="button button-fab waves-effect" ng-class="{'absentClass':student.absent}"
-                        ng-click="toggle(student)">
+                        ng-click="toggle(student)" >
                     <strong style="color:white">{{student.rollno}}</strong>
                 </button>
             </div>

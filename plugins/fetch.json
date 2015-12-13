@@ -46,5 +46,13 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "cordova-plugin-app-version": {
+        "source": {
+            "type": "local",
+            "path": "D:\\Users\\FarisAnsari\\Downloads\\cordova-plugin-app-version-develop"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

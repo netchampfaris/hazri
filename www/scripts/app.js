@@ -1,6 +1,6 @@
 angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.services', 'hazri.filters', 'ngCordova', 'pickadate'])
 
-.run(function ($ionicPlatform, $rootScope, $location, Auth, $ionicPopup, $state, $ionicHistory, $cordovaGoogleAds) {
+.run(function ($ionicPlatform, $rootScope, $location, Auth, $ionicPopup, $state, $ionicHistory, $cordovaGoogleAds, $cordovaAppVersion) {
     $ionicPlatform.ready(function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -76,6 +76,10 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
             $state.go('main');
         };
 
+        $cordovaAppVersion.getVersionNumber().then(function (version) {
+            $rootScope.appVersion = version;
+        });
+
         $rootScope.$on("$stateChangeError", function (event, toState, toParams, fromState, fromParams, error) {
             // We can catch the error thrown when the $requireAuth promise is rejected
             // and redirect the user back to the home page
@@ -101,7 +105,7 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
         }
         else
             $ionicHistory.goBack();
-    }, 501);
+    }, 151);
 })
 
 .config(function ($stateProvider, $urlRouterProvider) {
