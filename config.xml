@@ -117,4 +117,6 @@
     </vs:platformSpecificWidget>
   </vs:platformSpecificValues>
   <vs:plugin name="cordova-plugin-app-version" version="0.1.8" src="D:\Users\FarisAnsari\Downloads\cordova-plugin-app-version-develop" />
+  <vs:plugin name="cordova-plugin-crosswalk-webview" version="1.4.0" src="D:\Users\FarisAnsari\Downloads\cordova-plugin-crosswalk-webview-master\cordova-plugin-crosswalk-webview-master" />
+  <vs:plugin name="cordova-plugin-x-toast" version="2.3.1" src="D:\Users\FarisAnsari\Downloads\Toast-PhoneGap-Plugin-master\Toast-PhoneGap-Plugin-master" />
 </widget>

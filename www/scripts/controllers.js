@@ -89,7 +89,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
 
 })
 
-.controller("MainCtrl", function ($scope, Firebase, FirebaseUrl, AttendanceService, attendances, fetchData, DBService, $ionicPopup, $ionicLoading, $ionicModal, $timeout, $state, $rootScope, $q, $cordovaGoogleAds, $cordovaAppVersion, $ionicPlatform, $cordovaNetwork) {
+.controller("MainCtrl", function ($scope, Firebase, FirebaseUrl, AttendanceService, attendances, fetchData, DBService, $ionicPopup, $ionicLoading, $ionicModal, $timeout, $state, $rootScope, $q, $cordovaGoogleAds, $cordovaAppVersion, $cordovaToast, $ionicPlatform, $cordovaNetwork) {
 
     $rootScope.slideHeader = false;
     $rootScope.slideHeaderPrevious = 0;
@@ -125,7 +125,6 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
 
     $scope.$on('$ionicView.enter', function () {
         console.log("in main");
-
     });
 
     $scope.dividerFunction = function (key) {
@@ -212,6 +211,23 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
         $state.go('details', { att: att });
     };
 
+    $scope.newAtt = function () {
+
+        localforage.getItem('hazridata').then(function (data) {
+            if(data === null)
+            {
+                $ionicPopup.alert({
+                    title: "No data",
+                    content: "In order to take attendance you need to download the student data from settings",
+                    okType: 'default-primary-color text-primary-color'
+                });
+            }
+            else
+                $state.go('select');
+        });
+
+    };
+
     $ionicModal.fromTemplateUrl('templates/settings.html', function($ionicModal) {
         $scope.modal = $ionicModal;
     }, {
@@ -242,11 +258,14 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
         });
     };
 
+    $scope.download = function () {
+        DBService.fetchData();
+    };
+
     $scope.about = function () {
 
         var appVersion = $rootScope.appVersion;
         
-
         var alertPopup = $ionicPopup.alert({
             title: "About",
             template: "<p style='text-align:center'>Attendr v"+appVersion+"<br>codename: hazri<br> Copyright &copy 2015</p>",

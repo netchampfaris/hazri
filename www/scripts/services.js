@@ -32,7 +32,7 @@ angular.module('hazri.services', ['firebase'])
         };
     })
 
-    .factory("DBService", function ($q, FirebaseUrl) {
+    .factory("DBService", function ($q, FirebaseUrl, $cordovaToast) {
         var fetchData = function () {
 
             localforage.getItem('hazridata').then(function (data) {
@@ -46,15 +46,18 @@ angular.module('hazri.services', ['firebase'])
                         var data = snapshot.val();
                         localforage.setItem('hazridata', data).then(function () {
                             console.log('firebase data retrieved successfully');
+                            $cordovaToast.showShortBottom('Database downloaded successfully');
                         });
                         deferred.resolve();
                     }, function (error) {
                         console.log(error.code);
+                        $cordovaToast.showShortBottom('Database download error');
                         deferred.reject();
                     });
                 }
                 else {
                     console.log('yes data');
+                    $cordovaToast.showShortBottom('Database is up-to-date');
                     deferred.resolve();
                 }
                 return deferred.promise;
