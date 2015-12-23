@@ -140,6 +140,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
             dept: att.dept.id,
             semester: att.semester.id,
             subid: att.subid.id,
+            topic: att.topic,
             type: att.type.id,
             batchno: (att.batchno) ? att.batchno.id : null,
             year: att.year.id,
@@ -312,22 +313,11 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
         console.log("entered state select");
         //initialize values
 
-        localforage.getItem('hazridata').then(function (data) {
-            hazridata = data;
-        });
-
         $scope.options = [
             {
                 id: "dept",
                 name: "Department",
-                values: [
-                    { id: "ch", value: "Chemical" },
-                    { id: "cs", value: "Computer" },
-                    { id: "extc", value: "Electronics and Telecommunication" },
-                    { id: "is", value: "Instrumentation" },
-                    { id: "it", value: "Information Technology" },
-                    { id: "me", value: "Mechanical" }
-                ]
+                values: []
             },
 
             {
@@ -370,6 +360,20 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
             }
 
         ];
+
+        localforage.getItem('hazridata').then(function (data) {
+            hazridata = data;
+            depts = hazridata.departments;
+            console.log(depts);
+            for (var key in depts) {
+                if (depts.hasOwnProperty(key)) {
+                    var value = depts[key]['name'];
+                    $scope.options[0].values.push({id:key,value:value});
+                }
+            }
+        });
+
+
 
         $scope.allSelected = false;
         if ($scope.selected.type) $scope.selected.type = undefined;
@@ -625,6 +629,8 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
 .controller("AttendanceCtrl", function ($scope, $rootScope, $stateParams, $q, $ionicLoading, $ionicPopup, $ionicPopover, $state, FirebaseUrl, $ionicPlatform, $cordovaNetwork, $ionicHistory, $timeout) {
     var selectedOptions;
     var batchStart, batchEnd;
+    $scope.topic = {};
+    $scope.topic.name = '';
 
     $scope.$on('$ionicView.beforeEnter', function () {
         console.log("entered state take attendance");
@@ -638,8 +644,39 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
         console.log($stateParams);
     });
 
+    $scope.askTopic = function() {
+        var myPopup = $ionicPopup.show({
+            template: '<input type="text" ng-model="topic.name">',
+            title: 'Would you like to enter the topic you just taught?',
+            subTitle: 'Please use specific topic name',
+            scope: $scope,
+            buttons: [
+                { text: 'No' },
+                {
+                    text: '<b>Yes</b>',
+                    type: 'default-primary-color text-primary-color',
+                    onTap: function (e) {
+                        if(!$scope.topic.name){
+                            e.preventDefault();
+                        }
+                        else
+                        return $scope.topic.name;
+                    }
+                }
+            ]
+        });
+        myPopup.then(function(res) {
+            if(res)
+                console.log('topic added:'+$scope.topic.name);
+            else
+                console.log('no topic');
+            $scope.showConfirm();
+        });
+    };
+
     $scope.showConfirm = function () {
         console.log($scope.students);
+
         var confirmPopup = $ionicPopup.confirm({
             title: 'Confirm Submit',
             template: 'Are you sure you want to submit?',
@@ -679,6 +716,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
             dept: selectedOptions.dept,
             semester: selectedOptions.semester,
             subid: selectedOptions.subject,
+            topic: $scope.topic.name,
             type: selectedOptions.type,
             totalStudents: $scope.totalStudents,
             batchno: selectedOptions.batchno || null,
@@ -694,6 +732,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
             dept: selectedOptions.dept.id,
             semester: selectedOptions.semester.id,
             subid: selectedOptions.subject.id,
+            topic: $scope.topic.name,
             type: selectedOptions.type.id,
             batchno: (selectedOptions.batchno) ? selectedOptions.batchno.id : null,
             year: selectedOptions.year.id,

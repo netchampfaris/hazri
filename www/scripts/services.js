@@ -33,32 +33,43 @@ angular.module('hazri.services', ['firebase'])
     })
 
     .factory("DBService", function ($q, FirebaseUrl, $cordovaToast) {
+        var ref = new Firebase(FirebaseUrl.root);
+
         var fetchData = function () {
 
             localforage.getItem('hazridata').then(function (data) {
                 var deferred = $q.defer();
-                if (!data) {
+                if (!data) {    //if no data then download it
                     console.log('no data');
-
-                    var ref = new Firebase("https://hazri.firebaseio.com/");
+                    //firebase fetch
                     ref.on("value",
-                    function (snapshot) {
-                        var data = snapshot.val();
-                        localforage.setItem('hazridata', data).then(function () {
-                            console.log('firebase data retrieved successfully');
-                            $cordovaToast.showShortBottom('Database downloaded successfully');
+                        function (snapshot) {
+                            localforage.setItem('hazridata', snapshot.val()).then(function () {
+                                console.log('firebase data retrieved successfully');
+                                $cordovaToast.showShortBottom('Database downloaded successfully');
+                                deferred.resolve();
+                            });
+                        }, function (error) {
+                            console.log(error.code);
+                            $cordovaToast.showShortBottom('Database download error');
+                            deferred.resolve();
                         });
-                        deferred.resolve();
-                    }, function (error) {
-                        console.log(error.code);
-                        $cordovaToast.showShortBottom('Database download error');
-                        deferred.reject();
-                    });
                 }
-                else {
+                else {  //if data present, then check if up-to-date
                     console.log('yes data');
-                    $cordovaToast.showShortBottom('Database is up-to-date');
-                    deferred.resolve();
+                    ref.on("value",
+                        function (snapshot) {
+                            if(angular.equals(data,snapshot.val()))
+                                $cordovaToast.showShortBottom('Database is up-to-date');
+                            else
+                                localforage.setItem('hazridata', snapshot.val()).then(function () {
+                                    $cordovaToast.showShortBottom('Database updated successfully');
+                                });
+                            deferred.resolve();
+                        }, function (error) {
+                            console.log(error.code);
+                            deferred.resolve();
+                        });
                 }
                 return deferred.promise;
             });

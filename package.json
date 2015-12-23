@@ -1,6 +1,9 @@
 {
-    "name": "HazriApp",
-    "version": "1.0.0",
-    "dependencies": {
-    }
+  "name": "HazriApp",
+  "version": "1.0.0",
+  "dependencies": {},
+  "cordovaPlugins": [],
+  "cordovaPlatforms": [
+    "android"
+  ]
 }
