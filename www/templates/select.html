@@ -24,7 +24,7 @@
             <ion-item class="item item-icon-right"
                         ng-click="toggleDate()">
                 Date
-                <span class="item-note">{{ selected.date | date }}</span>
+                <span class="item-note" style="width:30%;overflow:hidden">{{ selected.date | date }}</span>
                 <i class="icon ion-chevron-down icon-accessory"></i>
             </ion-item>
             <ion-item class="item-accordion" ng-show="showDate" ng-repeat="a in ['a']">
@@ -33,8 +33,8 @@
                 </div>
             </ion-item>
         </ion-list>
-        <div class="center">
-            <button class="button button-balanced button-clear center waves-effect " ng-show="allSelected" ng-click="gotoAtt(selected)">Take attendance</button>
+        <div class="center" style="margin-top: 2em">
+            <button class="button button-balanced button-clear center waves-effect" style="color:#388E3C" ng-show="allSelected" ng-click="gotoAtt(selected)">TAKE ATTENDANCE</button>
         </div>
             
 </ion-content>

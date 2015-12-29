@@ -55,14 +55,6 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-crosswalk-webview": {
-        "source": {
-            "type": "local",
-            "path": "D:\\Users\\FarisAnsari\\Downloads\\cordova-plugin-crosswalk-webview-master\\cordova-plugin-crosswalk-webview-master"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "cordova-plugin-x-toast": {
         "source": {
             "type": "local",

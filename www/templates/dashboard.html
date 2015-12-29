@@ -7,21 +7,28 @@
         <h6 class="title" style="font-weight:200;font-size:medium">Your attendances</h6>
         <button class="button button-assertive" ng-click="newAtt()"><i class="ion-android-create"></i> New Attendance</button>
     </ion-header-bar>
-    <ion-content class="has-subheader" scroll-watch>
+    <ion-content class="has-subheader">
         <ion-list>
-            <ion-item auto-list-divider auto-list-divider-value="{{att.date}}" auto-list-divider-function="dividerFunction" 
-                      class="item-icon-left" 
-                      ng-repeat="att in attendances"
+            <ion-item class="item-icon-left"
+                      ng-repeat="(key, att) in attendances track by key | orderObjectBy:'date':true"
                       ng-click="gotoDetails(att)"
-                      can-swipe="att.uploaded == false">
+                      can-swipe="true">
                 
                 <i ng-class="{'icon ion-android-cloud-done':att.uploaded, 'icon ion-android-cloud':!att.uploaded}"></i>
-                <h2 class="primary-text-color">{{ att.subid.value }}</h2>
-                <p class="secondary-text-color">{{ att.year.id | uppercase }} {{ att.dept.value }}, {{ att.type.value }}</p>
-                <ion-option-button class="button-primary"
+                <h2 class="primary-text-color" >{{ att.subid.value }}</h2>
+                <p class="secondary-text-color">{{ att.year.id | uppercase }} {{ att.dept.value }}, {{ att.type.value }}
+                    <span class="item-note">{{att.date | date:"EEE, dd MMM"}}</span>
+                </p>
+
+                <ion-option-button class="default-primary-color text-primary-color"
                                    ng-if="!att.uploaded"
                                    ion-stop-event="click"
-                                   ng-click="syncFb(att,$index)">SYNC</ion-item>
+                                   ng-click="syncFb(att,key)">SYNC</ion-option-button>
+                <ion-option-button class="button-assertive"
+                                   ng-if="!att.uploaded"
+                                   ion-stop-event="click"
+                                   ng-click="deleteAtt(key)">DELETE</ion-option-button>
+            </ion-item>
         </ion-list>
         <div class="padding">
         </div>       

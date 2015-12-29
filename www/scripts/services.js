@@ -36,15 +36,24 @@ angular.module('hazri.services', ['firebase'])
         var ref = new Firebase(FirebaseUrl.root);
 
         var fetchData = function () {
+            var deferred = $q.defer();
 
             localforage.getItem('hazridata').then(function (data) {
-                var deferred = $q.defer();
                 if (!data) {    //if no data then download it
                     console.log('no data');
+                    var hazridata = {};
                     //firebase fetch
-                    ref.on("value",
+                    ref.once("value",
                         function (snapshot) {
-                            localforage.setItem('hazridata', snapshot.val()).then(function () {
+
+                            hazridata.departments = snapshot.val().departments;
+                            hazridata.studentCount = snapshot.val().studentCount;
+                            hazridata.students = snapshot.val().students;
+                            hazridata.subjects = snapshot.val().subjects;
+                            hazridata.teachers = snapshot.val().teachers;
+                            console.log(hazridata);
+
+                            localforage.setItem('hazridata', hazridata).then(function () {
                                 console.log('firebase data retrieved successfully');
                                 $cordovaToast.showShortBottom('Database downloaded successfully');
                                 deferred.resolve();
@@ -57,22 +66,35 @@ angular.module('hazri.services', ['firebase'])
                 }
                 else {  //if data present, then check if up-to-date
                     console.log('yes data');
-                    ref.on("value",
+                    ref.once("value",
                         function (snapshot) {
-                            if(angular.equals(data,snapshot.val()))
+                            if(angular.equals(data.departments,snapshot.val().departments) &&
+                               angular.equals(data.studentCount, snapshot.val().studentCount) &&
+                               angular.equals(data.students, snapshot.val().students) &&
+                               angular.equals(data.subjects, snapshot.val().subjects) &&
+                               angular.equals(data.teachers, snapshot.val().teachers)
+                            )
                                 $cordovaToast.showShortBottom('Database is up-to-date');
-                            else
-                                localforage.setItem('hazridata', snapshot.val()).then(function () {
+                            else{
+                                var hazridata = {};
+                                hazridata.departments = snapshot.val().departments;
+                                hazridata.studentCount = snapshot.val().studentCount;
+                                hazridata.students = snapshot.val().students;
+                                hazridata.subjects = snapshot.val().subjects;
+                                hazridata.teachers = snapshot.val().teachers;
+                                console.log(hazridata);
+                                localforage.setItem('hazridata', hazridata).then(function () {
                                     $cordovaToast.showShortBottom('Database updated successfully');
                                 });
+                            }
                             deferred.resolve();
                         }, function (error) {
                             console.log(error.code);
                             deferred.resolve();
                         });
                 }
-                return deferred.promise;
             });
+            return deferred.promise;
         };
 
         return {
