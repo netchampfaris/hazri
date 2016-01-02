@@ -15,6 +15,8 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
 
     $scope.login = function (user) {
 
+        cordova.plugins.Keyboard.close();
+
         if (user && user.email && user.password) {
 
             var isOnline;

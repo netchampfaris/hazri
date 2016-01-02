@@ -1,5 +1,13 @@
 {
   "name": "hazri",
   "app_id": "662890af",
-  "defaultBrowser": "chrome"
+  "defaultBrowser": "chrome",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*"
+  ]
 }
