@@ -240,8 +240,8 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
 
     $scope.clear = function () {
         var confirmPopup = $ionicPopup.confirm({
-            title: 'Delete Data',
-            template: 'Are you sure you want to delete all attendance data from your device?',
+            title: 'Delete Attendance data from device?',
+            template: 'Note: Both synced and unsynced attendances will be deleted. If there are unsynced attendances, please sync them first.',
             okType: 'accent-color text-primary-color',
             okText: 'Delete',
             cancelText: 'Cancel'
@@ -259,7 +259,15 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
     };
 
     $scope.download = function () {
-        DBService.fetchData();
+        $ionicLoading.show({
+            template: 'Downloading<br><ion-spinner icon="android" class="spinner-balanced"></ion-spinner>',
+            animation: 'fade-in',
+            showBackdrop: true,
+            maxWidth: 250
+        });
+        DBService.fetchData().then(function() {
+            $ionicLoading.hide();
+        });
     };
 
     $scope.about = function () {
@@ -283,8 +291,6 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
     $scope.att = $stateParams.att;
 
     $scope.showCumAtt = function (att) {
-
-        console.log(att);
 
         var selectedOptions = {
             absentno: att.absentno,
@@ -788,139 +794,31 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
 
 })
 
-.controller("ViewAttendanceCtrl", function ($scope, $stateParams, FirebaseUrl, $q, $ionicLoading, $ionicPlatform, $state) {
-    var selectedOptions;
-    var totalStudents;
-    var cumulativeAttendance;
-    var totalLectures;
-    var bStart, bEnd;
-    $scope.batchinfo = { pr: false };
+.controller("ViewAttendanceCtrl", function ($scope, $stateParams, FirebaseUrl, $q, $ionicLoading, $ionicPlatform, $state, $http) {
 
-    $scope.$on('$ionicView.beforeEnter', function () {
+    $ionicLoading.show({template: "Loading..."});
+    var selectedOptions = $stateParams.selected;
+    var dept = selectedOptions.dept.id;
+    var year = selectedOptions.year.id;
+    var sem = selectedOptions.semester.id;
+    var sub = selectedOptions.subject.id;
+    $scope.batchno = (selectedOptions.batchno)?selectedOptions.batchno.id: null;
+    $http({
+        method: 'GET',
+        url: 'http://cors.io/?u=http://bvcoeportal.orgfree.com/api/subject_att_calc.php/' + dept + '/' + year + '/' + sem + '/' + sub
+    }).then(function(response){
 
-        selectedOptions = $stateParams.selected;
-        totalStudents = $stateParams.totalStudents;
-        bStart = $stateParams.bStart;
-        bEnd = $stateParams.bEnd;
-
-        if (selectedOptions.type.id == 'pr')
-            $scope.batchinfo = {
-                pr: true,
-                bno: selectedOptions.batchno.id,
-                start: bStart,
-                end: bEnd
-            };
+        if(selectedOptions.type.id == 'pr')
+        {
+            $scope.items = response.data.attDataPr[sub][$scope.batchno-1];
+        }
         else
-            $scope.batchinfo = { pr: false };
-
-        $scope.subjectName = selectedOptions.subject.value;
-        cumulativeAttendance = [];
-        totalLectures = 0;
-
-        var getStudentInfo = function () {
-            var deferred = $q.defer();
-            $ionicLoading.show({ template: 'Loading student info..' });
-            var ref = new Firebase(FirebaseUrl.root);
-            ref.child("students/" + selectedOptions.dept.id).on("value", function (snapshot) {
-
-                snapshot.forEach(function (data) {
-                    if (selectedOptions.year.id == data.val().year) //add batch code later
-                    {
-                        var studentObj = { rollno: data.val().rollno, name: data.val().name, att: 0 };
-                        if (selectedOptions.type.id == 'pr') {
-                            if (studentObj.rollno >= bStart && studentObj.rollno <= bEnd)
-                                cumulativeAttendance.push(studentObj);
-                        }
-                        else
-                            cumulativeAttendance.push(studentObj);
-                    }
-                });
-
-                deferred.resolve();
-            }, function (error) {
-                console.log("error:" + error.code);
-                deferred.reject();
-            });
-
-            return deferred.promise;
-        };
-
-        var promise = getStudentInfo();
-
-        promise.then(function () {
-            $ionicLoading.hide();
-        }, function (reason) {
-            $ionicLoading.hide();
-            console.log('Failed: ' + reason);
-        });
-
-        var computeAttendance = function () {
-            var defer = $q.defer();
-            $ionicLoading.show({ template: "Getting data..." });
-
-            var ref = new Firebase(FirebaseUrl.root);
-            ref.child("attendances").on("value", function (snapshot) {
-                snapshot.forEach(function (data) {
-
-                    if (selectedOptions.dept.id == data.val().dept && selectedOptions.year.id == data.val().year && selectedOptions.semester.id == data.val().semester && selectedOptions.subject.id == data.val().subid && selectedOptions.type.id == data.val().type) {
-                        var i;
-                        var arraylength;
-                        var absentno;
-                        //for theory
-                        if (selectedOptions.type.id == 'th') {
-                            totalLectures++;
-
-                            for (i = 0; i < totalStudents; i++)
-                                cumulativeAttendance[i].att++;
-                            absentno = data.val().absentno;
-                            if (absentno !== undefined) //absentno undefined means all present
-                            {
-                                arraylength = absentno.length;
-                                for (i = 0; i < arraylength ; i++)
-                                    cumulativeAttendance[absentno[i] - 1].att--;
-                            }
-                            //else all present
-                        }
-                            //for practicals, show only the specific batch selected
-                        else {
-                            if (selectedOptions.batchno.id == data.val().batchno) {
-                                totalLectures++;
-                                for (i = 0; i < bEnd - bStart + 1; i++)
-                                    cumulativeAttendance[i].att++;
-                                absentno = data.val().absentno;
-                                if (absentno !== undefined) //absentno undefined means all present
-                                {
-                                    arraylength = absentno.length;
-                                    for (i = 0; i < arraylength ; i++)
-                                        cumulativeAttendance[absentno[i] - bStart].att--;
-                                }
-                                //else all present
-                            }
-                        }
-                    }
-
-                });
-                defer.resolve();
-
-            }, function (error) {
-                console.log("some error occured: " + error.code);
-                defer.reject();
-            });
-            return defer.promise;
-        };
-
-        promise = computeAttendance();
-
-        promise.then(function () {
-            $ionicLoading.hide();
-            $scope.totalLectures = totalLectures;
-            $scope.items = cumulativeAttendance;
-            cumulativeAttendance = []; //flush values
-        }, function (reason) {
-            $ionicLoading.hide();
-            console.log(reason);
-            cumulativeAttendance = []; //flush values
-        });
+        {
+            $scope.items = response.data.attDataTh[sub];
+        }
+        $ionicLoading.hide();
+    },function(error){
+        console.log(error);
     });
 
     $ionicPlatform.registerBackButtonAction(function (event) {

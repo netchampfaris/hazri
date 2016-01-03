@@ -3,26 +3,35 @@
         <button class="button button-clear icon ion-android-home text-primary-color" ng-click="goHome()"></button>
     </ion-nav-buttons>
     <ion-content>
-        <div class="padding">
-            <h3>{{ att.subid.value }}</h3>
-            <h5>{{ att.date | date:'d MMMM, yyyy' }}</h5>
-            <p>
-                {{ att.year.id | uppercase }} {{ att.dept.value }}
-            </p>
-            <p>
-                {{ att.semester.value }}
-            </p>
-            <p>
-                {{ att.type.value }}
-            </p>
-            <p>
-               Batch {{ att.batchno.id }}
-            </p>
-            <p ng-if="att.absentno.length > 0">
-                Absentees: <span ng-repeat="no in att.absentno">{{no}} </span>
-            </p>
-            <p ng-if="att.absentno.length == 0">No absentees</p>
-            <button class="button button-balanced button-clear waves-effect" ng-click="showCumAtt(att)">Total Attendance</button>
+        <div class="list card">
+            <div class="item item-text-wrap">
+                <h2>
+                    {{att.subid.value}}
+                </h2>
+                <p>Date: {{ att.date | date:'d MMMM, yyyy' }}</p>
+            </div>
+            <div class="item item-text-wrap">
+                <h2>{{ att.year.id | uppercase }} {{ att.dept.value }}</h2>
+            </div>
+            <div class="item item-text-wrap">
+                <h2>{{ att.semester.value }}</h2>
+            </div>
+            <div class="item item-text-wrap">
+                <h2>{{ att.type.value }}</h2>
+            <div class="item item-text-wrap" ng-if="att.batchno.id">
+                <h2>Batch {{ att.batchno.id }}</h2>
+            </div>
+            </div>
+            <div class="item item-text-wrap">
+                <h2 ng-if="att.absentno.length > 0">
+                    Absentees: <span ng-repeat="no in att.absentno">{{no}} </span>
+                </h2>
+                <h2 ng-if="att.absentno.length == 0">No absentees</h2>
+            </div>
+            <a class="item item-icon-left stable-bg" ng-click="showCumAtt(att)">
+                <i class="icon ion-document-text"></i>
+                View total
+            </a>
         </div>
     </ion-content>
 </ion-view>

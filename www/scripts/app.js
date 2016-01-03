@@ -154,6 +154,7 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
     })
 
     .state('details', {
+        cache: false,
         url: "/details",
         templateUrl: "templates/details.html",
         controller: 'DetailCtrl',
@@ -215,6 +216,7 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
     })
 
     .state('viewAttendance', {
+        cache: false,
         url: "/viewattendance",
         templateUrl: "templates/view_attendance.html",
         controller: 'ViewAttendanceCtrl',

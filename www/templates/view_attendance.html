@@ -5,9 +5,15 @@
     <ion-content padding="true" scroll="true" class="has-header">
         <div class="card">
             <div class="item item-text-wrap">
-                Subject: {{ subjectName }} <br />
-                Total Lectures: {{ totalLectures }} <br />
-                <span ng-show="batchinfo.pr">Batch: {{ batchinfo.bno }}</span>
+                <h2>
+                    {{items.name}}
+                </h2>
+                <p>
+                    Total Lectures: {{items.totalAtt}}
+                </p>
+                <p ng-if="batchno">
+                    Batch {{items.batchno}}
+                </p>
             </div>
         </div>
         <div id="cumAttTable">
@@ -16,10 +22,10 @@
                 <div class="col">Name</div>
                 <div class="col col-25">Cumu Att</div>
             </div>
-            <div class="row" ng-repeat="item in items">
-                <div class="col col-20"><strong>{{ item.rollno }}</strong></div>
-                <div class="col">{{ item.name }}</div>
-                <div class="col col-25">{{ item.att }}</div>
+            <div class="row" ng-repeat="(roll, att) in items.att track by $index">
+                <div class="col col-20"><strong>{{ roll }}</strong></div>
+                <div class="col">{{ items.studentNames[$index] }}</div>
+                <div class="col col-25">{{ att }}</div>
             </div>
         </div>
     </ion-content>
