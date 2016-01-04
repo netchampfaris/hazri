@@ -21,6 +21,12 @@
                     {{item.value}}
                 </ion-item>
             </div>
+            <label class="item">Duration<span style="width:30%;overflow:hidden" class="item-note">{{selected.noofhours}} Hour{{(selected.noofhours==1)?'':'s'}}</span></label>
+            <div class="item range range-balanced" ng-init="selected.noofhours = 1">
+                1
+                <input type="range" min="1" max="3" value="1" ng-model="selected.noofhours">
+                3
+            </div>
             <ion-item class="item item-icon-right"
                         ng-click="toggleDate()">
                 Date

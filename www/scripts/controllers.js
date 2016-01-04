@@ -129,9 +129,11 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
             subid: att.subid.id,
             topic: att.topic,
             type: att.type.id,
+            noofhours: att.noofhours,
             batchno: (att.batchno) ? att.batchno.id : null,
             year: att.year.id,
-            timestamp: Firebase.ServerValue.TIMESTAMP
+            timestamp: Firebase.ServerValue.TIMESTAMP,
+            teacher: $rootScope.authData.uid
         };
 
         var isOnline;
@@ -433,7 +435,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
         var batchCount = 0;
         var studentCount;
 
-        $ionicLoading.show({ template: "Getting Batch info..." });
+        //$ionicLoading.show({ template: "Getting Batch info..." });
         studentCount = hazridata.studentCount[$scope.selected.dept.id];
 
         for (var key in studentCount) {
@@ -450,7 +452,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
                 $scope.options[4].values.push({ id: i, value: "Batch " + i });
             }
         }
-        $ionicLoading.hide();
+        //$ionicLoading.hide();
 
     };
 
@@ -458,7 +460,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
 
         //proceed only if type field is selected and if type is practical then make sure that batch field is selected
 
-        $ionicLoading.show({ template: "Getting subject list..." });
+        //$ionicLoading.show({ template: "Getting subject list..." });
 
         var subjects = hazridata.subjects[$scope.selected.dept.id];
 
@@ -474,7 +476,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
             }
         }
 
-        $ionicLoading.hide();
+        //$ionicLoading.hide();
 
     };
 
@@ -542,9 +544,12 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
 
         $scope.toggleOption(option);
 
-        if ($scope.selected.type && $scope.selected.type.id == 'pr')
+        if ($scope.selected.type && $scope.selected.type.id == 'pr') {
             $scope.options[4].show = true;
+            $scope.selected.noofhours = 2;
+        }
         if ($scope.selected.type && $scope.selected.type.id == 'th') {
+            $scope.selected.noofhours = 1;
             $scope.options[4].show = false;
             $scope.selected.batchno = undefined;
         }
@@ -575,6 +580,8 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
 
     $scope.gotoAtt = function (selected) {
 
+        $ionicLoading.show({template: "Loading.."});
+
         var students = [];
         var batchStart;
         var batchEnd;
@@ -586,6 +593,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
 
             var studentCount = hazridata.studentCount[selectedOptions.dept.id];
             var key, data;
+            //console.log(hazridata);
 
             for (key in studentCount) {
                 if (studentCount.hasOwnProperty(key)) {
@@ -600,6 +608,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
                             else
                                 batchEnd = data.batchno[selectedOptions.batchno.id + 1] - 1;
                         }
+                        //console.log(batchStart, batchEnd);
                     }
                 }
             }
@@ -612,14 +621,17 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
                     if (selectedOptions.year.id == data.year) //add batch code later
                     {
                         if (selectedOptions.type.id == 'pr') {
-                            if (data.rollno >= batchStart && data.rollno <= batchEnd)
+                            data.rollno = parseInt(data.rollno);
+                            if (data.rollno >= batchStart && data.rollno <= batchEnd){
                                 students.push({ id: key, name: data.name, rollno: data.rollno, absent: false });
+                            }
                         }
                         else
                             students.push({ id: key, name: data.name, rollno: data.rollno, absent: false });
                     }
                 }
             }
+            $ionicLoading.hide();
 
         });
 
@@ -634,9 +646,9 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
     $scope.topic = {};
     $scope.topic.name = '';
 
+
     $scope.$on('$ionicView.beforeEnter', function () {
         console.log("entered state take attendance");
-
         $scope.students = $stateParams.students;
         batchStart = $stateParams.batchStart;
         batchEnd = $stateParams.batchEnd;
@@ -719,6 +731,7 @@ angular.module('hazri.controllers', ['ionic', 'firebase', 'hazri.services'])
             subid: selectedOptions.subject,
             topic: $scope.topic.name,
             type: selectedOptions.type,
+            noofhours: selectedOptions.noofhours,
             totalStudents: $scope.totalStudents,
             batchno: selectedOptions.batchno || null,
             bStart: batchStart || null,

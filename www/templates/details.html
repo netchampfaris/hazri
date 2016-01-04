@@ -18,9 +18,12 @@
             </div>
             <div class="item item-text-wrap">
                 <h2>{{ att.type.value }}</h2>
+            </div>
             <div class="item item-text-wrap" ng-if="att.batchno.id">
                 <h2>Batch {{ att.batchno.id }}</h2>
             </div>
+            <div class="item item-text-wrap">
+                <h2>Duration: {{ att.noofhours }} Hour{{(att.noofhours==1)?'':'s'}}</h2>
             </div>
             <div class="item item-text-wrap">
                 <h2 ng-if="att.absentno.length > 0">

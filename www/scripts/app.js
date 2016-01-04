@@ -47,6 +47,7 @@ angular.module('hazri', ['ionic', 'firebase', 'hazri.controllers', 'hazri.servic
 
         Auth.$onAuth(function (authData) {
             if (authData) {
+                $rootScope.authData = authData;
                 console.log("Logged in as:", authData.uid);
                 $location.path('/main');
             } else {

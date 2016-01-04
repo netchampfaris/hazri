@@ -43,7 +43,7 @@ angular.module('hazri.services', ['firebase'])
                     console.log('no data');
                     var hazridata = {};
                     //firebase fetch
-                    ref.once("value",
+                    ref.limitToFirst(8).once("value",
                         function (snapshot) {
 
                             hazridata.departments = snapshot.val().departments;
@@ -66,7 +66,7 @@ angular.module('hazri.services', ['firebase'])
                 }
                 else {  //if data present, then check if up-to-date
                     console.log('yes data');
-                    ref.once("value",
+                    ref.limitToFirst(8).once("value",
                         function (snapshot) {
                             if(angular.equals(data.departments,snapshot.val().departments) &&
                                angular.equals(data.studentCount, snapshot.val().studentCount) &&
